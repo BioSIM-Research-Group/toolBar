@@ -1,0 +1,5 @@
+####vmdStore#### START toolBar
+## Version XXversionXX
+lappend auto_path "$::vmdStorePath/plugins/toolBar"
+vmd_install_extension toolBar "toolBar::startGui" "PortoBioComp/Tool Bar"
+####vmdStore#### END toolBar
