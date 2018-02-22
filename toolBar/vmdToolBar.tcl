@@ -38,7 +38,7 @@ namespace eval toolBar:: {
 		## Packages
 		
 		package require Tk
-		#package require vmdRender 1.0      
+		package require vmdRender 1.0      
 }
 
 
@@ -318,17 +318,7 @@ proc toolBar::resetToolBar {} {
 }
 
 proc toolBar::deleteGraphics {topLayer} {
-		# Delete all graphics from the layer if it exists
-		
-		# See if the toolBarGraphics exit
-		set nameLayer ""
-		foreach x [molinfo list] {set nameLayer [linsert $nameLayer end [molinfo $x get name]]}
-		
-		# If it  exists 
-		if {[lsearch $nameLayer "toolBar"]!=-1} {
-			foreach a $toolBar::graphicsID {graphics [lindex $a 0] delete [lindex $a 1]}
-			set toolBar::graphicsID ""
-		}
+
 	
 }
 
@@ -338,87 +328,38 @@ proc toolBar::atomPicked {args} {
     global ::vmd_pick_atom
     global ::vmd_pick_mol  
 
-	if {[llength $toolBar::pickedAtoms]>=1 && [llength $toolBar::pickedAtoms]<=3} {
-		set toolBar::pickedAtoms [lappend toolBar::pickedAtoms $::vmd_pick_atom]
-	} else {	
-		# Delete all graphics from the toplayer
-		toolBar::deleteGraphics [molinfo top]
+	# Delete all graphics from the toplayer
+	toolBar::deleteGraphics [molinfo top]
 		
-		# Add the first atom	
-		set toolBar::pickedAtoms "$::vmd_pick_atom"
-	}
-	
-	
-	# Put Values in the correct place
-		
-	if {[llength $toolBar::pickedAtoms]==1} {
-		#Draw a sphere on the selected atom
-		set toolBar::graphicsID [lappend toolBar::graphicsID "[toolBar::sphere [lindex $::vmd_pick_atom 0] red]"]		
-		# Print the result on the bottom
-		#set sel [atomselect $::vmd_pick_mol "same residue as index $::vmd_pick_atom"]
-		set atom [atomselect $::vmd_pick_mol "index $::vmd_pick_atom"]
-		lassign [$atom get {chain resname resid index}] chain resname resid index
+	# Add the first atom	
+	set toolBar::pickedAtoms "$::vmd_pick_atom"
 
-		set chain [$atom get chain]
-		set resname [$atom get resname]
-		set resid [$atom get resid]
-		set index [$atom get index]
+	#Draw a sphere on the selected atom
+	set toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] red]		
 		
-		
-		
-		#toolBar::displayText "Info) Resname [lindex $resname 0]; Resid [lindex $resname 1]; Index [lindex $resname 2]" 0
-		
-		
-		if {$toolBar::cmd=="query"} {
-			toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nIndex\n$index"
-			set toolBar::pickedAtoms ""
-		}
-		
-		if {$toolBar::cmd=="measure"} {
-			toolBar::displayText "Info) Select another atom..." 0
-		}
+	# Print the result on the bottom
+	set atom [atomselect $::vmd_pick_mol "index $::vmd_pick_atom"]
+	set chain [$atom get chain]
+	set resname [$atom get resname]
+	set resid [$atom get resid]
+	set index [$atom get index]
+			
+	if {$toolBar::cmd=="query"} {
+		toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nIndex\n$index"
+		set toolBar::pickedAtoms ""
 	}
-	
-	
-	if {[llength $toolBar::pickedAtoms]==2 && $toolBar::cmd=="measure"} {
-		#Draw a sphere on the selected atom
 		
-		# calculate distance
-		set value [format %7.2f [measure bond  "[lindex $toolBar::pickedAtoms 0] [lindex $toolBar::pickedAtoms 1]"] ]
-	 
-		# Print the result on the bottom  
-		toolBar::displayText "Info) Distance = $value A" 0
-		set toolBar::graphicsID [lappend toolBar::graphicsID "[toolBar::sphere [lindex $::vmd_pick_atom 0] yellow]"]
-	}
-	
-	
-	if {[llength $toolBar::pickedAtoms]==3 && $toolBar::cmd=="measure"} {
-		#Draw a sphere on the selected atom
-		set toolBar::graphicsID [lappend toolBar::graphicsID "[toolBar::sphere [lindex $::vmd_pick_atom 0] green]"]
-		# calculate distance
-		set value [format %7.2f [measure angle "[lindex $toolBar::pickedAtoms 0] [lindex $toolBar::pickedAtoms 1] [lindex $toolBar::pickedAtoms 2]"] ]
-		
-		# Print the result on the bottom  
-		toolBar::displayText "Info) Angle = $value degree" 0
-	}
 
-
-	if {[llength $toolBar::pickedAtoms]==4 && $toolBar::cmd=="measure"} {
-		#Draw a sphere on the selected atom
-		set toolBar::graphicsID [lappend toolBar::graphicsID "[toolBar::sphere [lindex $::vmd_pick_atom 0] blue]"]		
-		# calculate distance
-		set value [format %7.2f [measure dihed "[lindex $toolBar::pickedAtoms 0] [lindex $toolBar::pickedAtoms 1] [lindex $toolBar::pickedAtoms 2] [lindex $toolBar::pickedAtoms 3]"] ]
 		
-		# Print the result on the bottom  
-		toolBar::displayText "Info) Dihedral = $value degree" 0
-	}
-   
 }
 
 
 
 proc toolBar::sphere {selection color} {
 # Draw sphere in one atom
+
+
+puts "DRAW"
 	set coordinates [[atomselect top "index $selection"] get {x y z}]
 	
 	# Draw a circle around the coordinate
@@ -431,12 +372,7 @@ proc toolBar::sphere {selection color} {
 proc toolBar::displayText {text} {
 	$toolBar::topGui.frame2.text delete 1.0 end
 	$toolBar::topGui.frame2.text insert 1.0 $text
-
 }
 
 ## STRAT ToolBar
 toolBar::startGui
-
-
-
-
