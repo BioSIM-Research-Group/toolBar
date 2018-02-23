@@ -27,19 +27,17 @@ namespace eval toolBar:: {
 								{resetView B} {centerAtom C} \
 								{query C} {bond C}\
 								{angle C} {dihedral C}
-								{measure C} {deleteLabels B} \
-								{render B}"
+								{deleteLabels B} {render B}"
 
 		variable Layer	0	; #ID of the graphics toplayer
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules
-		variable pickedAtoms ""; #atoms picked by VMD
 		variable cmd ""; #command that was selected from the toolbar
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
 
-		variable text "testst" ;#info text on the toolbar
+		variable text "" ;#info text on the toolbar
 		variable version "1.2"
 
 
@@ -168,7 +166,6 @@ proc toolBar::startGui {} {
 	user add key t {mouse mode rotate; toolBar::cmd translate}	
 	user add key p {mouse mode pick; toolBar::cmd pick}
 
-
     #############################################################
     #### Bindings ###############################################
     #############################################################
@@ -179,9 +176,6 @@ proc toolBar::startGui {} {
 	#############################################################
 	toolBar::moveGui
  	toolBar::cmd rotate ; # default button
-
-
-
 
 }
 
@@ -255,19 +249,19 @@ proc toolBar::cmd {cmd} {
 					    set toolBar::cmdType 1 }	
 
 			bond     	{set toolBar::button_rotate 1; \
-						 mouse mode pick; \
+						 mouse mode labelbond; \
 						 set toolBar::button_bond 1; \
 						 set toolBar::cmdType 1
 						}
 
 			angle     	{set toolBar::button_rotate 1;  \
-						 mouse mode pick; \
+						 mouse mode labelangle; \
 						 set toolBar::button_angle 1; \
 						 set toolBar::cmdType 1
 						}
 						
 			dihedral	{set toolBar::button_rotate 1; \
-						 mouse mode pick; \
+						 mouse mode labeldihedral; \
 						 set toolBar::button_dihedral 1; \
 						 set toolBar::cmdType 1
 						}
@@ -309,14 +303,11 @@ proc toolBar::cmd {cmd} {
 						 if {$fileName != ""} {play $fileName}
 						}
 			 
-			deleteLabels {label delete Atoms all ; \
-						   label delete Bonds all  ; \
-						   label delete Angles all ; \
-						   label delete Dihedrals all ; \
+			deleteLabels {toolBar::deleteGraphics all; \
 						   set toolBar::cmdType 0
 						   }
 								
-			render			{vmdRender::gui; set toolBar::cmdType 0}
+			render		{vmdRender::gui; set toolBar::cmdType 0}
 
 			representations 	{menu graphics off ; menu graphics on}
 			
@@ -333,15 +324,24 @@ proc toolBar::resetToolBar {} {
 		set opt [lindex $var 1]
 		if {$opt=="C"} {set toolBar::button_$a 0}
 	}
-	toolBar::deleteGraphics	
+	toolBar::deleteGraphics	all
+	mouse mode off
 }
 
-
-proc toolBar::deleteGraphics {} {
+proc toolBar::deleteGraphics {cmd} {
 	# Delete all graphics from the toplayer if required
-		foreach a $toolBar::graphicsID {draw delete $a}
-		set toolBar::graphicsID ""
-		set toolBar::pickedAtoms ""; # é redundante
+	foreach a $toolBar::graphicsID {draw delete $a}
+	set toolBar::graphicsID ""
+
+	# Delete data from bonds, angles and dihedrals
+	switch $cmd {
+		 query 		{label delete Atoms all}
+		 bond    	{label delete Atoms all; label delete Bonds all}
+		 angle    	{label delete Atoms all; label delete Angles all}
+		 dihedral	{label delete Atoms all; label delete Dihedrals all}
+		 all 		{label delete Atoms all; label delete Bonds all; label delete Angles all; label delete Dihedrals all}
+		 default	{}
+	}
 }
 
 proc toolBar::atomPicked {args} {
@@ -350,9 +350,6 @@ proc toolBar::atomPicked {args} {
     global ::vmd_pick_atom
     global ::vmd_pick_mol  
 
-	# Add the first atom	
-	set toolBar::pickedAtoms "$::vmd_pick_atom"
-		
 	# Print the result on the bottom
 	set atom [atomselect $::vmd_pick_mol "index $::vmd_pick_atom"]
 	set chain [$atom get chain]
@@ -362,9 +359,6 @@ proc toolBar::atomPicked {args} {
 
 	# Show text
 	toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nIndex\n$index"
-
-puts "#### $toolBar::cmd"
-puts "### $toolBar::graphicsID : [llength $toolBar::graphicsID]"
 
 	set clean off
 	switch $toolBar::cmd {
@@ -376,14 +370,11 @@ puts "### $toolBar::graphicsID : [llength $toolBar::graphicsID]"
 	}
 
 	# Delete all graphics from the toplayer if required
-	if {$clean=="on"} {toolBar::deleteGraphics}
+	if {$clean=="on"} {toolBar::deleteGraphics $toolBar::cmd}
 
-	
 	#Draw a sphere on the selected atom
 	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]	
-
 }
-
 
 
 proc toolBar::sphere {selection color} {
@@ -398,9 +389,18 @@ proc toolBar::sphere {selection color} {
 }
 
 proc toolBar::displayText {text} {
+# insert the information text on the toolBar
 	$toolBar::topGui.frame2.text delete 1.0 end
 	$toolBar::topGui.frame2.text insert 1.0 $text
 }
 
-## STRAT ToolBar
+
+proc tollBar::vmdState {file} {
+# Change the vmdState and remove the path from the PDb files
+
+#TODO
+
+}
+
+## START ToolBar
 toolBar::startGui
