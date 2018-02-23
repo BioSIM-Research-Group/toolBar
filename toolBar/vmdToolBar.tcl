@@ -152,6 +152,11 @@ proc toolBar::startGui {} {
 	user add key t {mouse mode rotate; toolBar::cmd translate}	
 	user add key p {mouse mode pick; toolBar::cmd pick}
 
+	user add key 1 {mouse mode pick; toolBar::cmd query}
+	user add key 2 {mouse mode bond; toolBar::cmd bond}
+	user add key 3 {mouse mode angle; toolBar::cmd angle}
+	user add key 4 {mouse mode dihedral; toolBar::cmd dihedral}
+
     #############################################################
     #### Bindings ###############################################
     #############################################################
