@@ -30,7 +30,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.8.1"
+		variable version "0.8.2"
 
 		## Packages
 		package require Tk
@@ -59,6 +59,10 @@ proc toolBar::startGui {} {
 	toplevel $toolBar::topGui
 
 	### Hide the Window Decoration
+	if {[string first "Windows" $::tcl_platform(os)] == -1} {
+		wm overrideredirect $toolBar::topGui true
+		wm resizable $toolBar::topGui 0 0
+	}
 	wm title $toolBar::topGui "ToolBar" ;# titulo da pagina
 	wm attribute $toolBar::topGui -topmost
 
@@ -152,8 +156,10 @@ proc toolBar::startGui {} {
 			-highlightbackground {#575756} \
     	] -in $toolBar::topGui.frame1 -row [expr $row + 1] -column 0 -columnspan 2 -sticky news
 
-	wm overrideredirect $toolBar::topGui true
-	wm resizable $toolBar::topGui 0 0
+	if {[string first "Windows" $::tcl_platform(os)] != -1} {
+		wm overrideredirect $toolBar::topGui true
+		wm resizable $toolBar::topGui 0 0
+	}
 
     #############################################################
     #### Trace Variables ########################################
