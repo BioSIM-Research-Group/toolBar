@@ -18,11 +18,11 @@ namespace eval toolBar:: {
 		variable buttonOrder "	{open B} {save B} \
 								{openVisual B} {saveVisual B} \
 								{representations B} {rotate C} \
-								{translate C} {scale C} \
-								{resetView B} {centerAtom C} \
-								{query C} {bond C}\
-								{angle C} {dihedral C}
-								{deleteLabels B} {render B}"
+								{resetView B} {scale C} \
+								{centerAtom C} {translate C}\
+								{query C} {bond C} \
+								{deleteLabels B} {angle C}  \
+								{render B} {dihedral C}"
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -30,7 +30,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "1.2"
+		variable version "1.3"
 
 		## Packages
 		package require Tk
@@ -89,6 +89,18 @@ proc toolBar::startGui {} {
 		    ttk::style layout toolBar.button.$a Button.toolBar.button.$a.button
 	}
 
+	#### Top moving button 
+	ttk::style element create toolBar.button.topmoving.button \
+		        image [list $toolBar::images(moving-n) \
+		                 pressed $toolBar::images(moving-h) \
+		                 {selected active} $toolBar::images(moving-h) \
+		                 selected $toolBar::images(moving-a) \
+		                 active $toolBar::images(moving-h) \
+		                 disabled $toolBar::images(moving-n) \
+		                ] -width 72 -height 18
+		
+	ttk::style layout toolBar.button.topmoving Button.toolBar.button.topmoving.button
+
     #############################################################
     #### Buttons ################################################
     #############################################################
@@ -96,7 +108,7 @@ proc toolBar::startGui {} {
     #### FRAME 0 - Header
 	grid [frame $toolBar::topGui.frame0] -row 0 -column 0
 	grid [ttk::button $toolBar::topGui.frame0.header \
-				-style toolBar.button.moving \
+				-style toolBar.button.topmoving \
 				-command "toolBar::cmd moving" \
 		       ] -in $toolBar::topGui.frame0 -row 0 -column 0 -sticky news
 
@@ -134,9 +146,13 @@ proc toolBar::startGui {} {
      }
 
 	#### FRAME 2- Text frame
-	grid [frame $toolBar::topGui.frame2] -row 2 -column 0  
-	grid [text $toolBar::topGui.frame2.text -width 8 -height 10 \
-            	] -in $toolBar::topGui.frame2 -row 0 -column 0 
+	#grid [frame $toolBar::topGui.frame2] -row 2 -column 0  
+	grid [text $toolBar::topGui.frame1.text -width 8 -height 10 \
+			-bg {#575756} \
+			-fg white \
+			-borderwidth 0 \
+			-highlightbackground {#575756} \
+    	] -in $toolBar::topGui.frame1 -row [expr $row + 1] -column 0 -columnspan 2 -sticky news
 
     #############################################################
     #### Trace Variables ########################################
@@ -351,7 +367,7 @@ proc toolBar::atomPicked {args} {
 	set index [$atom get index]
 
 	# Show text
-	toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nType:\n$type\nIndex\n$index"
+	toolBar::displayText "Chain:\n$chain\nResname:\n$resname\nResid:\n$resid\nType:\n$type\nIndex:\n$index"
 
 	set clean off
 	switch $toolBar::cmd {
@@ -383,8 +399,8 @@ proc toolBar::sphere {selection color} {
 
 proc toolBar::displayText {text} {
 # insert the information text on the toolBar
-	$toolBar::topGui.frame2.text delete 1.0 end
-	$toolBar::topGui.frame2.text insert 1.0 $text
+	$toolBar::topGui.frame1.text delete 1.0 end
+	$toolBar::topGui.frame1.text insert 1.0 $text
 }
 
 
