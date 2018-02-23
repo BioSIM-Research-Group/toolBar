@@ -11,14 +11,10 @@ package provide toolBar 1.0
 # usage: toolBar::startGui
 
 
-## TODO
-
-# adicionar o botão das representacoes
-# melhorar o codigo quando tem mais de 1 molecula
-
 namespace eval toolBar:: {
 	namespace export toolBar
 
+		# global variables of the toolBar
         variable topGui ".toolBar"
 		variable buttonOrder "	{open B} {save B} \
 								{openVisual B} {saveVisual B} \
@@ -29,26 +25,22 @@ namespace eval toolBar:: {
 								{angle C} {dihedral C}
 								{deleteLabels B} {render B}"
 
-		variable Layer	0	; #ID of the graphics toplayer
 		variable cmdType	0 ; #variable used to reset buttons
-		variable graphicsID ""; #graphics on the toplayer molecules
+		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
 		variable cmd ""; #command that was selected from the toolbar
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-
-		variable text "" ;#info text on the toolbar
 		variable version "1.2"
 
-
 		## Packages
-		
 		package require Tk
 		package require vmdRender 1.0      
 }
 
 
 proc toolBar::moveWindow {x y} {
+# moves the window
 	set xpos [expr $x - $toolBar::xoff]
 	set ypos [expr $y - $toolBar::yoff]
 	wm geometry $toolBar::topGui "+$xpos+$ypos"
@@ -105,14 +97,12 @@ proc toolBar::startGui {} {
     #### Buttons ################################################
     #############################################################
 
-
     #### FRAME 0 - Header
 	grid [frame $toolBar::topGui.frame0] -row 0 -column 0
 	grid [ttk::button $toolBar::topGui.frame0.header \
 				-style toolBar.button.moving \
 				-command "toolBar::cmd moving" \
 		       ] -in $toolBar::topGui.frame0 -row 0 -column 0 -sticky news
-
 
     #### FRAME 1 - Buttons
 	#	Button type C - checkbutton
@@ -220,7 +210,6 @@ proc toolBar::moveGui {} {
 }
 
 
-
 proc toolBar::cmd {cmd} {
 # Applies the commands to the buttons that are selected on the toolBar
 
@@ -231,15 +220,15 @@ proc toolBar::cmd {cmd} {
 	
 	
     switch $cmd {
-            rotate    {mouse mode rotate;\
+            rotate    	{mouse mode rotate;\
 						set toolBar::button_rotate 1; \
 						set toolBar::cmdType 1 }
 						
-            translate {mouse mode translate; \
+            translate 	{mouse mode translate; \
 						set toolBar::button_translate 1; \
 						set toolBar::cmdType 1}
 						
-            scale      {mouse mode scale; \
+            scale      	{mouse mode scale; \
 						set toolBar::button_scale 1; \
 						set toolBar::cmdType 1}
 						
@@ -266,14 +255,14 @@ proc toolBar::cmd {cmd} {
 						 set toolBar::cmdType 1
 						}
 
-			centerAtom {set toolBar::button_rotate 1; \
-						 set toolBar::button_centerAtom 1; \
-						 set toolBar::cmdType 1; 
-						 mouse mode center; \
+			centerAtom 	{set toolBar::button_rotate 1; \
+						set toolBar::button_centerAtom 1; \
+						set toolBar::cmdType 1; 
+						mouse mode center; \
 						}	
 
 			resetView	{display resetview;
-						catch {graphics $toolBar::Layer delete all}
+						catch {graphics [molinfo top] delete all}
 						set toolBar::cmdType 0; 
 						toolBar::cmd rotate
 						}
@@ -281,6 +270,7 @@ proc toolBar::cmd {cmd} {
 			open      	{set toolBar::cmdType 0; \
 						menu files on
 						}
+
 			save      	{set toolBar::cmdType 0; \
 						menu save on
 						}
@@ -297,21 +287,21 @@ proc toolBar::cmd {cmd} {
 						}
 								
 			openVisual {set toolBar::cmdType 0; \
-						 set types { {{VMD States} {.vmd}     }
+						set types { {{VMD States} {.vmd}     }
 						           {{All Files}  *         }}
-						 set fileName [tk_getOpenFile -filetypes $types]
-						 if {$fileName != ""} {play $fileName}
+						set fileName [tk_getOpenFile -filetypes $types]
+						if {$fileName != ""} {play $fileName}
 						}
 			 
 			deleteLabels {toolBar::deleteGraphics all; \
-						   set toolBar::cmdType 0
-						   }
+						 set toolBar::cmdType 0
+						 }
 								
 			render		{vmdRender::gui; set toolBar::cmdType 0}
 
 			representations 	{menu graphics off ; menu graphics on}
 			
-             default   {set toolBar::cmdType 0}
+            default   {set toolBar::cmdType 0}
     }
 
 	if {$toolBar::cmdType==0} {toolBar::resetToolBar}
@@ -395,7 +385,7 @@ proc toolBar::displayText {text} {
 }
 
 
-proc tollBar::vmdState {file} {
+proc toolBar::vmdState {file} {
 # Change the vmdState and remove the path from the PDb files
 
 #TODO
