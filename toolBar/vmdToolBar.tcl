@@ -6,10 +6,9 @@ package provide toolBar 1.0
 #
 # $Id: toolBar.tcl, v1.0 2017/111/10 22:31:39
 #
-# Implements a toolBar for VMD
+# Implements a toolBar for VMD with basic commands
 # 
 # usage: toolBar::startGui
-
 
 namespace eval toolBar:: {
 	namespace export toolBar
@@ -38,7 +37,6 @@ namespace eval toolBar:: {
 		package require vmdRender 1.0      
 }
 
-
 proc toolBar::moveWindow {x y} {
 # moves the window
 	set xpos [expr $x - $toolBar::xoff]
@@ -46,8 +44,6 @@ proc toolBar::moveWindow {x y} {
 	wm geometry $toolBar::topGui "+$xpos+$ypos"
 	toolBar::moveGui
 }
-
-
 
 proc toolBar::startGui {} {
 # Builds the tooldBar
@@ -218,7 +214,6 @@ proc toolBar::cmd {cmd} {
 	# reset all buttons from the toolbar if it is required
 	if {$toolBar::cmdType==1} {toolBar::resetToolBar }
 	
-	
     switch $cmd {
             rotate    	{mouse mode rotate;\
 						set toolBar::button_rotate 1; \
@@ -241,18 +236,21 @@ proc toolBar::cmd {cmd} {
 						 mouse mode labelbond; \
 						 set toolBar::button_bond 1; \
 						 set toolBar::cmdType 1
+						 toolBar::deleteGraphics	all
 						}
 
 			angle     	{set toolBar::button_rotate 1;  \
 						 mouse mode labelangle; \
 						 set toolBar::button_angle 1; \
 						 set toolBar::cmdType 1
+						toolBar::deleteGraphics	all
 						}
 						
 			dihedral	{set toolBar::button_rotate 1; \
 						 mouse mode labeldihedral; \
 						 set toolBar::button_dihedral 1; \
 						 set toolBar::cmdType 1
+						 toolBar::deleteGraphics	all
 						}
 
 			centerAtom 	{set toolBar::button_rotate 1; \
@@ -314,7 +312,6 @@ proc toolBar::resetToolBar {} {
 		set opt [lindex $var 1]
 		if {$opt=="C"} {set toolBar::button_$a 0}
 	}
-	toolBar::deleteGraphics	all
 	mouse mode off
 }
 
@@ -345,10 +342,11 @@ proc toolBar::atomPicked {args} {
 	set chain [$atom get chain]
 	set resname [$atom get resname]
 	set resid [$atom get resid]
+	set type [$atom get type]
 	set index [$atom get index]
 
 	# Show text
-	toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nIndex\n$index"
+	toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nType:\n$type\nIndex\n$index"
 
 	set clean off
 	switch $toolBar::cmd {
@@ -388,7 +386,7 @@ proc toolBar::displayText {text} {
 proc toolBar::vmdState {file} {
 # Change the vmdState and remove the path from the PDb files
 
-#TODO
+	#TODO - next milestone
 
 }
 
