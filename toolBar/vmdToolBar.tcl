@@ -314,6 +314,7 @@ proc toolBar::cmd {cmd} {
 			 
 			deleteLabels {toolBar::deleteGraphics all; \
 						 set toolBar::cmdType 0
+						 label delete Atoms all; label delete Bonds all; label delete Angles all; label delete Dihedrals all
 						 }
 								
 			render		{vmdRender::gui; set toolBar::cmdType 0}
@@ -341,15 +342,6 @@ proc toolBar::deleteGraphics {cmd} {
 	foreach a $toolBar::graphicsID {draw delete $a}
 	set toolBar::graphicsID ""
 
-	# Delete data from bonds, angles and dihedrals
-	switch $cmd {
-		 query 		{label delete Atoms all}
-		 bond    	{label delete Atoms all; label delete Bonds all}
-		 angle    	{label delete Atoms all; label delete Angles all}
-		 dihedral	{label delete Atoms all; label delete Dihedrals all}
-		 all 		{label delete Atoms all; label delete Bonds all; label delete Angles all; label delete Dihedrals all}
-		 default	{}
-	}
 }
 
 proc toolBar::atomPicked {args} {
