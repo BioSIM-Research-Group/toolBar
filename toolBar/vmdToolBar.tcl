@@ -20,7 +20,15 @@ namespace eval toolBar:: {
 	namespace export toolBar
 
         variable topGui ".toolBar"
-		variable buttonOrder "{open B} {save B} {openVisual B} {saveVisual B} {representations B} {rotate C} {translate C} {scale C} {resetView B} {centerAtom C} {query C} {measure C} {deleteLabels B} {render B}"
+		variable buttonOrder "	{open B} {save B} \
+								{openVisual B} {saveVisual B} \
+								{representations B} {rotate C} \
+								{translate C} {scale C} \
+								{resetView B} {centerAtom C} \
+								{query C} {bond C}\
+								{angle C} {dihedral C}
+								{measure C} {deleteLabels B} \
+								{render B}"
 
 		variable Layer	0	; #ID of the graphics toplayer
 		variable cmdType	0 ; #variable used to reset buttons
@@ -229,50 +237,61 @@ proc toolBar::cmd {cmd} {
 	
 	
     switch $cmd {
-             rotate    {mouse mode rotate;\
+            rotate    {mouse mode rotate;\
 						set toolBar::button_rotate 1; \
 						set toolBar::cmdType 1 }
 						
-             translate {mouse mode translate; \
+            translate {mouse mode translate; \
 						set toolBar::button_translate 1; \
 						set toolBar::cmdType 1}
 						
-             scale      {mouse mode scale; \
+            scale      {mouse mode scale; \
 						set toolBar::button_scale 1; \
 						set toolBar::cmdType 1}
 						
-			 query     {set toolBar::button_rotate 1; \
+			query     	{set toolBar::button_rotate 1; \
 						mouse mode pick; \
 					    set toolBar::button_query 1; \
 					    set toolBar::cmdType 1 }	
 
-			measure     {set toolBar::button_rotate 1; set toolBar::pickedAtoms ""; \
+			bond     	{set toolBar::button_rotate 1; \
 						 mouse mode pick; \
-						 set toolBar::button_measure 1; \
+						 set toolBar::button_bond 1; \
 						 set toolBar::cmdType 1
-						
-						}	
+						}
 
-			 centerAtom {set toolBar::button_rotate 1; \
+			angle     	{set toolBar::button_rotate 1;  \
+						 mouse mode pick; \
+						 set toolBar::button_angle 1; \
+						 set toolBar::cmdType 1
+						}
+						
+			dihedral	{set toolBar::button_rotate 1; \
+						 mouse mode pick; \
+						 set toolBar::button_dihedral 1; \
+						 set toolBar::cmdType 1
+						}
+
+			centerAtom {set toolBar::button_rotate 1; \
 						 set toolBar::button_centerAtom 1; \
 						 set toolBar::cmdType 1; 
 						 mouse mode center; \
 						}	
 
-			 resetView	{display resetview;
+			resetView	{display resetview;
 						catch {graphics $toolBar::Layer delete all}
 						set toolBar::cmdType 0; 
 						toolBar::cmd rotate
 						}
 			
-			 open      	{set toolBar::cmdType 0; \
+			open      	{set toolBar::cmdType 0; \
 						menu files on
 						}
-			 save      	{set toolBar::cmdType 0; \
+			save      	{set toolBar::cmdType 0; \
 						menu save on
 						}
 								
-			 saveVisual {set toolBar::cmdType 0; \
+			saveVisual {set toolBar::cmdType 0; \
 						 set fileName [file rootname [file tail [molinfo [molinfo top] get name] ]]
 						 set topLayerName $fileName
 						 graphics [molinfo top] delete all
@@ -283,23 +302,23 @@ proc toolBar::cmd {cmd} {
 						 save_state $fileName
 						}
 								
-			 openVisual {set toolBar::cmdType 0; \
+			openVisual {set toolBar::cmdType 0; \
 						 set types { {{VMD States} {.vmd}     }
 						           {{All Files}  *         }}
 						 set fileName [tk_getOpenFile -filetypes $types]
 						 if {$fileName != ""} {play $fileName}
 						}
 			 
-			 deleteLabels {label delete Atoms all ; \
+			deleteLabels {label delete Atoms all ; \
 						   label delete Bonds all  ; \
 						   label delete Angles all ; \
 						   label delete Dihedrals all ; \
 						   set toolBar::cmdType 0
 						   }
 								
-			 render			{vmdRender::gui; set toolBar::cmdType 0}
+			render			{vmdRender::gui; set toolBar::cmdType 0}
 
-			 representations 	{menu graphics off ; menu graphics on}
+			representations 	{menu graphics off ; menu graphics on}
 			
              default   {set toolBar::cmdType 0}
     }
@@ -314,12 +333,15 @@ proc toolBar::resetToolBar {} {
 		set opt [lindex $var 1]
 		if {$opt=="C"} {set toolBar::button_$a 0}
 	}
-	toolBar::deleteGraphics $toolBar::Layer	
+	toolBar::deleteGraphics	
 }
 
-proc toolBar::deleteGraphics {topLayer} {
 
-	
+proc toolBar::deleteGraphics {} {
+	# Delete all graphics from the toplayer if required
+		foreach a $toolBar::graphicsID {draw delete $a}
+		set toolBar::graphicsID ""
+		set toolBar::pickedAtoms ""; # é redundante
 }
 
 proc toolBar::atomPicked {args} {
@@ -328,14 +350,8 @@ proc toolBar::atomPicked {args} {
     global ::vmd_pick_atom
     global ::vmd_pick_mol  
 
-	# Delete all graphics from the toplayer
-	toolBar::deleteGraphics [molinfo top]
-		
 	# Add the first atom	
 	set toolBar::pickedAtoms "$::vmd_pick_atom"
-
-	#Draw a sphere on the selected atom
-	set toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] red]		
 		
 	# Print the result on the bottom
 	set atom [atomselect $::vmd_pick_mol "index $::vmd_pick_atom"]
@@ -343,30 +359,42 @@ proc toolBar::atomPicked {args} {
 	set resname [$atom get resname]
 	set resid [$atom get resid]
 	set index [$atom get index]
-			
-	if {$toolBar::cmd=="query"} {
-		toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nIndex\n$index"
-		set toolBar::pickedAtoms ""
-	}
-		
 
-		
+	# Show text
+	toolBar::displayText "Chain\n$chain\nResname\n$resname\nResid\n$resid\nIndex\n$index"
+
+puts "#### $toolBar::cmd"
+puts "### $toolBar::graphicsID : [llength $toolBar::graphicsID]"
+
+	set clean off
+	switch $toolBar::cmd {
+             query    	{set color red; set clean on}
+			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]==2} {set clean on} }
+			 angle    	{set color green;	if {[llength $toolBar::graphicsID]==3} {set clean on} }
+			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]==4} {set clean on} }
+			 default	{}
+	}
+
+	# Delete all graphics from the toplayer if required
+	if {$clean=="on"} {toolBar::deleteGraphics}
+
+	
+	#Draw a sphere on the selected atom
+	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]	
+
 }
 
 
 
 proc toolBar::sphere {selection color} {
 # Draw sphere in one atom
-
-
-puts "DRAW"
 	set coordinates [[atomselect top "index $selection"] get {x y z}]
 	
 	# Draw a circle around the coordinate
 	draw color $color
 	draw material Transparent
 	set id [graphics [molinfo top] sphere "[lindex $coordinates 0] [lindex $coordinates 1] [lindex $coordinates 2]" radius 1.0 resolution 25]
-	return  "[molinfo top] $id"
+	return  "$id"
 }
 
 proc toolBar::displayText {text} {
