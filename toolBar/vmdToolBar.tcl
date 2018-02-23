@@ -30,7 +30,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "1.3"
+		variable version "0.8"
 
 		## Packages
 		package require Tk
