@@ -27,12 +27,12 @@ namespace eval toolBar:: {
         variable topGui ".toolBar"
 		variable buttonOrder "	{open B} {save B} \
 								{openVisual B} {saveVisual B} \
-								{main C} {representations C} \
-								{rotate C} {translate C}\
-								{scale C} {query C}\
-								{resetView B} {centerAtom C}					
-								{bond C} {angle C}\
-								{dihedral C} {deleteLabels B}   \
+								{main C} {rotate C} \
+								{representations C} {translate C} \
+								{query C} {scale C}\
+								{resetView B} {bond C} \
+								{centerAtom C} {angle C} \
+								{deleteLabels B} {dihedral C} \
 								{render B} {exit B}"
 
 		variable cmdType	0 ; #variable used to reset buttons
@@ -357,7 +357,7 @@ proc toolBar::cmd {cmd} {
 			exit 		{
  						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
 							switch $answer {
-							yes {exit}
+							yes {catch {exit} debug}
 							no {}
  							}
 						}			
