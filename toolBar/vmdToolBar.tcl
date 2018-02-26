@@ -10,6 +10,13 @@ package provide toolBar 1.0
 # 
 # usage: toolBar::startGui
 
+
+###### TODO
+
+#incluir um button para o main
+# incluir uma sphere para center on atom
+
+
 namespace eval toolBar:: {
 	namespace export toolBar
 
@@ -17,12 +24,13 @@ namespace eval toolBar:: {
         variable topGui ".toolBar"
 		variable buttonOrder "	{open B} {save B} \
 								{openVisual B} {saveVisual B} \
-								{representations B} {rotate C} \
-								{resetView B} {scale C} \
-								{centerAtom C} {translate C}\
-								{query C} {bond C} \
-								{deleteLabels B} {angle C}  \
-								{render B} {dihedral C}"
+								{main C} {representations C} \
+								{rotate C} {translate C}\
+								{scale C} {query C}\
+								{resetView B} {centerAtom C}					
+								{bond C} {angle C}\
+								{dihedral C} {deleteLabels B}   \
+								{render B} "
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -319,8 +327,22 @@ proc toolBar::cmd {cmd} {
 								
 			render		{vmdRender::gui; set toolBar::cmdType 0}
 
-			representations 	{menu graphics off ; menu graphics on}
-			
+			representations 	{
+								if {[menu graphics status]=="off"} {
+									menu graphics on
+									set toolBar::button_representations 1 
+									set toolBar::cmdType 1
+								} else {menu graphics off} 
+								}
+
+			main 		{
+						if {[menu main status]=="off"} {
+							menu main on
+							set toolBar::button_main 1 
+							set toolBar::cmdType 1
+						} else {menu main off} 
+						}			
+
             default   {set toolBar::cmdType 0}
     }
 
@@ -328,13 +350,17 @@ proc toolBar::cmd {cmd} {
 }
 
 proc toolBar::resetToolBar {} {
+
+
 # Reset all the buttons in which the option previousCMD equals to 1.
 	foreach var $toolBar::buttonOrder {
 		set a [lindex $var 0]
 		set opt [lindex $var 1]
-		if {$opt=="C"} {set toolBar::button_$a 0}
+		if {$opt=="C" && $a!="representations"} {set toolBar::button_$a 0}
 	}
+
 	mouse mode off
+	#toolBar::deleteGraphics all
 }
 
 proc toolBar::deleteGraphics {cmd} {
