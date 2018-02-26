@@ -13,8 +13,11 @@ package provide toolBar 1.0
 
 ###### TODO
 
-#incluir um button para o main
-# incluir uma sphere para center on atom
+# 1. incluir um button para o main (o engine já está)
+# 2. incluir um buttton exit (assim n\ao é necessário ter o main aberto)
+# 3. incluir uma sphere para center on atom
+
+
 
 
 namespace eval toolBar:: {
@@ -363,7 +366,7 @@ proc toolBar::resetToolBar {} {
 	foreach var $toolBar::buttonOrder {
 		set a [lindex $var 0]
 		set opt [lindex $var 1]
-		if {$opt=="C" && $a!="representations"} {set toolBar::button_$a 0}
+		if {$opt=="C" && $a!="representations" && $a!="main"} {set toolBar::button_$a 0}
 	}
 
 	mouse mode off
@@ -438,3 +441,4 @@ proc toolBar::vmdState {file} {
 
 ## START ToolBar
 toolBar::startGui
+set toolBar::button_main 1
