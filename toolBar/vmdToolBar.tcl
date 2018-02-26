@@ -368,28 +368,12 @@ proc toolBar::cmd {cmd} {
 
 proc toolBar::resetToolBar {} {
 
-# see the icon that is on
-	set cmd R
-	if {$toolBar::button_rotate==1} {set cmd R}
-	if {$toolBar::button_translate==1} {set cmd T}
-	if {$toolBar::button_scale==1} {set cmd S}
 
 # Reset all the buttons in which the option previousCMD equals to 1.
 	foreach var $toolBar::buttonOrder {
 		set a [lindex $var 0]
 		set opt [lindex $var 1]
 		if {$opt=="C" && $a!="representations" && $a!="main"} {set toolBar::button_$a 0}
-	}
-
-
-# restore the icon
-
-	switch $cmd {
-
-		R {set toolBar::button_rotate 1}
-		T {set toolBar::button_translate 1}
-		S {set toolBar::button_scale 1}
-		
 	}
 
 	mouse mode off
@@ -435,7 +419,7 @@ proc toolBar::atomPicked {args} {
 	}
 
 	# Delete all graphics from the toplayer if required
-	if {$clean=="on"} {toolBar::deleteGraphics $toolBar::cmd}
+	if {$clean=="on"} {toolBar::deleteGraphics $toolBar::graphicsID}
 
 	#Draw a sphere on the selected atom
 	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]	
