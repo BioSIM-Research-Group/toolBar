@@ -16,6 +16,7 @@ package provide toolBar 1.0
 # 1. incluir um button para o main (o engine já está)
 # 2. incluir um buttton exit (assim n\ao é necessário ter o main aberto)
 # 3. incluir uma sphere para center on atom
+# 4. acabar o proc do save vmd state
 
 
 namespace eval toolBar:: {
@@ -353,18 +354,11 @@ proc toolBar::cmd {cmd} {
 
 			exit 		{
  						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
-						switch $answer {
+							switch $answer {
 							yes {exit}
 							no {}
- }
-
-
-
-
-
+ 							}
 						}			
-
-
 
             default   {set toolBar::cmdType 0}
     }
@@ -374,6 +368,11 @@ proc toolBar::cmd {cmd} {
 
 proc toolBar::resetToolBar {} {
 
+# see the icon that is on
+	set cmd R
+	if {$toolBar::button_rotate==1} {set cmd R}
+	if {$toolBar::button_translate==1} {set cmd T}
+	if {$toolBar::button_scale==1} {set cmd S}
 
 # Reset all the buttons in which the option previousCMD equals to 1.
 	foreach var $toolBar::buttonOrder {
@@ -382,12 +381,28 @@ proc toolBar::resetToolBar {} {
 		if {$opt=="C" && $a!="representations" && $a!="main"} {set toolBar::button_$a 0}
 	}
 
+
+# restore the icon
+
+	switch $cmd {
+
+		R {set toolBar::button_rotate 1}
+		T {set toolBar::button_translate 1}
+		S {set toolBar::button_scale 1}
+		
+	}
+
 	mouse mode off
 	#toolBar::deleteGraphics all
+
+
+
+
+
 }
 
 proc toolBar::deleteGraphics {cmd} {
-	# Delete all graphics from the toplayer if required
+# Delete all graphics from the toplayer if required
 	foreach a $toolBar::graphicsID {draw delete $a}
 	set toolBar::graphicsID ""
 
@@ -434,7 +449,7 @@ proc toolBar::sphere {selection color} {
 	# Draw a circle around the coordinate
 	draw color $color
 	draw material Transparent
-	set id [graphics [molinfo top] sphere "[lindex $coordinates 0] [lindex $coordinates 1] [lindex $coordinates 2]" radius 1.0 resolution 25]
+	set id [graphics [molinfo top] sphere "[lindex $coordinates 0] [lindex $coordinates 1] [lindex $coordinates 2]" radius 0.8 resolution 25]
 	return  "$id"
 }
 
