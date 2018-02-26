@@ -5,6 +5,7 @@ Moreover, this plugin provide an easy to use interface to render beautiful image
 ![Image](Screenshots/image1.gif)
 ![Image](Screenshots/image2.gif)
 ![Image](Screenshots/image3.gif)
+![Image](Screenshots/image4.gif)
 
 ## Minimum Requirements
 
