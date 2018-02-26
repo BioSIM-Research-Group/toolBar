@@ -18,8 +18,6 @@ package provide toolBar 1.0
 # 3. incluir uma sphere para center on atom
 
 
-
-
 namespace eval toolBar:: {
 	namespace export toolBar
 
@@ -33,7 +31,7 @@ namespace eval toolBar:: {
 								{resetView B} {centerAtom C}					
 								{bond C} {angle C}\
 								{dihedral C} {deleteLabels B}   \
-								{render B} "
+								{render B} {exit B}"
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -352,6 +350,21 @@ proc toolBar::cmd {cmd} {
 							set toolBar::cmdType 1
 						} else {menu main off} 
 						}			
+
+			exit 		{
+ 						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
+						switch $answer {
+							yes {exit}
+							no {}
+ }
+
+
+
+
+
+						}			
+
+
 
             default   {set toolBar::cmdType 0}
     }
