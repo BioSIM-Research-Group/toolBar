@@ -17,6 +17,7 @@ package provide toolBar 1.0
 # 2. incluir um buttton exit (assim n\ao é necessário ter o main aberto)
 # 3. incluir uma sphere para center on atom
 # 4. acabar o proc do save vmd state
+# 5. imporve resolution of the header image
 
 
 namespace eval toolBar:: {
@@ -320,6 +321,7 @@ proc toolBar::cmd {cmd} {
 
 						 set fileName [tk_getSaveFile -initialfile $fileName  -defaultextension ".vmd" -filetypes $types]
 						 save_state $fileName
+						 toolBar::vmdState $fileName
 						}
 								
 			openVisual {set toolBar::cmdType 0; \
@@ -448,6 +450,7 @@ proc toolBar::vmdState {file} {
 # Change the vmdState and remove the path from the PDb files
 
 	#TODO - next milestone
+	puts "$file"
 
 }
 
