@@ -1,5 +1,5 @@
 # Introduction
-This toolbar allows you to reach easily and faster to all common used command avaialble on VMD.
+This toolbar allows you to reach easily and faster to all common used command available on VMD.
 Moreover, this plugin provide an easy to use interface to render beautiful images.
 
 ![Image](Screenshots/image1.gif)
