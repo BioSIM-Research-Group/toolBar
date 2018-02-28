@@ -12,12 +12,7 @@ package provide toolBar 1.0
 
 
 ###### TODO
-
-# 1. incluir um button para o main (o engine já está)
-# 2. incluir um buttton exit (assim n\ao é necessário ter o main aberto)
 # 3. incluir uma sphere para center on atom
-# 4. acabar o proc do save vmd state
-# 5. imporve resolution of the header image
 
 
 namespace eval toolBar:: {
@@ -369,8 +364,6 @@ proc toolBar::cmd {cmd} {
 }
 
 proc toolBar::resetToolBar {} {
-
-
 # Reset all the buttons in which the option previousCMD equals to 1.
 	foreach var $toolBar::buttonOrder {
 		set a [lindex $var 0]
@@ -380,10 +373,6 @@ proc toolBar::resetToolBar {} {
 
 	mouse mode off
 	#toolBar::deleteGraphics all
-
-
-
-
 
 }
 
@@ -449,7 +438,6 @@ proc toolBar::displayText {text} {
 proc toolBar::vmdState {file} {
 # Change the vmdState and remove the path from the PDb files
 
-
 	# directory
     set directory [file dirname $file]
 
@@ -472,7 +460,6 @@ proc toolBar::vmdState {file} {
             set read [string replace $read $pos0 $posF $newFileName]
             set newFileNameList [lappend newFileNameList $newFileName]
 
-puts "newFileNameList"
 			## Look for the PDB in the toplevel and save in the correct directory
     		foreach a [molinfo list] {
         		set molName [molinfo $a get name]
