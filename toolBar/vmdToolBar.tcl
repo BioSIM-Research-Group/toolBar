@@ -22,15 +22,15 @@ namespace eval toolBar:: {
 
 		# global variables of the toolBar
         variable topGui ".toolBar"
-		variable buttonOrder "	{open B} {save B} \
-								{openVisual B} {saveVisual B} \
-								{main C} {representations C} \
-								{rotate C} {translate C}\
-								{scale C} {query C}\
-								{resetView B} {centerAtom C}					
-								{bond C} {angle C}\
-								{dihedral C} {deleteLabels B}   \
-								{render B} {exit B}"
+		variable buttonOrder "	{open B \"New molecule...\"} {save B \"Save coordinates...\"} \
+								{openVisual B \"Load visualization state...\"} {saveVisual B \"Save visualization state...\"} \
+								{main C \"Show/Hide VMD Main\"} {rotate C \"Mouse mode: rotate\"} \
+								{representations C \"Show/Hide Representations\"} {translate C \"Mouse mode: translate\"} \
+								{query C \"Pick atoms\"} {scale C \"Mouse mode: scale\"}\
+								{resetView B \"Reset View\"} {bond C \"Measure Bonds\"} \
+								{centerAtom C \"Mouse mode: center\"} {angle C \"Measure Angles\"} \
+								{deleteLabels B \"Delete all labels\"} {dihedral C \"Measure Dihedral Angles\"} \
+								{render B \"Image render\"} {exit B \"Quit\"}"
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -38,11 +38,12 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.8.2"
+		variable version "0.8.3"
 
 		## Packages
 		package require Tk
-		package require vmdRender 1.0      
+		package require vmdRender 1.0
+		package require balloon 1.0
 }
 
 proc toolBar::moveWindow {x y} {
@@ -134,6 +135,7 @@ proc toolBar::startGui {} {
 	
 		set a [lindex $var 0]
 		set opt [lindex $var 1]
+		set balloon [lindex $var 2]
 		if {$opt=="C"} {		
         	grid [ttk::checkbutton $toolBar::topGui.frame1.$a \
 				-style toolBar.button.$a \
@@ -149,6 +151,7 @@ proc toolBar::startGui {} {
 		       ] -in $toolBar::topGui.frame1 -row $row -column $column -sticky news
 			
 		}
+		balloon $toolBar::topGui.frame1.$a -text $balloon
 
 		update
 		if {$column>=$toolBar::nColumns} {set column 0; incr row} else {incr column} 
