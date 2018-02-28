@@ -25,15 +25,15 @@ namespace eval toolBar:: {
 
 		# global variables of the toolBar
         variable topGui ".toolBar"
-		variable buttonOrder "	{open B \"New molecule...\"} {save B \"Save coordinates...\"} \
-								{openVisual B \"Load visualization state...\"} {saveVisual B \"Save visualization state...\"} \
-								{main C \"Show/Hide VMD Main\"} {rotate C \"Mouse mode: rotate\"} \
-								{representations C \"Show/Hide Representations\"} {translate C \"Mouse mode: translate\"} \
-								{query C \"Pick atoms\"} {scale C \"Mouse mode: scale\"}\
-								{resetView B \"Reset View\"} {bond C \"Measure Bonds\"} \
-								{centerAtom C \"Mouse mode: center\"} {angle C \"Measure Angles\"} \
-								{deleteLabels B \"Delete all labels\"} {dihedral C \"Measure Dihedral Angles\"} \
-								{render B \"Image render\"} {exit B \"Quit\"}"
+		variable buttonOrder "	{open B} {save B} \
+								{openVisual B} {saveVisual B} \
+								{main C} {representations C} \
+								{rotate C} {translate C}\
+								{scale C} {query C}\
+								{resetView B} {centerAtom C}					
+								{bond C} {angle C}\
+								{dihedral C} {deleteLabels B}   \
+								{render B} {exit B}"
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -137,7 +137,6 @@ proc toolBar::startGui {} {
 	
 		set a [lindex $var 0]
 		set opt [lindex $var 1]
-		set balloon [lindex $var 2]
 		if {$opt=="C"} {		
         	grid [ttk::checkbutton $toolBar::topGui.frame1.$a \
 				-style toolBar.button.$a \
@@ -145,6 +144,7 @@ proc toolBar::startGui {} {
 				-variable ::toolBar::button_[subst $a] \
            		-onvalue 1 -offvalue 0 \
             	] -in $toolBar::topGui.frame1 -row $row -column $column -sticky news
+
 		} else {
 		      grid [ttk::button $toolBar::topGui.frame1.$a \
 				-style toolBar.button.$a \
@@ -152,7 +152,6 @@ proc toolBar::startGui {} {
 		       ] -in $toolBar::topGui.frame1 -row $row -column $column -sticky news
 			
 		}
-		balloon $toolBar::topGui.frame1.$a -text $balloon
 
 		update
 		if {$column>=$toolBar::nColumns} {set column 0; incr row} else {incr column} 
@@ -358,7 +357,7 @@ proc toolBar::cmd {cmd} {
 			exit 		{
  						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
 							switch $answer {
-							yes {catch {exit} debug}
+							yes {exit}
 							no {}
  							}
 						}			
@@ -450,8 +449,51 @@ proc toolBar::displayText {text} {
 proc toolBar::vmdState {file} {
 # Change the vmdState and remove the path from the PDb files
 
-	#TODO - next milestone
-	puts "$file"
+
+	# directory
+    set directory [file dirname $file]
+
+	# open read the file and save a new one
+	set loadFile [open $file r]
+    set saveFile [open "$file.temp" w]
+    set newFileName ""
+    set newFileNameList ""
+
+    while {![eof $loadFile]} {
+        set read [gets $loadFile]
+
+        if {[string first "mol new" $read]!=-1 && [lindex $read 4]!="webpdb"} {
+            
+			# Look for normal PDB filenames
+			set line [lindex $read 2]
+            set newFileName [file tail $line]
+            set pos0 [string first $line $read]
+            set posF [expr $pos0 -1 + [string length $line] ]
+            set read [string replace $read $pos0 $posF $newFileName]
+            set newFileNameList [lappend newFileNameList $newFileName]
+
+puts "newFileNameList"
+			## Look for the PDB in the toplevel and save in the correct directory
+    		foreach a [molinfo list] {
+        		set molName [molinfo $a get name]
+        		
+				if {$molName==$newFileName} {
+					set selectAllAtoms [atomselect $a all]
+        			$selectAllAtoms writepdb [file rootname $directory/$molName].pdb 
+    			}
+			
+			}
+
+		}
+
+        puts $saveFile $read
+    }
+
+    # close files
+	close $loadFile; close $saveFile
+
+    #rename newFile
+    file rename -force "$file.temp" "$file"
 
 }
 
