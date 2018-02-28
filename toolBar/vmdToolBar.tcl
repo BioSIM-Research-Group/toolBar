@@ -12,6 +12,8 @@ package provide toolBar 1.0
 
 
 ###### TODO
+# 1. Add selection manager
+# 2. Add tkcon button
 # 3. incluir uma sphere para center on atom
 
 
@@ -175,12 +177,13 @@ proc toolBar::startGui {} {
     trace variable ::vmd_pick_atom w {toolBar::atomPicked}
 
 	## Draw logFile
-	#trace add variable ::vmd_logfile write {toolBar::logfile}
 	user add key r {mouse mode rotate; toolBar::cmd rotate}
 	user add key s {mouse mode rotate; toolBar::cmd scale}
 	user add key t {mouse mode rotate; toolBar::cmd translate}	
 	user add key p {mouse mode pick; toolBar::cmd pick}
+	user add key c {mouse mode center; toolBar::cmd centerAtom}
 
+	user add key 0 {mouse mode center; toolBar::cmd centerAtom}
 	user add key 1 {mouse mode pick; toolBar::cmd query}
 	user add key 2 {mouse mode bond; toolBar::cmd bond}
 	user add key 3 {mouse mode angle; toolBar::cmd angle}
@@ -264,7 +267,15 @@ proc toolBar::cmd {cmd} {
 			query     	{set toolBar::button_rotate 1; \
 						mouse mode pick; \
 					    set toolBar::button_query 1; \
-					    set toolBar::cmdType 1 }	
+					    set toolBar::cmdType 1
+						}
+
+			centerAtom 	{set toolBar::button_rotate 1; \
+						set toolBar::button_centerAtom 1; \
+						set toolBar::cmdType 1; 
+						mouse mode center; \
+						}	
+
 
 			bond     	{set toolBar::button_rotate 1; \
 						 mouse mode labelbond; \
@@ -286,12 +297,6 @@ proc toolBar::cmd {cmd} {
 						 set toolBar::cmdType 1
 						 toolBar::deleteGraphics	all
 						}
-
-			centerAtom 	{set toolBar::button_rotate 1; \
-						set toolBar::button_centerAtom 1; \
-						set toolBar::cmdType 1; 
-						mouse mode center; \
-						}	
 
 			resetView	{display resetview;
 						catch {graphics [molinfo top] delete all}
