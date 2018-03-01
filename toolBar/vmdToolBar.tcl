@@ -538,5 +538,5 @@ proc toolBar::vmdState {file} {
 toolBar::startGui
 set toolBar::button_main 1
 
-menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 310] 50
-menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 310] 100
+menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 50
+menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 100
