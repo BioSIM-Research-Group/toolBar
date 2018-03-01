@@ -14,52 +14,9 @@ package provide selV 1.0
 
 
 
-
 #### START GUI
 proc toolBar::selV {} {
-    #### Theme
-    # Colors
-    set gray "#575756"
-    set white white
-
-    ttk::style configure selV.TLabel \
-        -foreground red \
-        -background blue
-
-    ttk::style layout selV.TLabel {
-        Plain.Label.label
-    }
-
-    ttk::style configure selV.TCombobox \
-        -background $gray \
-        -selectbackground blue \
-        -selectforeground $white \
-        -foreground white
-
-    ttk::style element create selV.Combobox.downarrow image \
-         [list $toolBar::images(combobox-arrow) \
-         disabled $toolBar::images(combobox-arrow) \
-         pressed $toolBar::images(combobox-arrow) \
-         active $toolBar::images(combobox-arrow) \
-         ] \
-         -border 0 -width 24 -height 24
-
-    ttk::style element create selV.Combobox.field image \
-         [list $toolBar::images(combobox) \
-         ] \
-         -sticky ew -border [list 10 0 10 0]
     
-    ttk::style layout selV.TCombobox {
-        Combobox.selV.Combobox.downarrow -side right
-        Combobox.selV.Combobox.field -children {
-            Combobox.selV.Combobox.padding -children {
-                Combobox.selV.Combobox.textarea -expand true
-            }
-        }
-    }
-
-
-
 	toplevel $toolBar::selVGui
 	
 
@@ -70,8 +27,7 @@ proc toolBar::selV {} {
     #### Change the location of window
     
     #mainmenu location
-    menu main move 0 50
-
+   
     # screen width and height
     set sWidth  [winfo vrootwidth  $toolBar::selVGui]
     set sHeight [expr [winfo vrootheight $toolBar::selVGui] - 80]
@@ -80,16 +36,15 @@ proc toolBar::selV {} {
     set wWidth  [winfo reqwidth $toolBar::selVGui]
     set wHeight [winfo reqheight $toolBar::selVGui]
 
-    display reposition 0 [expr ${sHeight} + 10]
-    display resize [expr $sWidth - 315] ${sHeight}
+    #display reposition 0 [expr ${sHeight} + 10]
+    #display resize [expr $sWidth - 315] ${sHeight}
 
     #wm geometry window $VBox::selVGui 40x59 0
     wm geometry $toolBar::selVGui 300x${sHeight}+[expr $sWidth - 310]+25
-
     
 
     # menu graphics
-    menu graphics move $sWidth [expr ${sHeight} - 15]
+#    menu graphics move $sWidth [expr ${sHeight} - 15]
 
     #### FRAME 0
     grid [ttk::frame $toolBar::selVGui.frame0 -style frame.TFrame] -row 0 -column 0 -padx 1 -pady 1 -sticky news
@@ -259,10 +214,6 @@ proc toolBar::selV {} {
 
     grid rowconfigure $toolBar::selVGui.frame1.frame11          1 -weight 2
     grid rowconfigure $toolBar::selVGui.frame4                  0 -weight 3
-
-
-    
-
 
 
     ### Create the Menu
@@ -1105,7 +1056,7 @@ proc toolBar::cleanGui {} {
     $toolBar::selVGui.frame0.cb1 set ""
 }
 
-proc toolBar::start {} {
+proc toolBar::startselV {} {
 
    
 #### Check if the window exists
@@ -1116,7 +1067,7 @@ if {[winfo exists $::toolBar::selVGui]} {
 	}
 
     ##### START GUI
-    toolBar::startGui
+    toolBar::selV
 
    	return $::toolBar::selVGui
 }

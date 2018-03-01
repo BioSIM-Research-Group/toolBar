@@ -33,7 +33,7 @@ namespace eval toolBar:: {
 								{centerAtom C \"Mouse mode: center\"} {angle C \"Measure Angles\"} \
 								{deleteLabels B \"Delete all labels\"} {dihedral C \"Measure Dihedral Angles\"} \
 								{render B \"Image render\"} {quit B \"Quit\"} \
-								{selV B \"Show/Hide Selection Manager\"} {tkcon C \"Tk Console\"}"
+								{selV C \"Show/Hide Selection Manager\"} {tkcon C \"Tk Console\"}"
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -81,7 +81,7 @@ proc toolBar::startGui {} {
 	if [winfo exists $toolBar::topGui] {
 		wm deiconify $toolBar::topGui
 		raise $toolBar::topGui
-		return $w
+		return $toolBar::topGui
 	}
 
 	# Initialize window
@@ -386,7 +386,17 @@ proc toolBar::cmd {cmd} {
 						}	
 
 			selV	{
-					toolBar::selV
+						if {[winfo exists $::toolBar::selVGui]} {
+							destroy $::toolBar::selVGui
+						} else {
+							set toolBar::button_selV 1 
+							set toolBar::cmdType 1
+							toolBar::startselV
+							
+						}						 
+
+
+					
 					}
 
 			quit 		{
@@ -408,7 +418,7 @@ proc toolBar::resetToolBar {} {
 	foreach var $toolBar::buttonOrder {
 		set a [lindex $var 0]
 		set opt [lindex $var 1]
-		if {$opt=="C" && $a!="representations" && $a!="main"} {set toolBar::button_$a 0}
+		if {$opt=="C" && $a!="representations" && $a!="main" && $a!="selV"} {set toolBar::button_$a 0}
 	}
 
 	mouse mode off
@@ -527,3 +537,6 @@ proc toolBar::vmdState {file} {
 ## START ToolBar
 toolBar::startGui
 set toolBar::button_main 1
+
+menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 310] 50
+menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 310] 100
