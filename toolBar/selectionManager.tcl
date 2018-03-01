@@ -13,15 +13,58 @@ package provide selV 1.0
 
 
 
-#### START GUI
 
+
+#### START GUI
 proc toolBar::selV {} {
-	
+    #### Theme
+    # Colors
+    set gray "#575756"
+    set white white
+
+    ttk::style configure selV.TLabel \
+        -foreground red \
+        -background blue
+
+    ttk::style layout selV.TLabel {
+        Plain.Label.label
+    }
+
+    ttk::style configure selV.TCombobox \
+        -background $gray \
+        -selectbackground blue \
+        -selectforeground $white \
+        -foreground white
+
+    ttk::style element create selV.Combobox.downarrow image \
+         [list $toolBar::images(combobox-arrow) \
+         disabled $toolBar::images(combobox-arrow) \
+         pressed $toolBar::images(combobox-arrow) \
+         active $toolBar::images(combobox-arrow) \
+         ] \
+         -border 0 -width 24 -height 24
+
+    ttk::style element create selV.Combobox.field image \
+         [list $toolBar::images(combobox) \
+         ] \
+         -sticky ew -border [list 10 0 10 0]
+    
+    ttk::style layout selV.TCombobox {
+        Combobox.selV.Combobox.downarrow -side right
+        Combobox.selV.Combobox.field -children {
+            Combobox.selV.Combobox.padding -children {
+                Combobox.selV.Combobox.textarea -expand true
+            }
+        }
+    }
+
+
+
 	toplevel $toolBar::selVGui
 	
 
 	#### Title of the windows
-	wm title $toolBar::selVGui "Tool Bar $toolBar::version " ;# titulo da pagina
+	wm title $toolBar::selVGui "Tool Bar $toolBar::version" ;# titulo da pagina
 
 
     #### Change the location of window
@@ -49,12 +92,18 @@ proc toolBar::selV {} {
     menu graphics move $sWidth [expr ${sHeight} - 15]
 
     #### FRAME 0
-    grid [frame $toolBar::selVGui.frame0] -row 0 -column 0 -padx 1 -pady 1 -sticky news
-       	grid [ttk::label $toolBar::selVGui.frame0.l1 -text "Molecule ID:"] -in $toolBar::selVGui.frame0 -row 0 -column 0 -sticky nsew 
-        grid [ttk::combobox $toolBar::selVGui.frame0.cb1 -values $toolBar::layers -postcommand toolBar::PDBList ] -in $toolBar::selVGui.frame0 -row 0 -column 1 -sticky ew
+    grid [ttk::frame $toolBar::selVGui.frame0 -style frame.TFrame] -row 0 -column 0 -padx 1 -pady 1 -sticky news
+       	grid [ttk::label $toolBar::selVGui.frame0.l1 \
+           -image $toolBar::images(moleculeID) \
+           -style selV.TLabel \
+           ] -in $toolBar::selVGui.frame0 -row 0 -column 0 -sticky nsew 
+        grid [ttk::combobox $toolBar::selVGui.frame0.cb1 -values $toolBar::layers -postcommand toolBar::PDBList -style selV.TCombobox] -in $toolBar::selVGui.frame0 -row 0 -column 1 -sticky ew
 
 		# label     
-		grid [ttk::label $toolBar::selVGui.frame0.lb -text "Selection Tree:"] -in $toolBar::selVGui.frame0 -row 1 -column 0 -sticky news -columnspan 2
+		grid [ttk::label $toolBar::selVGui.frame0.lb \
+            -image $toolBar::images(selectiontree) \
+            -style selV.TLabel \
+            ] -in $toolBar::selVGui.frame0 -row 1 -column 0 -sticky news -columnspan 2
 
 
 	#### FRAME 1 - Paned Window
@@ -268,9 +317,9 @@ proc toolBar::selV {} {
 }
 
 
-proc toolBar::exit {} {
-	wm withdraw $::toolBar::selVGui
-}
+#proc toolBar::exit {} {
+#	wm withdraw $::toolBar::selVGui
+#}
 
 proc toolBar::optionsWindow {} {
     #### Check if the window exists

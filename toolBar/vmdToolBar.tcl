@@ -21,7 +21,9 @@ namespace eval toolBar:: {
 	namespace export toolBar
 
 		# global variables of the toolBar
-        variable topGui ".toolBar"
+        variable topGui			".toolBar"
+		variable selVGui		".toolBar.selV"
+		variable optionsGui		".toolBar.selV.options"
 		variable buttonOrder "	{open B \"New molecule...\"} {save B \"Save coordinates...\"} \
 								{openVisual B \"Load visualization state...\"} {saveVisual B \"Save visualization state...\"} \
 								{main C \"Show/Hide VMD Main\"} {rotate C \"Mouse mode: rotate\"} \
@@ -30,7 +32,7 @@ namespace eval toolBar:: {
 								{resetView B \"Reset View\"} {bond C \"Measure Bonds\"} \
 								{centerAtom C \"Mouse mode: center\"} {angle C \"Measure Angles\"} \
 								{deleteLabels B \"Delete all labels\"} {dihedral C \"Measure Dihedral Angles\"} \
-								{render B \"Image render\"} {exit B \"Quit\"} \
+								{render B \"Image render\"} {quit B \"Quit\"} \
 								{selV B \"Show/Hide Selection Manager\"} {tkcon C \"Tk Console\"}"
 
 		variable cmdType	0 ; #variable used to reset buttons
@@ -45,8 +47,6 @@ namespace eval toolBar:: {
 		variable layers         {} ;# values of the combobox
 		variable selection      {}
 		variable widget         "tree"
-		variable selVGui        .toolBar.selV
-		variable optionsGui     .toolBar.selV.options
 		variable entrySel          ""
 		variable item           ""
 		variable VMDKeywords    {all none backbone sidechain protein nucleic water waters vmd_fast_hydrogen helix alpha_helix helix_3_10 pi_helix sheet betasheet extended_beta bridge_beta turn coil at acidic cyclic acyclic aliphatic alpha amino aromatic basic bonded buried cg charged hetero hydrophobic small medium large neutral polar purine pyrimidine surface lipid lipids ion ions sugar solvent glycan carbon hydrogen nitrogen oxygen sulfur noh heme conformationall conformationA conformationB conformationC conformationD conformationE conformationF drude unparametrized name type backbonetype residuetype index serial atomicnumber element residue resid resname altloc insertion chain segname segif fragment pfrag nfrag numbonds structure pucker user radius mass charge beta occupancy {all within 4 of} {same residue as} and as or to all within}
@@ -389,10 +389,10 @@ proc toolBar::cmd {cmd} {
 					toolBar::selV
 					}
 
-			exit 		{
+			quit 		{
  						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
 							switch $answer {
-							yes {exit}
+							yes {catch {exit} debug}
 							no {}
  							}
 						}			
