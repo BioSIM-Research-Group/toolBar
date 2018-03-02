@@ -1000,6 +1000,11 @@ proc toolBar::updateSelection {} {
      ### Add selection to history
      lappend toolBar::selectionHistory $toolBar::customSelection
 
+
+    # remove the yellow selection
+
+    toolBar::changeRepresentation "none" 0
+
     set toolBar::customSelection ""
     $toolBar::selVGui.frame1.frame10.f1.bt2 configure -state disabled
 }
