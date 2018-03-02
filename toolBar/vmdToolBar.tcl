@@ -28,12 +28,12 @@ namespace eval toolBar:: {
 								{openVisual B \"Load visualization state...\"} {saveVisual B \"Save visualization state...\"} \
 								{main C \"Show/Hide VMD Main\"} {rotate C \"Mouse mode: rotate\"} \
 								{representations C \"Show/Hide Representations\"} {translate C \"Mouse mode: translate\"} \
-								{query C \"Pick atoms\"} {scale C \"Mouse mode: scale\"}\
+								{selV C \"Show/Hide Selection Manager\"} {scale C \"Mouse mode: scale\"}\
 								{resetView B \"Reset View\"} {bond C \"Measure Bonds\"} \
 								{centerAtom C \"Mouse mode: center\"} {angle C \"Measure Angles\"} \
 								{deleteLabels B \"Delete all labels\"} {dihedral C \"Measure Dihedral Angles\"} \
-								{render B \"Image render\"} {quit B \"Quit\"} \
-								{selV C \"Show/Hide Selection Manager\"} {tkcon C \"Tk Console\"}"
+								{render B \"Image render\"} {tkcon C \"Tk Console\"} \
+								{query C \"Pick atoms\"} {quit B \"Quit\"}"
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -41,7 +41,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.8.3"
+		variable version "0.9.0"
 
 		# Sel V
 		variable layers         {} ;# values of the combobox

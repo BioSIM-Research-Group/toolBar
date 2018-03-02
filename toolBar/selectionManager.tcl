@@ -49,15 +49,13 @@ proc toolBar::selV {} {
     #### FRAME 0
     grid [ttk::frame $toolBar::selVGui.frame0 -style frame.TFrame] -row 0 -column 0 -padx 1 -pady 1 -sticky news
        	grid [ttk::label $toolBar::selVGui.frame0.l1 \
-           -image $toolBar::images(moleculeID) \
-           -style selV.TLabel \
+           -text "Molecule ID:" \
            ] -in $toolBar::selVGui.frame0 -row 0 -column 0 -sticky nsew 
         grid [ttk::combobox $toolBar::selVGui.frame0.cb1 -values $toolBar::layers -postcommand toolBar::PDBList -style selV.TCombobox] -in $toolBar::selVGui.frame0 -row 0 -column 1 -sticky ew
 
 		# label     
 		grid [ttk::label $toolBar::selVGui.frame0.lb \
-            -image $toolBar::images(selectiontree) \
-            -style selV.TLabel \
+            -text "Selection Tree:" \
             ] -in $toolBar::selVGui.frame0 -row 1 -column 0 -sticky news -columnspan 2
 
 
