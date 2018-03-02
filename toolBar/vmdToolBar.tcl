@@ -41,7 +41,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.9.1"
+		variable version "0.9.2"
 
 		# Sel V
 		variable layers         {} ;# values of the combobox
@@ -88,10 +88,9 @@ proc toolBar::startGui {} {
 	toplevel $toolBar::topGui
 
 	### Hide the Window Decoration
-	if {[string first "Darwin" $::tcl_platform(os)] != -1} {
-		wm overrideredirect $toolBar::topGui true
-		wm resizable $toolBar::topGui 0 0
-	}
+	wm overrideredirect $toolBar::topGui true
+	wm resizable $toolBar::topGui 0 0
+
 	wm title $toolBar::topGui "ToolBar" ;# titulo da pagina
 	wm attribute $toolBar::topGui -topmost
 
@@ -137,7 +136,7 @@ proc toolBar::startGui {} {
     #############################################################
 
     #### FRAME 0 - Header
-	grid [frame $toolBar::topGui.frame0] -row 0 -column 0
+	grid [ttk::frame $toolBar::topGui.frame0] -row 0 -column 0
 	grid [ttk::button $toolBar::topGui.frame0.header \
 				-style toolBar.button.topmoving \
 				-command "toolBar::cmd moving" \
@@ -148,7 +147,7 @@ proc toolBar::startGui {} {
 	#	Button Other  - button
 	# 	The order of the buttons is done by the global varibale "buttonOrder"
 
-    grid [frame $toolBar::topGui.frame1] -row 1 -column 0  -sticky news
+    grid [ttk::frame $toolBar::topGui.frame1] -row 1 -column 0  -sticky news
 
 	set row 0; set column 0
 	foreach var $toolBar::buttonOrder {
@@ -179,7 +178,6 @@ proc toolBar::startGui {} {
      }
 
 	#### FRAME 2- Text frame
-	#grid [frame $toolBar::topGui.frame2] -row 2 -column 0  
 	grid [text $toolBar::topGui.frame1.text -width 8 -height 10 \
 			-bg {#575756} \
 			-fg white \
@@ -187,10 +185,7 @@ proc toolBar::startGui {} {
 			-highlightbackground {#575756} \
     	] -in $toolBar::topGui.frame1 -row [expr $row + 1] -column 0 -columnspan 2 -sticky news
 
-	if {[string first "Darwin" $::tcl_platform(os)] == -1} {
-		wm overrideredirect $toolBar::topGui true
-		wm resizable $toolBar::topGui 0 0
-	}
+	update
 
     #############################################################
     #### Trace Variables ########################################
