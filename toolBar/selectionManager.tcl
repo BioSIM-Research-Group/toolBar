@@ -16,46 +16,38 @@ package provide selV 1.0
 
 #### START GUI
 proc toolBar::selV {} {
-    
 	toplevel $toolBar::selVGui
 	
-
 	#### Title of the windows
 	wm title $toolBar::selVGui "Tool Bar $toolBar::version" ;# titulo da pagina
 
-
-    #### Change the location of window
-    
-    #mainmenu location
-   
     # screen width and height
     set sWidth  [winfo vrootwidth  $toolBar::selVGui]
-    set sHeight [expr [winfo vrootheight $toolBar::selVGui] - 80]
+    set sHeight [expr [winfo vrootheight $toolBar::selVGui] - 200]
 
     #window wifth and height
     set wWidth  [winfo reqwidth $toolBar::selVGui]
     set wHeight [winfo reqheight $toolBar::selVGui]
 
-    #display reposition 0 [expr ${sHeight} + 10]
-    #display resize [expr $sWidth - 315] ${sHeight}
-
     #wm geometry window $VBox::selVGui 40x59 0
     wm geometry $toolBar::selVGui 300x${sHeight}+[expr $sWidth - 310]+25
-    
 
-    # menu graphics
-#    menu graphics move $sWidth [expr ${sHeight} - 15]
 
     #### FRAME 0
     grid [ttk::frame $toolBar::selVGui.frame0 -style frame.TFrame] -row 0 -column 0 -padx 1 -pady 1 -sticky news
        	grid [ttk::label $toolBar::selVGui.frame0.l1 \
            -text "Molecule ID:" \
            ] -in $toolBar::selVGui.frame0 -row 0 -column 0 -sticky nsew 
-        grid [ttk::combobox $toolBar::selVGui.frame0.cb1 -values $toolBar::layers -postcommand toolBar::PDBList -style selV.TCombobox] -in $toolBar::selVGui.frame0 -row 0 -column 1 -sticky ew
+    grid [ttk::combobox $toolBar::selVGui.frame0.cb1 \
+         -values $toolBar::layers \
+         -postcommand toolBar::PDBList \
+         -state readonly \
+         ] -in $toolBar::selVGui.frame0 -row 0 -column 1 -sticky ew
 
 		# label     
 		grid [ttk::label $toolBar::selVGui.frame0.lb \
-            -text "Selection Tree:" \
+            -text "Selection Tree" \
+            -anchor center \
             ] -in $toolBar::selVGui.frame0 -row 1 -column 0 -sticky news -columnspan 2
 
 
@@ -83,7 +75,7 @@ proc toolBar::selV {} {
             grid [ttk::frame $toolBar::selVGui.frame1.frame10.f1] -in $toolBar::selVGui.frame1.frame10 -row 1 -column 0 -sticky we 
 
                 # label     
-                grid [ttk::label $toolBar::selVGui.frame1.frame10.f1.lb1 -text "Atom Selection:"] -in $toolBar::selVGui.frame1.frame10.f1 -row 0 -column 0 -columnspan 3
+                grid [ttk::label $toolBar::selVGui.frame1.frame10.f1.lb1 -text "Atom Selection"] -in $toolBar::selVGui.frame1.frame10.f1 -row 0 -column 0 -columnspan 3
 
                 # entry
                 ttk::style layout entry {
@@ -310,7 +302,7 @@ proc toolBar::optionsWindow {} {
 #### FRAME 1
     grid [ttk::frame $toolBar::optionsGui.frame2] -row 2 -column 0 -padx 0 -pady 0 -sticky news
 		
-		grid [ttk::button $toolBar::optionsGui.frame2.bt0 -text "Exit" -command {if {[winfo exists $toolBar::optionsGui]} {wm withdraw $toolBar::optionsGui }}] -in $toolBar::optionsGui.frame2 -column 0 -row 0 -sticky news
+		grid [ttk::button $toolBar::optionsGui.frame2.bt0 -text "Close" -command {if {[winfo exists $toolBar::optionsGui]} {wm withdraw $toolBar::optionsGui }}] -in $toolBar::optionsGui.frame2 -column 0 -row 0 -sticky news
 
 
 
