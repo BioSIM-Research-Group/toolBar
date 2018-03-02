@@ -41,7 +41,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.9.0"
+		variable version "0.9.1"
 
 		# Sel V
 		variable layers         {} ;# values of the combobox
@@ -63,7 +63,7 @@ namespace eval toolBar:: {
 		package require Tk
 		package require vmdRender 1.0
 		package require balloon 1.0
-		package require selV	1.0
+		package require selectionManager	1.0
 }
 
 proc toolBar::moveWindow {x y} {
@@ -88,7 +88,7 @@ proc toolBar::startGui {} {
 	toplevel $toolBar::topGui
 
 	### Hide the Window Decoration
-	if {[string first "Windows" $::tcl_platform(os)] == -1} {
+	if {[string first "Darwin" $::tcl_platform(os)] != -1} {
 		wm overrideredirect $toolBar::topGui true
 		wm resizable $toolBar::topGui 0 0
 	}
@@ -187,7 +187,7 @@ proc toolBar::startGui {} {
 			-highlightbackground {#575756} \
     	] -in $toolBar::topGui.frame1 -row [expr $row + 1] -column 0 -columnspan 2 -sticky news
 
-	if {[string first "Windows" $::tcl_platform(os)] != -1} {
+	if {[string first "Darwin" $::tcl_platform(os)] == -1} {
 		wm overrideredirect $toolBar::topGui true
 		wm resizable $toolBar::topGui 0 0
 	}

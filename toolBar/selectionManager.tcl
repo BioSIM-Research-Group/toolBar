@@ -1,4 +1,4 @@
-package provide selV 1.0
+package provide selectionManager 1.0
 
 #
 # SelectionViewer v1.0
@@ -1047,19 +1047,17 @@ proc toolBar::cleanGui {} {
 }
 
 proc toolBar::startselV {} {
-
-   
-#### Check if the window exists
-if {[winfo exists $::toolBar::selVGui]} {
-	wm deiconify $::toolBar::selVGui
-	update
-	return $::toolBar::selVGui
-	}
+    #### Check if the window exists
+    if {[winfo exists $::toolBar::selVGui]} {
+        wm deiconify $::toolBar::selVGui
+        update
+        return $::toolBar::selVGui
+    }
 
     ##### START GUI
     toolBar::selV
 
-   	return $::toolBar::selVGui
+    return $::toolBar::selVGui
 }
 
 
