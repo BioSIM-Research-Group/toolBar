@@ -41,7 +41,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.9.4"
+		variable version "0.9.5"
 
 		# Sel V
 		variable layers         {} ;# values of the combobox
@@ -88,7 +88,7 @@ proc toolBar::startGui {} {
 	toplevel $toolBar::topGui
 
 	### Hide the Window Decoration
-	wm overrideredirect $toolBar::topGui true
+	#wm overrideredirect $toolBar::topGui true
 	wm resizable $toolBar::topGui 0 0
 
 	wm title $toolBar::topGui "ToolBar" ;# titulo da pagina
