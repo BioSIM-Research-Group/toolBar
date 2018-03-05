@@ -41,7 +41,9 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.9.5"
+		variable version "0.9.6"
+
+		variable pathImages [file join [file dirname [info script]] style/icons]
 
 		# Sel V
 		variable layers         {} ;# values of the combobox
@@ -96,13 +98,15 @@ proc toolBar::startGui {} {
 
 	wm protocol $::toolBar::topGui WM_DELETE_WINDOW {toolBar::quit}
 
+	wm geometry $toolBar::topGui "+0+0"
+
     #############################################################
     #### Styles #################################################
     #############################################################
 
 	# Load the styles of the buttons
     variable images
-	array set toolBar::images [toolBar::loadImages [file join [file dirname [info script]] style/icons] *.gif]
+	array set toolBar::images [toolBar::loadImages $toolBar::pathImages *.gif]
 
 	foreach var "$toolBar::buttonOrder {moving B}" {
 		
@@ -220,6 +224,12 @@ proc toolBar::startGui {} {
 	#############################################################
 	toolBar::moveGui
  	toolBar::cmd rotate ; # default button
+
+
+	set toolBar::button_main 1
+
+	menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 50
+	menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 100
 
 }
 
@@ -546,9 +556,3 @@ proc toolBar::quit {} {
 	wm withdraw $toolBar::topGui
 }
 
-## START ToolBar
-toolBar::startGui
-set toolBar::button_main 1
-
-menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 50
-menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 100
