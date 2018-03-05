@@ -41,7 +41,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.9.2"
+		variable version "0.9.4"
 
 		# Sel V
 		variable layers         {} ;# values of the combobox
@@ -193,6 +193,7 @@ proc toolBar::startGui {} {
 
     ## Trace pick atom
     trace variable ::vmd_pick_atom w {toolBar::atomPicked}
+	trace variable ::vmd_frame w {toolBar::frameChanged}
 
 	## Draw logFile
 	user add key r {mouse mode rotate; toolBar::cmd rotate}
@@ -447,7 +448,10 @@ proc toolBar::atomPicked {args} {
 
 	set clean off
 	switch $toolBar::cmd {
-             query    	{set color red; set clean on}
+             query    	{set color red
+			 			set clean on
+						label add Atoms [format "%d/%d" [$atom molid] $index]
+						 }
 			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]==2} {set clean on} }
 			 angle    	{set color green;	if {[llength $toolBar::graphicsID]==3} {set clean on} }
 			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]==4} {set clean on} }
@@ -458,7 +462,7 @@ proc toolBar::atomPicked {args} {
 	if {$clean=="on"} {toolBar::deleteGraphics $toolBar::graphicsID}
 
 	#Draw a sphere on the selected atom
-	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]	
+	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]
 }
 
 
@@ -477,6 +481,10 @@ proc toolBar::displayText {text} {
 # insert the information text on the toolBar
 	$toolBar::topGui.frame1.text delete 1.0 end
 	$toolBar::topGui.frame1.text insert 1.0 $text
+}
+
+proc toolBar::frameChanged {args} {
+	toolBar::deleteGraphics all
 }
 
 
