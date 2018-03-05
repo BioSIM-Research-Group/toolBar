@@ -94,6 +94,8 @@ proc toolBar::startGui {} {
 	wm title $toolBar::topGui "ToolBar" ;# titulo da pagina
 	wm attribute $toolBar::topGui -topmost
 
+	wm protocol $::toolBar::topGui WM_DELETE_WINDOW {toolBar::quit}
+
     #############################################################
     #### Styles #################################################
     #############################################################
@@ -535,6 +537,13 @@ proc toolBar::vmdState {file} {
     #rename newFile
     file rename -force "$file.temp" "$file"
 
+}
+
+proc toolBar::quit {} {
+	trace remove variable ::vmd_pick_atom write toolBar::atomPicked
+	trace remove variable ::vmd_frame write toolBar::frameChanged
+	
+	wm withdraw $toolBar::topGui
 }
 
 ## START ToolBar
