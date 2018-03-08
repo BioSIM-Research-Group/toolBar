@@ -214,6 +214,9 @@ proc toolBar::selV {} {
         $toolBar::selVGui.menu add command -label "Delete" -command {toolBar::deleteSelection}
 
     #### Bindings
+
+    bind $toolBar::selVGui.frame1.frame10.f1.en1 <FocusOut> { toolBar::changeRepresentation "none" 0}
+
     bind $toolBar::selVGui.frame0.cb1 <<ComboboxSelected>> toolBar::selectPDB
     bind $toolBar::selVGui.frame1.frame10.f0.tree <<TreeviewSelect>> {toolBar::treeSelectItem 0}
     set tableListBody [$toolBar::selVGui.frame1.frame11.lb1 bodytag]
@@ -857,7 +860,9 @@ proc toolBar::changeRepresentation {selectionTotal opt} {
 
     ## Change representation
 
+
     # delete old item
+
     if {$toolBar::selection!=""} {
         ## modify representation if it already exists
         set repid [mol repindex top $toolBar::selection] 
@@ -877,8 +882,8 @@ proc toolBar::changeRepresentation {selectionTotal opt} {
     } else {mol representation Licorice 0.300000 8.000000 6.000000}
 
     # change color if is selection or add selection
-    if {$opt==1} { mol color Name
-    } else {mol color ColorID 4}
+     mol color Name
+    if {$opt!=1 } {mol color ColorID 4}
 
     mol addrep top
 
@@ -886,6 +891,7 @@ proc toolBar::changeRepresentation {selectionTotal opt} {
     set repid [expr [molinfo top get numreps] - 1]
     set repname [mol repname top $repid]
     set toolBar::selection $repname
+
 }
 
 
@@ -992,6 +998,7 @@ proc toolBar::edit {} {
 }
 
 proc toolBar::updateSelection {} {
+
     mol modselect $toolBar::item top $toolBar::customSelection
 
     ## Update list of representantions
@@ -1010,6 +1017,7 @@ proc toolBar::updateSelection {} {
 }
 
 proc toolBar::entrySelection {selection opt} {
+
     set error ""
     if {$toolBar::layers!={}} {
         catch {set error [atomselect top "$selection"]} atomselect
