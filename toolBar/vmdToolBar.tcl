@@ -41,7 +41,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.9.6"
+		variable version "0.9.7"
 
 		variable pathImages [file join [file dirname [info script]] style/icons]
 
