@@ -465,16 +465,30 @@ proc toolBar::atomPicked {args} {
              query    	{set color red
 						label add Atoms [format "%d/%d" [$atom molid] $index]
 						 }
-			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1500} }
-			 angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2200} }
-			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2800} }
+			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1200} }
+			 angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2000} }
+			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2500} }
 			 default	{}
+	}
+
+	#Delete Atom Reference
+	if {$toolBar::cmd!="query"} {
+		set atomsList [llength [label list Atoms]]
+		if {$atomsList!=0} {
+			set atomDel [expr [llength [label list Atoms]] -1]
+			label delete Atoms $atomDel
+		}
 	}
 
 	#Draw a sphere on the selected atom
 	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]
 	after $time {draw delete [lindex $toolBar::graphicsID 0]; set toolBar::graphicsID [lrange $toolBar::graphicsID 1 [llength $toolBar::graphicsID]]}
+
+
 }
+
+
+
 
 
 proc toolBar::sphere {selection color} {
