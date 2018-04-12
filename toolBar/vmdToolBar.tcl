@@ -436,9 +436,11 @@ proc toolBar::resetToolBar {} {
 
 proc toolBar::deleteGraphics {cmd} {
 # Delete all graphics from the toplayer if required
-	foreach a $toolBar::graphicsID {draw delete $a}
+	if {$toolBar::graphicsID!=""} {
+		foreach a $toolBar::graphicsID {draw delete $a}
+	}
 	set toolBar::graphicsID ""
-
+	
 }
 
 proc toolBar::atomPicked {args} {
@@ -458,23 +460,20 @@ proc toolBar::atomPicked {args} {
 	# Show text
 	toolBar::displayText "Chain:\n$chain\nResname:\n$resname\nResid:\n$resid\nType:\n$type\nIndex:\n$index"
 
-	set clean off
+	set time 1200
 	switch $toolBar::cmd {
              query    	{set color red
-			 			set clean on
 						label add Atoms [format "%d/%d" [$atom molid] $index]
 						 }
-			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]==2} {set clean on} }
-			 angle    	{set color green;	if {[llength $toolBar::graphicsID]==3} {set clean on} }
-			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]==4} {set clean on} }
+			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1500} }
+			 angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2200} }
+			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2800} }
 			 default	{}
 	}
 
-	# Delete all graphics from the toplayer if required
-	if {$clean=="on"} {toolBar::deleteGraphics $toolBar::graphicsID}
-
 	#Draw a sphere on the selected atom
 	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]
+	after $time {draw delete [lindex $toolBar::graphicsID 0]; set toolBar::graphicsID [lrange $toolBar::graphicsID 1 [llength $toolBar::graphicsID]]}
 }
 
 
@@ -486,6 +485,7 @@ proc toolBar::sphere {selection color} {
 	draw color $color
 	draw material Transparent
 	set id [graphics [molinfo top] sphere "[lindex $coordinates 0] [lindex $coordinates 1] [lindex $coordinates 2]" radius 0.8 resolution 25]
+
 	return  "$id"
 }
 
