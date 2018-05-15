@@ -56,6 +56,8 @@ namespace eval toolBar:: {
 		variable selectionHistoryID ""
 		variable animationOnOff 1
 		variable animationDuration 2.0
+
+		variable colorID	32
     
 		variable graphicsID ""
 		variable pickedAtomsBAD {}
@@ -65,7 +67,7 @@ namespace eval toolBar:: {
 		package require Tk
 		package require vmdRender 1.0
 		package require balloon 1.0
-		package require selectionManager	1.0
+		package require selectionManager	2.0
 }
 
 proc toolBar::moveWindow {x y} {
@@ -230,6 +232,19 @@ proc toolBar::startGui {} {
 
 	menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 50
 	menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 100
+
+
+
+	### Start Selection Manager
+	if {[winfo exists $::toolBar::selVGui]} {
+		destroy $::toolBar::selVGui
+	} else {
+		set toolBar::button_selV 1 
+		set toolBar::cmdType 1
+		toolBar::startselV
+		
+	}		
+
 
 }
 
