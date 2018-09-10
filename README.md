@@ -14,7 +14,7 @@ Visual Molecular Dynamics (VMD) 1.9.3 or later
 
 ## Installation
 
-You could install toolBar through [vmdStore](https://github.com/portobiocomp/vmdStore) (Recommended).
+You could install toolBar through [vmdStore](https://github.com/BioSIM-Research-Group/vmdStore) (Recommended).
 
 If you want to run toolBar when starting VMD, please add the following line to your .vmdrc or vmd.rc file:
 
