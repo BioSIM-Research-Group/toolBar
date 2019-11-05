@@ -973,7 +973,5 @@ proc vmdPresets::controlclippingScale {which x} {
 }
 
 #### Start
-vmdPresets::gui
+#vmdPresets::gui
 
-
-puts "okok 12"
