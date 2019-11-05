@@ -30,7 +30,7 @@ proc vmdPresets::gui {} {
 	set sHeight [expr [winfo vrootheight $::vmdPresets::topGui] -100]
 
     #### Window Size and Position
-	wm geometry $::vmdPresets::topGui 530x600+[expr $sWidth / 2 - 500 / 2]+[expr $sHeight / 2 - 400 / 2]
+	wm geometry $::vmdPresets::topGui 530x620+[expr $sWidth / 2 - 500 / 2]+[expr $sHeight / 2 - 400 / 2]
 	$::vmdPresets::topGui configure -background {#ececec}
 
     #### window is no resizable
@@ -131,6 +131,7 @@ proc vmdPresets::gui {} {
 
         grid [canvas $f4.canvas \
             -bg #e5e5e5 \
+            -width 440 \
             -height 160 \
             -yscrollcommand "$f4.vscroll set" \
             ] -in $f4 -row 0 -column 0 -sticky ew 
@@ -152,12 +153,12 @@ proc vmdPresets::gui {} {
             -height 40 \
             ] -in $f5 -row 0 -column 0 -sticky ew 
 
-        grid [ttk::button $f5.custom \
+       # grid [ttk::button $f5.custom \
             -text "Custom" \
             -command {set vmdPresets::colorRef [tk_chooseColor -initialcolor [$vmdPresets::topGui.lf2.frame5.canvas itemcget selectedColor -fill]]; \
                     $vmdPresets::topGui.lf2.frame5.canvas itemconfigure selectedColor -fill [lindex $vmdPresets::colorRef 0] -width 1 ; \
-                    $vmdPresets::topGui.lf2.frame5.canvas itemconfigure colorRef -text "Custom color : [::tk::Darken [lindex $vmdPresets::colorRef 0] 100] "}
-            ] -in $f5 -row 0 -column 1
+                    $vmdPresets::topGui.lf2.frame5.canvas itemconfigure colorRef -text "Custom color : [::tk::Darken [lindex $vmdPresets::colorRef 0] 100] "; }
+        #    ] -in $f5 -row 0 -column 1
 
 
 
@@ -229,11 +230,17 @@ proc vmdPresets::gui {} {
      #   grid columnconfigure $f2     1   -weight 1
 
 
+    #### Clip Label
+        grid [label  $f32.clipLabelClip \
+            -text "Clipplane:"\
+            ] -in $f32 -row 3 -column 0 -sticky w -pady 0 -padx 10
+        
+
     #### Clip Near
 
         grid [label  $f32.clipLabelNear \
-            -text "Clip Front plane:"\
-            ] -in $f32 -row 3 -column 0 -sticky w -pady 0 -padx 10
+            -text "Front:"\
+            ] -in $f32 -row 3 -column 1 -sticky w -pady 0 -padx 10
         
 
         variable clipScaleNear 0.50
@@ -244,19 +251,19 @@ proc vmdPresets::gui {} {
             -orient horizontal \
             -length 100 \
             -command {vmdPresets::controlclippingScale Near} \
-            ] -in $f32 -row 3 -column 1 -sticky news -pady 5 -padx 1
+            ] -in $f32 -row 3 -column 2 -sticky news -pady 5 -padx 1
 
 
         grid [ttk::label $f32.labelScaleNear1 \
             -textvariable vmdPresets::clipScaleNear \
-            ] -in $f32 -row 3 -column 2 -sticky news -pady 5 -padx 5
+            ] -in $f32 -row 3 -column 3 -sticky news -pady 5 -padx 5
 
 
     #### Clip Far
 
         grid [label  $f32.clipLabelFar \
-            -text "Clip Back plane:"\
-            ] -in $f32 -row 4 -column 0 -sticky w -pady 0 -padx 10
+            -text "Back:"\
+            ] -in $f32 -row 4 -column 1 -sticky w -pady 0 -padx 10
         
 
         variable clipScaleFar 5.00
@@ -267,17 +274,17 @@ proc vmdPresets::gui {} {
             -orient horizontal \
             -length 100 \
             -command {vmdPresets::controlclippingScale Far} \
-            ] -in $f32 -row 4 -column 1 -sticky news -pady 5 -padx 1
+            ] -in $f32 -row 4 -column 2 -sticky news -pady 5 -padx 1
 
 
         grid [ttk::label $f32.labelScaleFar1 \
             -textvariable vmdPresets::clipScaleFar \
-            ] -in $f32 -row 4 -column 2 -sticky news -pady 5 -padx 5
+            ] -in $f32 -row 4 -column 3 -sticky news -pady 5 -padx 5
 
         grid [ttk::button $f32.clipButtonReset \
             -text "Reset"\
             -command {set vmdPresets::clipScaleNear 0.50; display nearclip set $vmdPresets::clipScaleNear; set vmdPresets::clipScaleFar 5.0; display nearclip set $vmdPresets::clipScaleFar}
-            ] -in $f32 -row 3 -column 3 -sticky ns -pady 0 -padx 10   
+            ] -in $f32 -row 3 -column 4 -sticky ns -pady 0 -padx 10   
      
      #   grid rowconfigure $f32.clipButtonReset     3   -weight 1
 
@@ -984,5 +991,5 @@ proc vmdPresets::controlclippingScale {which x} {
 }
 
 #### Start
-vmdPresets::gui
+#vmdPresets::gui
 
