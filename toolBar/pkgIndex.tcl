@@ -1,5 +1,6 @@
 package ifneeded vmdRender        	                            1.0 [list source [file join $dir/vmdRender.tcl]]
 package ifneeded toolBar                                        1.0 [list source [file join $dir/vmdToolBar.tcl]]
 package ifneeded balloon                                        1.0 [list source [file join $dir/balloon.tcl]]
+package ifneeded vmdPresets                                     1.0 [list source [file join $dir/vmdPresets.tcl]]
 package ifneeded selectionManager                               1.0 [list source [file join $dir/selectionManager.tcl]]
 package ifneeded selectionManager                               2.0 [list source [file join $dir/newSelectionManager.tcl]]

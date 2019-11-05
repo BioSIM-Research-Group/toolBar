@@ -1,4 +1,4 @@
-package provide toolBar 1.0
+package provide toolBar 0.99
 
 # VMD tollBar plugin
 #
@@ -13,7 +13,6 @@ package provide toolBar 1.0
 
 ###### TODO
 # 1. Add selection manager
-# 2. Add tkcon button
 # 3. incluir uma sphere para center on atom
 
 
@@ -33,7 +32,9 @@ namespace eval toolBar:: {
 								{centerAtom C \"Mouse mode: center\"} {angle C \"Measure Angles\"} \
 								{deleteLabels B \"Delete all labels\"} {dihedral C \"Measure Dihedral Angles\"} \
 								{render B \"Image render\"} {tkcon C \"Tk Console\"} \
-								{query C \"Pick atoms\"} {quit B \"Quit\"}"
+								{query C \"Pick atoms\"} \
+								{presets B \"VMD Templates\"} \
+								{quit B \"Quit\"}"
 
 		variable cmdType	0 ; #variable used to reset buttons
 		variable graphicsID ""; #graphics on the toplayer molecules that will be managed by the tollBar
@@ -41,15 +42,17 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.9.7"
+		variable version "0.99"
 
+		# Paths
 		variable pathImages [file join [file dirname [info script]] style/icons]
+#		variable pathPresets [file join [file dirname [info script]] presets]
 
 		# Sel V
 		variable layers         {} ;# values of the combobox
 		variable selection      {}
 		variable widget         "tree"
-		variable entrySel          ""
+		variable entrySel       ""
 		variable item           ""
 		variable VMDKeywords    {all none backbone sidechain protein nucleic water waters vmd_fast_hydrogen helix alpha_helix helix_3_10 pi_helix sheet betasheet extended_beta bridge_beta turn coil at acidic cyclic acyclic aliphatic alpha amino aromatic basic bonded buried cg charged hetero hydrophobic small medium large neutral polar purine pyrimidine surface lipid lipids ion ions sugar solvent glycan carbon hydrogen nitrogen oxygen sulfur noh heme conformationall conformationA conformationB conformationC conformationD conformationE conformationF drude unparametrized name type backbonetype residuetype index serial atomicnumber element residue resid resname altloc insertion chain segname segif fragment pfrag nfrag numbonds structure pucker user radius mass charge beta occupancy {all within 4 of} {same residue as} and as or to all within}
 		variable selectionHistory {}
@@ -65,18 +68,20 @@ namespace eval toolBar:: {
 
 		## Packages
 		package require Tk
-		package require vmdRender 1.0
-		package require balloon 1.0
+		package require vmdRender 	1.0
+		package require vmdPresets 	1.0
+		package require balloon 	1.0
 		package require selectionManager	2.0
 }
 
-proc toolBar::moveWindow {x y} {
+proc toolBar::moveWindow1 {x y} {
 # moves the window
 	set xpos [expr $x - $toolBar::xoff]
 	set ypos [expr $y - $toolBar::yoff]
 	wm geometry $toolBar::topGui "+$xpos+$ypos"
 	toolBar::moveGui
 }
+
 
 proc toolBar::startGui {} {
 # Builds the tooldBar
@@ -89,18 +94,24 @@ proc toolBar::startGui {} {
 	}
 
 	# Initialize window
-	toplevel $toolBar::topGui
+	toplevel $toolBar::topGui  -background {#575756}
 
 	### Hide the Window Decoration
-	#wm overrideredirect $toolBar::topGui true
+	
+	# show small bar
+	#wm attributes $toolBar::topGui -disabled 0 -topmost 0 -toolwindow 1
+    
+	# do not show top bar
+	wm overrideredirect $toolBar::topGui true
+
+	# window not resizable
 	wm resizable $toolBar::topGui 0 0
 
+	# window title
 	wm title $toolBar::topGui "ToolBar" ;# titulo da pagina
-	wm attribute $toolBar::topGui -topmost
 
 	wm protocol $::toolBar::topGui WM_DELETE_WINDOW {toolBar::quit}
-
-	wm geometry $toolBar::topGui "+0+0"
+	wm geometry $toolBar::topGui "+0+20"
 
     #############################################################
     #### Styles #################################################
@@ -127,7 +138,7 @@ proc toolBar::startGui {} {
 		    ttk::style layout toolBar.button.$a Button.toolBar.button.$a.button
 	}
 
-	#### Top moving button 
+	#### Top moving button style
 	ttk::style element create toolBar.button.topmoving.button \
 		        image [list $toolBar::images(moving-n) \
 		                 pressed $toolBar::images(moving-h) \
@@ -139,12 +150,15 @@ proc toolBar::startGui {} {
 		
 	ttk::style layout toolBar.button.topmoving Button.toolBar.button.topmoving.button
 
+
+
+
     #############################################################
     #### Buttons ################################################
     #############################################################
 
     #### FRAME 0 - Header
-	grid [ttk::frame $toolBar::topGui.frame0] -row 0 -column 0
+	grid [frame $toolBar::topGui.frame0 -background {#575756}] -row 0 -column 0 -padx 5
 	grid [ttk::button $toolBar::topGui.frame0.header \
 				-style toolBar.button.topmoving \
 				-command "toolBar::cmd moving" \
@@ -155,8 +169,7 @@ proc toolBar::startGui {} {
 	#	Button Other  - button
 	# 	The order of the buttons is done by the global varibale "buttonOrder"
 
-    grid [ttk::frame $toolBar::topGui.frame1] -row 1 -column 0  -sticky news
-
+    grid [frame $toolBar::topGui.frame1 -background {#575756}] -row 1 -column 0 -sticky news -padx 5
 	set row 0; set column 0
 	foreach var $toolBar::buttonOrder {
 	
@@ -169,13 +182,13 @@ proc toolBar::startGui {} {
 				-command "toolBar::cmd [subst $a]" \
 				-variable ::toolBar::button_[subst $a] \
            		-onvalue 1 -offvalue 0 \
-            	] -in $toolBar::topGui.frame1 -row $row -column $column -sticky news
+            	] -in $toolBar::topGui.frame1 -row $row -column $column -sticky news -padx 3
 
 		} else {
 		      grid [ttk::button $toolBar::topGui.frame1.$a \
 				-style toolBar.button.$a \
 				-command "toolBar::cmd [subst $a]" \
-		       ] -in $toolBar::topGui.frame1 -row $row -column $column -sticky news
+		       ] -in $toolBar::topGui.frame1 -row $row -column $column -sticky news -padx 3
 			
 		}
 		balloon $toolBar::topGui.frame1.$a -text $balloon
@@ -185,13 +198,19 @@ proc toolBar::startGui {} {
 		
      }
 
-	#### FRAME 2- Text frame
-	grid [text $toolBar::topGui.frame1.text -width 8 -height 10 \
+
+	#### FRAME 2- Text or Canvas frame
+
+	grid [canvas $toolBar::topGui.frame1.canvas -width 8 -height 220 \
 			-bg {#575756} \
-			-fg white \
 			-borderwidth 0 \
 			-highlightbackground {#575756} \
     	] -in $toolBar::topGui.frame1 -row [expr $row + 1] -column 0 -columnspan 2 -sticky news
+
+	# DRAW LINE
+	$toolBar::topGui.frame1.canvas create line 10 10 75 10 -fill #2A2A28 -smooth true -width 3
+	$toolBar::topGui.frame1.canvas create line 10 216 75 216 -fill #2A2A28 -smooth true -width 3
+
 
 	update
 
@@ -219,7 +238,7 @@ proc toolBar::startGui {} {
     #############################################################
     #### Bindings ###############################################
     #############################################################
-    bind $toolBar::topGui.frame0.header <B1-Motion> [list toolBar::moveWindow %X %Y]
+    bind $toolBar::topGui.frame0.header <B1-Motion> [list toolBar::moveWindow1 %X %Y]
 
 	#############################################################
 	#### Extra Cmds #############################################
@@ -230,21 +249,9 @@ proc toolBar::startGui {} {
 
 	set toolBar::button_main 1
 
-	menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 50
-	menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 100
-
-
-
-	### Start Selection Manager
-	if {[winfo exists $::toolBar::selVGui]} {
-		destroy $::toolBar::selVGui
-	} else {
-		set toolBar::button_selV 1 
-		set toolBar::cmdType 1
-		toolBar::startselV
-		
-	}		
-
+	#menu main move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 50
+	#menu graphics move [expr [winfo vrootwidth  $toolBar::topGui] - 500] 100
+	
 
 }
 
@@ -264,6 +271,8 @@ proc toolBar::loadImages {imgdir {patterns {*.gif}}} {
 
 
 proc toolBar::moveGui {} {
+
+	 global tcl_platform
 # Deals with the movement of the display windows as a slave to the toolbar Gui
 
     # window Data
@@ -279,11 +288,21 @@ proc toolBar::moveGui {} {
     # Move position of the display Window, when the toolbar is moved
     
     # if toolbar window is close to the left of the screen ,it becomes aligned to the left of the screen
+
+	## CORRECTIONS to windows position in relation to openGl window
+	set OS ""
+	set OS [lindex $tcl_platform(os) 0]
+	if {$OS == "Windows" || $OS == "windows"} {
+		set correction 0
+	} else {set correction 44}
+
     if {$windowPosX<=0} {
         wm geometry $toolBar::topGui ${windowWidth}x${windowHeight}+1+$windowPosY
-        display reposition  [expr ${windowPosX} + ${windowWidth}] [expr $screenHeight - $windowPosY-44]
+        display reposition  [expr ${windowPosX} + ${windowWidth}] [expr $screenHeight - $windowPosY - $correction]
+
+
     } else {
-        display reposition  [expr ${windowPosX} + ${windowWidth}] [expr $screenHeight - $windowPosY-44]
+        display reposition  [expr ${windowPosX} + ${windowWidth}] [expr $screenHeight - $windowPosY - $correction]
     }
     display update 
 }
@@ -381,8 +400,12 @@ proc toolBar::cmd {cmd} {
 						 set toolBar::cmdType 0
 						 label delete Atoms all; label delete Bonds all; label delete Angles all; label delete Dihedrals all
 						 }
-								
-			render		{vmdRender::gui; set toolBar::cmdType 0}
+
+			render		{
+						if {[winfo exists  $::vmdRender::topGui]} {
+							destroy  $::vmdRender::topGui
+						} else {vmdRender::gui; set toolBar::cmdType 0}						 
+						}
 
 			representations 	{
 								if {[menu graphics status]=="off"} {
@@ -415,11 +438,13 @@ proc toolBar::cmd {cmd} {
 							set toolBar::button_selV 1 
 							set toolBar::cmdType 1
 							toolBar::startselV
-							
 						}						 
+					}
 
-
-					
+			presets	{
+						if {[winfo exists  $::vmdPresets::topGui]} {
+							destroy  $::vmdPresets::topGui
+						} else {vmdPresets::gui}						 
 					}
 
 			quit 		{
@@ -465,26 +490,27 @@ proc toolBar::atomPicked {args} {
     global ::vmd_pick_mol  
 
 	# Print the result on the bottom
-	set atom [atomselect $::vmd_pick_mol "index $::vmd_pick_atom"]
-	set chain [$atom get chain]
-	set resname [$atom get resname]
-	set resid [$atom get resid]
-	set type [$atom get type]
-	set index [$atom get index]
+	set atompick [atomselect $::vmd_pick_mol "index $::vmd_pick_atom"]
 
-	# Show text
-	toolBar::displayText "Chain:\n$chain\nResname:\n$resname\nResid:\n$resid\nType:\n$type\nIndex:\n$index"
+	set element [$atompick get element]
+	set chain [$atompick get chain]
+	set resname [$atompick get resname]
+	set resid [$atompick get resid]
+	set type [$atompick get type]
+	set index [$atompick get index]
+
+	#Display text Widget
+	toolBar::displayCanvas $element $chain $resname $resid $type $index
 
 	set time 1200
 	switch $toolBar::cmd {
-             query    	{set color red
-						label add Atoms [format "%d/%d" [$atom molid] $index]
-						 }
+             query    	{set color red; 	toolBar::label_atoms [molinfo top] $atompick}
 			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1200} }
 			 angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2000} }
 			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2500} }
 			 default	{}
 	}
+
 
 	#Delete Atom Reference
 	if {$toolBar::cmd!="query"} {
@@ -497,13 +523,19 @@ proc toolBar::atomPicked {args} {
 
 	#Draw a sphere on the selected atom
 	set toolBar::graphicsID [lappend toolBar::graphicsID [toolBar::sphere [lindex $::vmd_pick_atom 0] $color]]
-	after $time {draw delete [lindex $toolBar::graphicsID 0]; set toolBar::graphicsID [lrange $toolBar::graphicsID 1 [llength $toolBar::graphicsID]]}
-
+	after $time {
+		foreach a $toolBar::graphicsID {draw delete $a}
+		set  toolBar::graphicsID ""
+	}
 
 }
 
 
-
+proc toolBar::label_atoms { molid sel } {
+# Add labels to atoms
+  set atom [$sel list]
+  label add Atoms "$molid/$atom"
+}
 
 
 proc toolBar::sphere {selection color} {
@@ -518,10 +550,79 @@ proc toolBar::sphere {selection color} {
 	return  "$id"
 }
 
-proc toolBar::displayText {text} {
-# insert the information text on the toolBar
-	$toolBar::topGui.frame1.text delete 1.0 end
-	$toolBar::topGui.frame1.text insert 1.0 $text
+
+proc toolBar::displayCanvas {element chain resname resid type index} {
+
+	# Delete canvas
+	$toolBar::topGui.frame1.canvas delete data
+
+
+	# ELEMENT
+	set x0 20
+	set y 38
+	$toolBar::topGui.frame1.canvas create text $x0 $y \
+		-fill white -justify right -font {Helvetica -30 bold} \
+		-text $element -tags data -anchor w
+
+	if {[string length $element]!=1} {$toolBar::topGui.frame1.canvas itemconfigure element -font {Helvetica -24 bold} }
+
+	# ATOM TYPE
+	set x [expr $x0 + 25]
+	$toolBar::topGui.frame1.canvas create text $x [expr $y+10] \
+		-fill #E9C062 -font {Helvetica -14 bold} \
+		-text "$type" -tags data  -anchor w
+
+	# CHAIN
+	set y [expr $y+40]
+	set x [expr $x0 + 36]
+	$toolBar::topGui.frame1.canvas create text $x $y \
+		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-text "Chain :" -anchor e -tags data
+
+	set x [expr $x0 + 46]
+	$toolBar::topGui.frame1.canvas create text $x $y \
+		-fill white -justify center -font {Helvetica -12 bold}\
+		-text $chain -tags data
+		
+	# RESNAME
+	set y [expr $y + 25]
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x $y \
+		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-text "ResName" -tags data
+
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x [expr $y + 17] \
+		-fill white -justify center -font {Helvetica -12 bold}\
+		-text $resname -tags data
+
+
+	# RESID
+	set y [expr $y + 38]
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x $y \
+		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-text "ResID" -tags data
+
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x [expr $y + 17] \
+		-fill white -justify center -font {Helvetica -12 bold}\
+		-text $resid -tags data
+
+
+	# INDEX
+	set y [expr $y + 38]
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x $y \
+		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-text "Index" -tags data
+
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x [expr $y + 17] \
+		-fill white -justify center -font {Helvetica -12 bold}\
+		-text $index -tags data
+
+
 }
 
 proc toolBar::frameChanged {args} {
@@ -578,6 +679,7 @@ proc toolBar::vmdState {file} {
 
 }
 
+
 proc toolBar::quit {} {
 	trace remove variable ::vmd_pick_atom write toolBar::atomPicked
 	trace remove variable ::vmd_frame write toolBar::frameChanged
@@ -585,3 +687,8 @@ proc toolBar::quit {} {
 	wm withdraw $toolBar::topGui
 }
 
+toolBar::startGui
+
+#toolBar::displayCanvas "Br" "A" "GLU" "122" "NG9" "1223"
+
+#vmdPresets::gui

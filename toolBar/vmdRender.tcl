@@ -267,8 +267,16 @@ proc vmdRender::updateAmbientOcclusion {} {
 proc vmdRender::render {} {
     catch {graphics $toolBar::Layer delete all}
 
-    set cmd "\"[lindex [::render default Tachyon] 0]\""
-    
+
+    #set cmd "\"[lindex [::render default Tachyon] 0]\""
+    # does not work on windows
+
+    #this works on windows NSC
+    set cmd [::render default Tachyon]
+    set path_cmd [string map {\\ \\\\} $cmd]
+    set cmd "\"[lindex $path_cmd 0]\""
+
+ 
     append cmd " $vmdRender::path"
 
     switch $vmdRender::shadowsQuality {
