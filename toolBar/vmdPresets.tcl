@@ -236,19 +236,18 @@ proc vmdPresets::gui {} {
             ] -in $f32 -row 3 -column 0 -sticky w -pady 0 -padx 10
         
 
-        variable clipScaleNear 0
+        variable clipScaleNear 0.50
 
         grid [ttk::scale $f32.clipScaleNear \
             -variable vmdPresets::clipScaleNear \
             -from 0 -to 5 \
             -orient horizontal \
-            -length 200 \
+            -length 100 \
             -command {vmdPresets::controlclippingScale Near} \
             ] -in $f32 -row 3 -column 1 -sticky news -pady 5 -padx 1
 
 
         grid [ttk::label $f32.labelScaleNear1 \
-            -text "1.00" \
             -textvariable vmdPresets::clipScaleNear \
             ] -in $f32 -row 3 -column 2 -sticky news -pady 5 -padx 5
 
@@ -260,26 +259,28 @@ proc vmdPresets::gui {} {
             ] -in $f32 -row 4 -column 0 -sticky w -pady 0 -padx 10
         
 
-        variable clipScaleFar 2
+        variable clipScaleFar 5.00
 
         grid [ttk::scale $f32.clipScaleFar \
             -variable vmdPresets::clipScaleFar \
             -from 0 -to 5 \
             -orient horizontal \
-            -length 200 \
+            -length 100 \
             -command {vmdPresets::controlclippingScale Far} \
             ] -in $f32 -row 4 -column 1 -sticky news -pady 5 -padx 1
 
 
         grid [ttk::label $f32.labelScaleFar1 \
-            -text "2.00" \
             -textvariable vmdPresets::clipScaleFar \
             ] -in $f32 -row 4 -column 2 -sticky news -pady 5 -padx 5
 
-        grid [ttk::label $f32.clipButtonReset \
+        grid [ttk::button $f32.clipButtonReset \
             -text "Reset"\
-            ] -in $f32 -row 3 -column 3 -sticky ns -pady 0 -padx 10
-        
+            -command {set vmdPresets::clipScaleNear 0.50; display nearclip set $vmdPresets::clipScaleNear; set vmdPresets::clipScaleFar 5.0; display nearclip set $vmdPresets::clipScaleFar}
+            ] -in $f32 -row 3 -column 3 -sticky ns -pady 0 -padx 10   
+     
+     #   grid rowconfigure $f32.clipButtonReset     3   -weight 1
+
 
 
 #### FRAME 4 - last frame
@@ -952,26 +953,36 @@ proc vmdPresets::controlCulling {} {
 
 proc vmdPresets::controlclippingScale {which x} { 
 
+    # format x
+    set x [format %2.2f $x]
+
     #turn perspective on
     vmdPresets::controlViewMode "Perspective" 
 
-    if {$which=="Near" && [display get Farclip] > $x} {
+    if {$which=="Near" } {
         display nearclip set $x
+        set vmdPresets::clipScaleNear $x
     } 
 
-    if {$which=="Far" && [display get Nearclip] < $x} {
+    if {$which=="Far" } {
         display farclip set $x
+        set vmdPresets::clipScaleFar $x
     } 
 
-    if {[display get Nearclip] >= $x} {
+    if {[display get Nearclip] > $x} {
         set vmdPresets::clipScaleNear $x
     } 
     
-    if { [display get Farclip] < $x} {
+
+    if {[display get Farclip] < $x} {
         set vmdPresets::clipScaleFar $x
-    }
+    } 
+    
+
+
+
 }
 
 #### Start
-#vmdPresets::gui
+vmdPresets::gui
 
