@@ -1,26 +1,23 @@
 #!/usr/local/bin/vmd
 # VMD script written by save_state $Revision: 1.47 $
 # VMD version: 1.9.3
-set viewplist {}
-set fixedlist {}
 
+# Delete all representations. The stored will be added.
 
-
-# Is the background an gradient ?
-display backgroundgradient on
-
-# Delete all representations. New ones will be added
 set srcmol [molinfo top]
 foreach mol [molinfo list] {
-  #delete current representations
-  set numreps [molinfo $mol get numreps]
-  for {set i 0} {$i < $numreps} {incr i} {
-    mol delrep 0 $mol
-  }
+ set numreps [molinfo $mol get numreps]
+ for {set i 0} {$i < $numreps} {incr i} {mol delrep 0 $mol}
 }
 
+# Gradient option
 
+display backgroundgradient on
 
+##### Standard vmdstate
+
+set viewplist {}
+set fixedlist {}
 proc vmdrestoremymaterials {} {
   set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome }
   set mymlist [material list]
@@ -427,8 +424,7 @@ mol clipplane center 5 1 top {0.0 0.0 0.0}
 mol clipplane color  5 1 top {0.5 0.5 0.5 }
 mol clipplane normal 5 1 top {0.0 0.0 1.0}
 mol clipplane status 5 1 top {0}
-mol top $topmol
-unset topmol
+mol rename top 1a3n_autopsf.pdb
 proc vmdrestoremycolors {} {
 color scale colors RWB {1.0 0.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
 color scale colors BWR {0.0 0.0 1.0} {1.0 1.0 1.0} {1.0 0.0 0.0}
@@ -444,9 +440,11 @@ color scale colors BlkW {0.0 0.0 0.0} {0.5 0.5 0.5} {1.0 1.0 1.0}
 color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
   color scale method RWB
   set colorcmds {
+    {color Display {Background} orange2}
     {color Display {BackgroundTop} black}
     {color Display {BackgroundBot} yellow2}
     {color Display {FPS} white}
+    {color Name {C} yellow}
     {color Name {LPA} green}
     {color Name {LPB} green}
     {color Type {LP} green}
@@ -467,6 +465,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Bi} ochre}
     {color Element {Bk} ochre}
     {color Element {Br} ochre}
+    {color Element {C} pink}
     {color Element {Ca} ochre}
     {color Element {Cd} ochre}
     {color Element {Ce} ochre}
@@ -562,10 +561,18 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Chain {D} orange}
     {color Chain {E} yellow}
     {color Chain {F} tan}
-    {color Segname {} blue}
+    {color Chain {G} silver}
+    {color Chain {H} green}
+    {color Segname {AP1} blue}
+    {color Segname {BP1} red}
+    {color Segname {CP1} gray}
+    {color Segname {DP1} orange}
+    {color Segname {EP1} yellow}
+    {color Segname {FP1} tan}
+    {color Segname {GP1} silver}
+    {color Segname {HP1} green}
     {color Conformation {all} blue}
     {color Molecule {0} blue}
-    {color Molecule {1ahw_new.pdb} blue}
     {color Structure {3_10_Helix} blue}
     {color Surface {Grasp} gray}
     {color Labels {Springs} orange}

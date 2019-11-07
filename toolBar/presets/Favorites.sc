@@ -1,6 +1,8 @@
-#ffffff       white
-#000000       black
-#ff0000       red
-#008000       green
-#ffff00       yellow
-#ffd700       gold
+#ffffff		{White}
+#000000		{Black}
+#659DBD		{Blue Peace}
+#05386B		{Dark Blue}
+#8D8741		{Earthy}
+#DAAD86		{Pastel}
+#FBEEC1		{Smoth Yellow}
+#ffd700		{Gold}

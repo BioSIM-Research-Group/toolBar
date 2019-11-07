@@ -367,7 +367,7 @@ mol delrep 0 top
 mol representation NewCartoon 0.300000 50.000000 4.100000 0
 mol color ColorID 20
 mol selection {all}
-mol material AOShiny
+mol material Glossy
 mol addrep top
 mol selupdate 0 top 0
 mol colupdate 0 top 0
@@ -401,7 +401,7 @@ mol clipplane status 5 0 top {0}
 mol representation VDW 1.000000 47.000000
 mol color Name
 mol selection {not protein and not water}
-mol material Glossy
+mol material Steel
 mol addrep top
 mol selupdate 1 top 0
 mol colupdate 1 top 0
@@ -455,10 +455,8 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Name {C} yellow}
     {color Name {LPA} green}
     {color Name {LPB} green}
-    {color Name {F} pink}
     {color Type {LP} green}
     {color Type {DRUD} pink}
-    {color Type {F} pink}
     {color Element {X} cyan}
     {color Element {Ac} red2}
     {color Element {Ag} ochre}
@@ -565,16 +563,23 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Y} ochre}
     {color Element {Yb} ochre}
     {color Element {Zr} ochre}
-    {color Resname {HEM} silver}
-    {color Resname {HOH} green}
     {color Chain {A} blue}
     {color Chain {B} red}
     {color Chain {C} gray}
     {color Chain {D} orange}
-    {color Segname {} blue}
+    {color Chain {E} yellow}
+    {color Chain {F} tan}
+    {color Chain {G} silver}
+    {color Chain {H} green}
+    {color Segname {AP1} blue}
+    {color Segname {BP1} red}
+    {color Segname {CP1} gray}
+    {color Segname {DP1} orange}
+    {color Segname {EP1} yellow}
+    {color Segname {FP1} tan}
+    {color Segname {GP1} silver}
+    {color Segname {HP1} green}
     {color Conformation {all} blue}
-    {color Conformation {A} red}
-    {color Conformation {B} gray}
     {color Molecule {0} blue}
     {color Molecule {1a3n.pdb} blue}
     {color Structure {3_10_Helix} blue}
