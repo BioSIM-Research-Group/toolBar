@@ -30,7 +30,7 @@ proc vmdPresets::gui {} {
 	set sHeight [expr [winfo vrootheight $::vmdPresets::topGui] -100]
 
     #### Window Size and Position
-	wm geometry $::vmdPresets::topGui 530x620+[expr $sWidth / 2 - 500 / 2]+[expr $sHeight / 2 - 400 / 2]
+	wm geometry $::vmdPresets::topGui 530x640+[expr $sWidth / 2 - 500 / 2]+[expr $sHeight / 2 - 400 / 2]
 	$::vmdPresets::topGui configure -background {#ececec}
 
     #### window is no resizable
@@ -231,14 +231,14 @@ proc vmdPresets::gui {} {
 
 
     #### Clip Label
-        grid [label  $f32.clipLabelClip \
+        grid [ttk::label  $f32.clipLabelClip \
             -text "Clipplane:"\
             ] -in $f32 -row 3 -column 0 -sticky w -pady 0 -padx 10
         
 
     #### Clip Near
 
-        grid [label  $f32.clipLabelNear \
+        grid [ttk::label  $f32.clipLabelNear \
             -text "Front:"\
             ] -in $f32 -row 3 -column 1 -sticky w -pady 0 -padx 10
         
@@ -261,7 +261,7 @@ proc vmdPresets::gui {} {
 
     #### Clip Far
 
-        grid [label  $f32.clipLabelFar \
+        grid [ttk::label  $f32.clipLabelFar \
             -text "Back:"\
             ] -in $f32 -row 4 -column 1 -sticky w -pady 0 -padx 10
         
