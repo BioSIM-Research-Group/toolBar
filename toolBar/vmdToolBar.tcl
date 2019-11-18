@@ -94,7 +94,7 @@ proc toolBar::startGui {} {
 	}
 
 	# Initialize window
-	toplevel $toolBar::topGui  -background {#575756}
+	toplevel $toolBar::topGui  -background {#6A6A69}
 
 	### Hide the Window Decoration
 	
@@ -158,7 +158,7 @@ proc toolBar::startGui {} {
     #############################################################
 
     #### FRAME 0 - Header
-	grid [frame $toolBar::topGui.frame0 -background {#575756}] -row 0 -column 0 -padx 5
+	grid [frame $toolBar::topGui.frame0 -background {#6A6A69}] -row 0 -column 0 -padx 5
 	grid [ttk::button $toolBar::topGui.frame0.header \
 				-style toolBar.button.topmoving \
 				-command "toolBar::cmd moving" \
@@ -169,7 +169,7 @@ proc toolBar::startGui {} {
 	#	Button Other  - button
 	# 	The order of the buttons is done by the global varibale "buttonOrder"
 
-    grid [frame $toolBar::topGui.frame1 -background {#575756}] -row 1 -column 0 -sticky news -padx 5
+    grid [frame $toolBar::topGui.frame1 -background {#6A6A69}] -row 1 -column 0 -sticky news -padx 5
 	set row 0; set column 0
 	foreach var $toolBar::buttonOrder {
 	
@@ -202,9 +202,9 @@ proc toolBar::startGui {} {
 	#### FRAME 2- Text or Canvas frame
 
 	grid [canvas $toolBar::topGui.frame1.canvas -width 8 -height 220 \
-			-bg {#575756} \
+			-bg {#6A6A69} \
 			-borderwidth 0 \
-			-highlightbackground {#575756} \
+			-highlightbackground {#6A6A69} \
     	] -in $toolBar::topGui.frame1 -row [expr $row + 1] -column 0 -columnspan 2 -sticky news
 
 	# DRAW LINE
