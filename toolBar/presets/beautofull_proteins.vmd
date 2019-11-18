@@ -368,7 +368,7 @@ display distance     -2.000000
 display projection   Orthographic
 display nearclip set 0.001000
 display farclip  set 4.400000
-display depthcue   off
+display depthcue   on
 display cuestart   0.500000
 display cueend     10.000000
 display cuestart   0.500000
@@ -382,6 +382,10 @@ display aodirect 0.300000
 display dof off
 display dof_fnumber 64.000000
 display dof_focaldist 0.700000
+graphics top color 1
+graphics top material 1
+graphics top color 1
+graphics top material 1
 mol delrep 0 top
 mol representation CPK 1.100000 0.900000 47.000000 37.000000
 mol color Element
@@ -665,10 +669,26 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Resname {MES} pink}
     {color Resname {HOH} cyan}
     {color Chain {A} blue}
+    {color Chain {B} red}
+    {color Chain {C} gray}
+    {color Chain {D} orange}
+    {color Chain {E} yellow}
+    {color Chain {F} tan}
+    {color Chain {G} silver}
+    {color Chain {H} green}
+    {color Segname {AP1} blue}
+    {color Segname {BP1} red}
+    {color Segname {CP1} gray}
+    {color Segname {DP1} orange}
+    {color Segname {EP1} yellow}
+    {color Segname {FP1} tan}
+    {color Segname {GP1} silver}
+    {color Segname {HP1} green}
     {color Segname {} blue}
     {color Conformation {all} blue}
     {color Molecule {0} blue}
     {color Molecule {1a3n.pdb} blue}
+    {color Molecule {1} gray}
     {color Structure {3_10_Helix} blue}
     {color Surface {Grasp} gray}
     {color Labels {Springs} orange}
@@ -711,3 +731,9 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
 }
 vmdrestoremycolors
 label textsize 1.0
+label add Atoms 1/5606
+label textoffset Atoms 0 {0.0 0.0}
+label textformat Atoms 0 %R%d:%a
+label add Atoms 1/5604
+label textoffset Atoms 1 {0.0 0.0}
+label textformat Atoms 1 %R%d:%a

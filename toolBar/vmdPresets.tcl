@@ -243,7 +243,7 @@ proc vmdPresets::gui {} {
             ] -in $f32 -row 3 -column 1 -sticky w -pady 0 -padx 10
         
 
-        variable clipScaleNear 0.50
+        variable clipScaleNear 0.0
 
         grid [ttk::scale $f32.clipScaleNear \
             -variable vmdPresets::clipScaleNear \
@@ -283,7 +283,7 @@ proc vmdPresets::gui {} {
 
         grid [ttk::button $f32.clipButtonReset \
             -text "Reset"\
-            -command {set vmdPresets::clipScaleNear 0.50; display nearclip set $vmdPresets::clipScaleNear; set vmdPresets::clipScaleFar 5.0; display nearclip set $vmdPresets::clipScaleFar}
+            -command {set vmdPresets::clipScaleNear 0.0; display nearclip set $vmdPresets::clipScaleNear; set vmdPresets::clipScaleFar 5.0; display nearclip set $vmdPresets::clipScaleFar}
             ] -in $f32 -row 3 -column 4 -sticky ns -pady 0 -padx 10   
      
      #   grid rowconfigure $f32.clipButtonReset     3   -weight 1
@@ -889,7 +889,7 @@ proc vmdPresets:initVariables {} {
     #        set vmdPresets::cullingCheckButton 1
     #} else {set vmdPresets::cullingCheckButton 0}
 
- vmdPresets::controlDeepCue
+  vmdPresets::controlDeepCue
   vmdPresets::controlCulling
 
 }
