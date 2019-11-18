@@ -394,7 +394,7 @@ proc vmdPresets::addSolidcolors {} {
     ## CANVAS 2
     set x 100; set y 10
         
-    $canvas2 create text [expr $x-50] [expr $y +10]  -text "Selected Color: " -fill black 
+    $canvas2 create text [expr $x-50] [expr $y +10]  -text "Selected Color: " -tag deleteGrad -fill black 
     vmdPresets::DrawBoxColor $canvas2 white "white : #ffffff" $x $y selectedColor
 
 }
@@ -445,7 +445,7 @@ proc vmdPresets::addGradcolors {} {
     #CANVAS 2
     set x 100; set y 10
     set text "Name of the gradient"
-    $canvas2 create text [expr $x-50] [expr $y +10]  -text "Selected Gradient: " -fill black 
+    $canvas2 create text [expr $x-50] [expr $y +10]  -text "Selected Gradient: " -tag deleteGrad -fill black 
     vmdPresets::DrawGradient $canvas2 red blue $text $x $y 100 selectedColor
 }
 
@@ -682,7 +682,7 @@ proc vmdPresets::onClick {x y} {
                 
                 set x 100; set y 10
                 set text "[::tk::Darken $fill 100] > [::tk::Darken $fill_2 100]"
-                $c2 create text [expr $x-50] [expr $y +10]  -text "Selected Gradient: " -fill black 
+                $c2 create text [expr $x-50] [expr $y +10]  -text "Selected Gradient: " -tag deleteGrad -fill black 
                 vmdPresets::DrawGradient $c2 $fill $fill_2 $text $x $y 100 selectedColor
 
         }
