@@ -11,15 +11,23 @@ foreach mol [molinfo list] {
 }
 
 # Gradient option
-
 display backgroundgradient on
+
+# Gradient deepcue
+display depthcue off
+
+# Culling option
+display culling off
+
+# Render Mode
+display rendermode GLSL
 
 ##### Standard vmdstate
 
 set viewplist {}
 set fixedlist {}
 proc vmdrestoremymaterials {} {
-  set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome }
+  set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome PDB }
   set mymlist [material list]
   foreach mat $mlist {
     if { [lsearch $mymlist $mat] == -1 } { 
@@ -233,6 +241,15 @@ proc vmdrestoremymaterials {} {
   material change outline RTChrome 0.000000
   material change outlinewidth RTChrome 0.000000
   material change transmode RTChrome 0.000000
+  material change ambient PDB 0.000000
+  material change diffuse PDB 1.000000
+  material change specular PDB 0.000000
+  material change shininess PDB 0.000000
+  material change mirror PDB 0.000000
+  material change opacity PDB 1.000000
+  material change outline PDB 2.720000
+  material change outlinewidth PDB 0.800000
+  material change transmode PDB 0.000000
 }
 vmdrestoremymaterials
 # Atom selection macros
@@ -398,10 +415,10 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
-mol representation VDW 1.000000 47.000000
-mol color Name
+mol representation CPK 1.100000 0.900000 47.000000 37.000000
+mol color Element
 mol selection {not protein and not water}
-mol material Steel
+mol material PDB
 mol addrep top
 mol selupdate 1 top 0
 mol colupdate 1 top 0
@@ -455,8 +472,12 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Name {C} yellow}
     {color Name {LPA} green}
     {color Name {LPB} green}
+    {color Name {F} pink}
+    {color Name {M} cyan}
     {color Type {LP} green}
     {color Type {DRUD} pink}
+    {color Type {F} pink}
+    {color Type {M} cyan}
     {color Element {X} cyan}
     {color Element {Ac} red2}
     {color Element {Ag} ochre}
@@ -473,7 +494,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Bi} ochre}
     {color Element {Bk} ochre}
     {color Element {Br} ochre}
-    {color Element {C} pink}
+    {color Element {C} yellow3}
     {color Element {Ca} ochre}
     {color Element {Cd} ochre}
     {color Element {Ce} ochre}
@@ -563,22 +584,13 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Y} ochre}
     {color Element {Yb} ochre}
     {color Element {Zr} ochre}
+    {color Resname {SF4} silver}
+    {color Resname {MO} green}
+    {color Resname {MGD} white}
+    {color Resname {MES} pink}
+    {color Resname {HOH} green}
     {color Chain {A} blue}
-    {color Chain {B} red}
-    {color Chain {C} gray}
-    {color Chain {D} orange}
-    {color Chain {E} yellow}
-    {color Chain {F} tan}
-    {color Chain {G} silver}
-    {color Chain {H} green}
-    {color Segname {AP1} blue}
-    {color Segname {BP1} red}
-    {color Segname {CP1} gray}
-    {color Segname {DP1} orange}
-    {color Segname {EP1} yellow}
-    {color Segname {FP1} tan}
-    {color Segname {GP1} silver}
-    {color Segname {HP1} green}
+    {color Segname {} blue}
     {color Conformation {all} blue}
     {color Molecule {0} blue}
     {color Molecule {1a3n.pdb} blue}

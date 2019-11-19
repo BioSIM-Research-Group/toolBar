@@ -11,8 +11,16 @@ foreach mol [molinfo list] {
 }
 
 # Gradient option
-
 display backgroundgradient on
+
+# Gradient deepcue
+display depthcue off
+
+# Culling option
+display culling off
+
+# Render Mode
+display rendermode GLSL
 
 ##### Standard vmdstate
 
@@ -350,7 +358,7 @@ display distance     -2.000000
 display projection   Orthographic
 display nearclip set 0.500000
 display farclip  set 10.000000
-display depthcue   on
+display depthcue   off
 display cuestart   0.500000
 display cueend     10.000000
 display cuestart   0.500000
@@ -794,10 +802,8 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Name {C} yellow2}
     {color Name {LPA} green}
     {color Name {LPB} green}
-    {color Name {F} pink}
     {color Type {LP} green}
     {color Type {DRUD} pink}
-    {color Type {F} pink}
     {color Element {X} cyan}
     {color Element {Ac} red2}
     {color Element {Ag} ochre}
@@ -904,31 +910,14 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Y} ochre}
     {color Element {Yb} ochre}
     {color Element {Zr} ochre}
-    {color Resname {HEM} silver}
+    {color Resname {PLP} silver}
     {color Resname {HOH} green}
     {color Chain {A} blue}
     {color Chain {B} red}
-    {color Chain {C} gray}
-    {color Chain {D} orange}
-    {color Chain {E} yellow}
-    {color Chain {F} tan}
-    {color Chain {G} silver}
-    {color Chain {H} green}
-    {color Segname {AP1} blue}
-    {color Segname {BP1} red}
-    {color Segname {CP1} gray}
-    {color Segname {DP1} orange}
-    {color Segname {EP1} yellow}
-    {color Segname {FP1} tan}
-    {color Segname {GP1} silver}
-    {color Segname {HP1} green}
     {color Segname {} blue}
     {color Conformation {all} blue}
-    {color Conformation {A} red}
-    {color Conformation {B} gray}
     {color Molecule {0} blue}
     {color Molecule {1a3n.pdb} blue}
-    {color Molecule {1} gray}
     {color Structure {3_10_Helix} blue}
     {color Surface {Grasp} gray}
     {color Labels {Springs} orange}

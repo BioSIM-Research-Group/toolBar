@@ -64,12 +64,12 @@ proc vmdRender::gui {} {
         ] -in $f1 -row 1 -column 2 -sticky news -pady 5 -padx 5
 
 
-    #### Shading Options
+    #### Rendering Quality
     set f2 $vmdRender::topGui.frame2
     grid [ttk::frame $f2] -in $vmdRender::topGui -sticky news -pady [list 10 0]
 
     grid [ttk::label $f2.label \
-        -text "Shading Options" \
+        -text "Rendering Quality" \
         -font {Helvetica -14 bold} \
         ] -in $f2 -row 0 -column 0 -sticky news -padx 10 -pady 5
 
@@ -126,13 +126,13 @@ proc vmdRender::gui {} {
     grid [ttk::checkbutton $f2.shadowsCheckButton \
         -text "Shadows" \
         -variable vmdRender::shadows \
-        -command {display shadows $vmdRender::shadows} \
-        ] -in $f2 -row 2 -column 3 -sticky news -padx 5 -pady 5 -columnspan 2
+        -command {vmdRender::updateShadows} \
+        ] -in $f2 -row 2 -column 0 -sticky news -padx 5 -pady 5 -columnspan 2
 
 
-    grid [ttk::label $f2.shadowsQualityLabel \
-        -text "Rendering Quality" \
-        ] -in $f2 -row 2 -column 0 -sticky news -padx 10 -pady 5
+    #grid [ttk::label $f2.shadowsQualityLabel \
+    #    -text "Rendering Quality" \
+    #    ] -in $f2 -row 2 -column 0 -sticky news -padx 10 -pady 5
 
     variable shadowsQuality "FullShade (best quality)"
     grid [ttk::combobox $f2.shadowsQualityCombo \
@@ -140,6 +140,8 @@ proc vmdRender::gui {} {
         -textvariable vmdRender::shadowsQuality \
         -state readonly \
         ] -in $f2 -row 2 -column 1 -sticky news -padx 5 -pady 5 -columnspan 2
+
+    vmdRender::updateShadows
 
     grid columnconfigure $f2 1 -weight 2
     grid columnconfigure $f2 4 -weight 2
@@ -232,8 +234,9 @@ proc vmdRender::gui {} {
     set f5 $vmdRender::topGui.frame5
     grid [ttk::frame $f5] -in $vmdRender::topGui -sticky sew -pady [list 10 0]
 
-    grid [ttk::button $f5.render \
+    grid [button $f5.render \
         -text "Render" \
+        -width 15 \
         -command {vmdRender::render} \
         ] -in $f5 -row 0 -column 4 -sticky es -padx 25 -pady 5
 
@@ -264,7 +267,30 @@ proc vmdRender::updateAmbientOcclusion {} {
     }
 }
 
+
+proc vmdRender::updateShadows {} {
+
+    display shadows $vmdRender::shadows
+
+    set f2 $vmdRender::topGui.frame2
+    if {[display get shadows] == "off"} {
+        $f2.shadowsQualityCombo configure -state disabled
+    } else {
+        $f2.shadowsQualityCombo configure -state normal
+    }
+
+}
+
+
 proc vmdRender::render {} {
+
+    #Change color of the button to get some feedback
+    set f5 $vmdRender::topGui.frame5
+    
+
+    $f5.render configure -background red -text "Rendering..."
+    update
+
     catch {graphics $toolBar::Layer delete all}
 
 
@@ -279,19 +305,23 @@ proc vmdRender::render {} {
  
     append cmd " $vmdRender::path"
 
-    switch $vmdRender::shadowsQuality {
-        "" -
-        "FullShade (best quality)" {
-            append cmd " -fullshade"
-        }
-        "MediumShade (good quality)" {
-            append cmd " -mediumshade"
-        }
-        "LowShade (low quality)" {
-            append cmd " -lowshade"
-        }
-        "LowestShade (worst quality)" {
-            append cmd " -lowestshade"
+    # Shadows
+    if {$vmdRender::shadows== 1} {
+
+        switch $vmdRender::shadowsQuality {
+            "" -
+            "FullShade (best quality)" {
+                append cmd " -fullshade"
+            }
+            "MediumShade (good quality)" {
+                append cmd " -mediumshade"
+            }
+            "LowShade (low quality)" {
+                append cmd " -lowshade"
+            }
+            "LowestShade (worst quality)" {
+                append cmd " -lowestshade"
+            }
         }
     }
 
@@ -329,6 +359,12 @@ proc vmdRender::render {} {
     
     ::render Tachyon $vmdRender::path $cmd
 
+
+
+    #Change color of the button to get some feedback
+    $f5.render configure -background green -text "Done."; update
+
+    after 1500 {$vmdRender::topGui.frame5.render configure -background SystemButtonFace -text "Render"; update}
 }
 
 #### Start

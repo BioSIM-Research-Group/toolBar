@@ -750,14 +750,41 @@ proc vmdPresets::saveTemplate {file} {
   # Add gradient
   puts $fildes ""
   puts $fildes "# Gradient option"
-  puts $fildes ""
-
-  set a "yes"
-  if {$a=="yes" } {
+  if {[display get backgroundgradient]=="on" } {
     puts $fildes "display backgroundgradient on"
   } else {
     puts $fildes "display backgroundgradient off"
   }
+
+  # Add cue
+  puts $fildes ""
+  puts $fildes "# Gradient deepcue"
+  if {[display get depthcue]=="on" } {
+    puts $fildes "display depthcue on"
+  } else {
+    puts $fildes "display depthcue off"
+  }
+
+  # Culling
+  puts $fildes ""
+  puts $fildes "# Culling option"
+  if {[display get culling]=="on" } {
+    puts $fildes "display culling on"
+  } else {
+    puts $fildes "display culling off"
+  }
+
+
+ # Render Mode
+  puts $fildes ""
+  puts $fildes "# Render Mode"
+  if {[display get rendermode]=="GLSL" } {
+    puts $fildes "display rendermode GLSL"
+  } else {
+    puts $fildes "display rendermode normal"
+  }
+
+
 
   puts $fildes ""
   puts $fildes "##### Standard vmdstate"
@@ -879,18 +906,18 @@ proc vmdPresets:initVariables {} {
 
     # check the depthcue status
 
-    #if {[display get depthcue]=="off"} {
-    #        set vmdPresets::deepCueRadioButton 0
-    #} else {set vmdPresets::deepCueRadioButton 1}
+    if {[display get depthcue]=="off"} {
+            set vmdPresets::deepCueRadioButton 0
+    } else {set vmdPresets::deepCueRadioButton 1}
 
 
     #check culling
-    #if {[display get culling]=="off"} {
-    #        set vmdPresets::cullingCheckButton 1
-    #} else {set vmdPresets::cullingCheckButton 0}
+    if {[display get culling]=="off"} {
+            set vmdPresets::cullingCheckButton 0
+    } else {set vmdPresets::cullingCheckButton 1}
 
-  vmdPresets::controlDeepCue
-  vmdPresets::controlCulling
+  #vmdPresets::controlDeepCue
+  #vmdPresets::controlCulling
 
 }
 
@@ -964,7 +991,7 @@ proc vmdPresets::controlclippingScale {which x} {
     set x [format %2.2f $x]
 
     #turn perspective on
-    vmdPresets::controlViewMode "Perspective" 
+   # vmdPresets::controlViewMode "Perspective" 
 
     if {$which=="Near" } {
         display nearclip set $x
