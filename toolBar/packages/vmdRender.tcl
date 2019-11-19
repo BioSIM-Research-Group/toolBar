@@ -11,7 +11,7 @@ namespace eval vmdRender:: {
     variable topGui ".gui"
 
     variable renderLocation [lindex [::render default Tachyon] 0]
-		
+	variable path "[file nativename "~/"]/image"
 }
 
 proc vmdRender::gui {} {
@@ -53,7 +53,6 @@ proc vmdRender::gui {} {
         -text "Save image as:" \
         ] -in $f1 -row 1 -column 0 -sticky news -pady 5 -padx 10
 
-    variable path "[file nativename "~/"]/image"
     grid [ttk::entry $f1.fileLocationEntry \
         -textvariable vmdRender::path \
         ] -in $f1 -row 1 -column 1 -sticky news -pady 5 -padx 5
@@ -286,10 +285,7 @@ proc vmdRender::render {} {
 
     #Change color of the button to get some feedback
     set f5 $vmdRender::topGui.frame5
-    
-
-    $f5.render configure -background red -text "Rendering..."
-    update
+    $f5.render configure -background red -text "Rendering..."; update
 
     catch {graphics $toolBar::Layer delete all}
 
