@@ -1,4 +1,4 @@
-package provide toolBar 0.99
+package provide vmdToolBar 1.0
 
 # VMD tollBar plugin
 #

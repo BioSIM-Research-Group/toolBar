@@ -10,7 +10,7 @@ namespace eval vmdPresets:: {
     variable version 1.0
     variable topGui ".gui_vmdPresets"
 
-    variable pathPresets [file join [file dirname [info script]] presets] ;# where the templates are located
+    variable pathPresets [file join [file dirname [info script]] ../templates] ;# where the templates are located
     variable colorRef "" ;# ref used to know color that is selected
 
 }
@@ -519,6 +519,7 @@ proc vmdPresets::DrawGradient {win col1Str col2Str text x0 y0 size tag} {
 proc vmdPresets::populateComboBoxBackgroundTemplates {fileExtension combobox} {
 
         # Populate the combobox with files
+
         set fileList [glob -dir $vmdPresets::pathPresets $fileExtension]
         set colorSchemes "" 
         foreach a $fileList {set colorSchemes [lappend colorSchemes [file tail [file rootname $a]]]}
