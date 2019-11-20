@@ -11,15 +11,23 @@ foreach mol [molinfo list] {
 }
 
 # Gradient option
-
 display backgroundgradient on
+
+# Gradient deepcue
+display depthcue off
+
+# Culling option
+display culling off
+
+# Render Mode
+display rendermode GLSL
 
 ##### Standard vmdstate
 
 set viewplist {}
 set fixedlist {}
 proc vmdrestoremymaterials {} {
-  set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome tran Glass OrganicM }
+  set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome PDB tran Glass OrganicM }
   set mymlist [material list]
   foreach mat $mlist {
     if { [lsearch $mymlist $mat] == -1 } { 
@@ -233,6 +241,15 @@ proc vmdrestoremymaterials {} {
   material change outline RTChrome 0.000000
   material change outlinewidth RTChrome 0.000000
   material change transmode RTChrome 0.000000
+  material change ambient PDB 0.320000
+  material change diffuse PDB 1.000000
+  material change specular PDB 1.000000
+  material change shininess PDB 1.000000
+  material change mirror PDB 0.000000
+  material change opacity PDB 1.000000
+  material change outline PDB 3.610000
+  material change outlinewidth PDB 0.270000
+  material change transmode PDB 0.000000
   material change ambient tran 0.000000
   material change diffuse tran 0.190000
   material change specular tran 0.070000
@@ -366,8 +383,8 @@ display focallength  2.000000
 display height       6.000000
 display distance     -2.000000
 display projection   Orthographic
-display nearclip set 0.001000
-display farclip  set 4.400000
+display nearclip set 0.500000
+display farclip  set 10.000000
 display depthcue   off
 display cuestart   0.500000
 display cueend     10.000000
@@ -385,8 +402,8 @@ display dof_focaldist 0.700000
 mol delrep 0 top
 mol representation CPK 1.100000 0.900000 47.000000 37.000000
 mol color Element
-mol selection {all and not ( protein or water)}
-mol material OrganicM
+mol selection {all and not hydrogen and not (protein or water)}
+mol material PDB
 mol addrep top
 mol selupdate 0 top 0
 mol colupdate 0 top 0
@@ -417,10 +434,10 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
-mol representation VDW 0.300000 50.000000
-mol color Element
-mol selection {hydrogen and not protein}
-mol material OrganicM
+mol representation NewCartoon 0.300000 15.000000 4.100000 0
+mol color ColorID 1
+mol selection {protein}
+mol material HardPlastic
 mol addrep top
 mol selupdate 1 top 0
 mol colupdate 1 top 0
@@ -451,74 +468,7 @@ mol clipplane center 5 1 top {0.0 0.0 0.0}
 mol clipplane color  5 1 top {0.5 0.5 0.5 }
 mol clipplane normal 5 1 top {0.0 0.0 1.0}
 mol clipplane status 5 1 top {0}
-mol representation DynamicBonds 1.600000 0.200000 52.000000
-mol color Element
-mol selection {all within 2 of hydrogen and not (protein or water)}
-mol material OrganicM
-mol addrep top
-mol selupdate 2 top 0
-mol colupdate 2 top 0
-mol scaleminmax top 2 0.000000 0.000000
-mol smoothrep top 2 0
-mol drawframes top 2 {now}
-mol clipplane center 0 2 top {0.0 0.0 0.0}
-mol clipplane color  0 2 top {0.5 0.5 0.5 }
-mol clipplane normal 0 2 top {0.0 0.0 1.0}
-mol clipplane status 0 2 top {0}
-mol clipplane center 1 2 top {0.0 0.0 0.0}
-mol clipplane color  1 2 top {0.5 0.5 0.5 }
-mol clipplane normal 1 2 top {0.0 0.0 1.0}
-mol clipplane status 1 2 top {0}
-mol clipplane center 2 2 top {0.0 0.0 0.0}
-mol clipplane color  2 2 top {0.5 0.5 0.5 }
-mol clipplane normal 2 2 top {0.0 0.0 1.0}
-mol clipplane status 2 2 top {0}
-mol clipplane center 3 2 top {0.0 0.0 0.0}
-mol clipplane color  3 2 top {0.5 0.5 0.5 }
-mol clipplane normal 3 2 top {0.0 0.0 1.0}
-mol clipplane status 3 2 top {0}
-mol clipplane center 4 2 top {0.0 0.0 0.0}
-mol clipplane color  4 2 top {0.5 0.5 0.5 }
-mol clipplane normal 4 2 top {0.0 0.0 1.0}
-mol clipplane status 4 2 top {0}
-mol clipplane center 5 2 top {0.0 0.0 0.0}
-mol clipplane color  5 2 top {0.5 0.5 0.5 }
-mol clipplane normal 5 2 top {0.0 0.0 1.0}
-mol clipplane status 5 2 top {0}
-mol representation NewCartoon 0.300000 40.000000 4.100000 0
-mol color ColorID 26
-mol selection {protein}
-mol material HardPlastic
-mol addrep top
-mol selupdate 3 top 0
-mol colupdate 3 top 0
-mol scaleminmax top 3 0.000000 0.000000
-mol smoothrep top 3 0
-mol drawframes top 3 {now}
-mol clipplane center 0 3 top {0.0 0.0 0.0}
-mol clipplane color  0 3 top {0.5 0.5 0.5 }
-mol clipplane normal 0 3 top {0.0 0.0 1.0}
-mol clipplane status 0 3 top {0}
-mol clipplane center 1 3 top {0.0 0.0 0.0}
-mol clipplane color  1 3 top {0.5 0.5 0.5 }
-mol clipplane normal 1 3 top {0.0 0.0 1.0}
-mol clipplane status 1 3 top {0}
-mol clipplane center 2 3 top {0.0 0.0 0.0}
-mol clipplane color  2 3 top {0.5 0.5 0.5 }
-mol clipplane normal 2 3 top {0.0 0.0 1.0}
-mol clipplane status 2 3 top {0}
-mol clipplane center 3 3 top {0.0 0.0 0.0}
-mol clipplane color  3 3 top {0.5 0.5 0.5 }
-mol clipplane normal 3 3 top {0.0 0.0 1.0}
-mol clipplane status 3 3 top {0}
-mol clipplane center 4 3 top {0.0 0.0 0.0}
-mol clipplane color  4 3 top {0.5 0.5 0.5 }
-mol clipplane normal 4 3 top {0.0 0.0 1.0}
-mol clipplane status 4 3 top {0}
-mol clipplane center 5 3 top {0.0 0.0 0.0}
-mol clipplane color  5 3 top {0.5 0.5 0.5 }
-mol clipplane normal 5 3 top {0.0 0.0 1.0}
-mol clipplane status 5 3 top {0}
+mol showrep top 1 0
 mol rename top 1a3n.pdb
 proc vmdrestoremycolors {} {
 color scale colors RWB {1.0 0.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
@@ -541,7 +491,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Display {FPS} white}
     {color Name {O} red3}
     {color Name {N} blue2}
-    {color Name {C} gray}
+    {color Name {C} yellow2}
     {color Name {LPA} green}
     {color Name {LPB} green}
     {color Name {F} pink}
@@ -567,12 +517,12 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Bi} ochre}
     {color Element {Bk} ochre}
     {color Element {Br} ochre}
-    {color Element {C} gray}
+    {color Element {C} green3}
     {color Element {Ca} ochre}
     {color Element {Cd} ochre}
     {color Element {Ce} ochre}
     {color Element {Cf} ochre}
-    {color Element {Cl} green}
+    {color Element {Cl} ochre}
     {color Element {Cm} ochre}
     {color Element {Co} ochre}
     {color Element {Cr} ochre}
@@ -663,7 +613,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Resname {MO} green}
     {color Resname {MGD} white}
     {color Resname {MES} pink}
-    {color Resname {HOH} cyan}
+    {color Resname {HOH} green}
     {color Chain {A} blue}
     {color Segname {} blue}
     {color Conformation {all} blue}
@@ -681,7 +631,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
   color change rgb 0 0.0 0.0 1.0
   color change rgb 2 0.3499999940395355 0.3499999940395355 0.3499999940395355
   color change rgb 3 1.0 0.5 0.0
-  color change rgb 4 1.0 1.0 0.0
+  color change rgb 4 0.8199999928474426 0.3400000035762787 0.0
   color change rgb 5 0.5 0.5 0.20000000298023224
   color change rgb 6 0.6000000238418579 0.6000000238418579 0.6000000238418579
   color change rgb 7 0.0 1.0 0.0

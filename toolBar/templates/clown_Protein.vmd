@@ -11,15 +11,23 @@ foreach mol [molinfo list] {
 }
 
 # Gradient option
-
 display backgroundgradient on
+
+# Gradient deepcue
+display depthcue off
+
+# Culling option
+display culling off
+
+# Render Mode
+display rendermode GLSL
 
 ##### Standard vmdstate
 
 set viewplist {}
 set fixedlist {}
 proc vmdrestoremymaterials {} {
-  set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome }
+  set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble RTChrome PDB }
   set mymlist [material list]
   foreach mat $mlist {
     if { [lsearch $mymlist $mat] == -1 } { 
@@ -99,14 +107,14 @@ proc vmdrestoremymaterials {} {
   material change outlinewidth Glass3 0.000000
   material change transmode Glass3 0.000000
   material change ambient Glossy 0.000000
-  material change diffuse Glossy 0.650000
+  material change diffuse Glossy 0.660000
   material change specular Glossy 1.000000
-  material change shininess Glossy 0.880000
+  material change shininess Glossy 0.860000
   material change mirror Glossy 0.000000
   material change opacity Glossy 1.000000
-  material change outline Glossy 0.000000
-  material change outlinewidth Glossy 0.000000
-  material change transmode Glossy 0.000000
+  material change outline Glossy 4.000000
+  material change outlinewidth Glossy 0.550000
+  material change transmode Glossy 1.000000
   material change ambient HardPlastic 0.000000
   material change diffuse HardPlastic 0.560000
   material change specular HardPlastic 0.280000
@@ -233,6 +241,15 @@ proc vmdrestoremymaterials {} {
   material change outline RTChrome 0.000000
   material change outlinewidth RTChrome 0.000000
   material change transmode RTChrome 0.000000
+  material change ambient PDB 0.000000
+  material change diffuse PDB 1.000000
+  material change specular PDB 0.000000
+  material change shininess PDB 0.000000
+  material change mirror PDB 0.000000
+  material change opacity PDB 1.000000
+  material change outline PDB 2.720000
+  material change outlinewidth PDB 0.800000
+  material change transmode PDB 0.000000
 }
 vmdrestoremymaterials
 # Atom selection macros
@@ -340,7 +357,7 @@ display height       6.000000
 display distance     -2.000000
 display projection   Orthographic
 display nearclip set 0.001000
-display farclip  set 10.000000
+display farclip  set 5.000000
 display depthcue   off
 display cuestart   0.500000
 display cueend     10.000000
@@ -355,19 +372,11 @@ display aodirect 0.300000
 display dof off
 display dof_fnumber 64.000000
 display dof_focaldist 0.700000
-graphics top color 1
-graphics top color 1
-graphics top color 1
-graphics top color 1
-graphics top color 1
-graphics top color 1
-graphics top color 1
-graphics top color 1
 mol delrep 0 top
-mol representation NewCartoon 0.300000 50.000000 4.100000 0
-mol color ColorID 20
-mol selection {all}
-mol material Glossy
+mol representation NewCartoon 1.710000 50.000000 1.060000 0
+mol color ResID
+mol selection {protein}
+mol material PDB
 mol addrep top
 mol selupdate 0 top 0
 mol colupdate 0 top 0
@@ -398,40 +407,6 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
-mol representation VDW 1.000000 47.000000
-mol color Name
-mol selection {not protein and not water}
-mol material Steel
-mol addrep top
-mol selupdate 1 top 0
-mol colupdate 1 top 0
-mol scaleminmax top 1 0.000000 0.000000
-mol smoothrep top 1 0
-mol drawframes top 1 {now}
-mol clipplane center 0 1 top {0.0 0.0 0.0}
-mol clipplane color  0 1 top {0.5 0.5 0.5 }
-mol clipplane normal 0 1 top {0.0 0.0 1.0}
-mol clipplane status 0 1 top {0}
-mol clipplane center 1 1 top {0.0 0.0 0.0}
-mol clipplane color  1 1 top {0.5 0.5 0.5 }
-mol clipplane normal 1 1 top {0.0 0.0 1.0}
-mol clipplane status 1 1 top {0}
-mol clipplane center 2 1 top {0.0 0.0 0.0}
-mol clipplane color  2 1 top {0.5 0.5 0.5 }
-mol clipplane normal 2 1 top {0.0 0.0 1.0}
-mol clipplane status 2 1 top {0}
-mol clipplane center 3 1 top {0.0 0.0 0.0}
-mol clipplane color  3 1 top {0.5 0.5 0.5 }
-mol clipplane normal 3 1 top {0.0 0.0 1.0}
-mol clipplane status 3 1 top {0}
-mol clipplane center 4 1 top {0.0 0.0 0.0}
-mol clipplane color  4 1 top {0.5 0.5 0.5 }
-mol clipplane normal 4 1 top {0.0 0.0 1.0}
-mol clipplane status 4 1 top {0}
-mol clipplane center 5 1 top {0.0 0.0 0.0}
-mol clipplane color  5 1 top {0.5 0.5 0.5 }
-mol clipplane normal 5 1 top {0.0 0.0 1.0}
-mol clipplane status 5 1 top {0}
 mol rename top 1a3n.pdb
 proc vmdrestoremycolors {} {
 color scale colors RWB {1.0 0.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
@@ -452,11 +427,15 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Display {BackgroundTop} orange2}
     {color Display {BackgroundBot} orange3}
     {color Display {FPS} white}
-    {color Name {C} yellow}
+    {color Name {C} yellow2}
     {color Name {LPA} green}
     {color Name {LPB} green}
+    {color Name {F} pink}
+    {color Name {M} cyan}
     {color Type {LP} green}
     {color Type {DRUD} pink}
+    {color Type {F} pink}
+    {color Type {M} cyan}
     {color Element {X} cyan}
     {color Element {Ac} red2}
     {color Element {Ag} ochre}
@@ -473,7 +452,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Bi} ochre}
     {color Element {Bk} ochre}
     {color Element {Br} ochre}
-    {color Element {C} pink}
+    {color Element {C} green3}
     {color Element {Ca} ochre}
     {color Element {Cd} ochre}
     {color Element {Ce} ochre}
@@ -563,22 +542,13 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Y} ochre}
     {color Element {Yb} ochre}
     {color Element {Zr} ochre}
+    {color Resname {SF4} silver}
+    {color Resname {MO} green}
+    {color Resname {MGD} white}
+    {color Resname {MES} pink}
+    {color Resname {HOH} green}
     {color Chain {A} blue}
-    {color Chain {B} red}
-    {color Chain {C} gray}
-    {color Chain {D} orange}
-    {color Chain {E} yellow}
-    {color Chain {F} tan}
-    {color Chain {G} silver}
-    {color Chain {H} green}
-    {color Segname {AP1} blue}
-    {color Segname {BP1} red}
-    {color Segname {CP1} gray}
-    {color Segname {DP1} orange}
-    {color Segname {EP1} yellow}
-    {color Segname {FP1} tan}
-    {color Segname {GP1} silver}
-    {color Segname {HP1} green}
+    {color Segname {} blue}
     {color Conformation {all} blue}
     {color Molecule {0} blue}
     {color Molecule {1a3n.pdb} blue}
@@ -607,8 +577,8 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
   color change rgb 16 0.94140625 0.15234375 0.06640625
   color change rgb 17 0.95703125 0.68359375 0.09765625
   color change rgb 18 0.550000011920929 0.8999999761581421 0.019999999552965164
-  color change rgb 19 0.0 0.8999999761581421 0.03999999910593033
-  color change rgb 20 0.0 0.44999998807907104 0.17000000178813934
+  color change rgb 19 0.0 0.5199999809265137 0.7200000286102295
+  color change rgb 20 0.44999998807907104 0.44999998807907104 0.44999998807907104
   color change rgb 21 0.0 0.8799999952316284 1.0
   color change rgb 22 0.0 0.7599999904632568 1.0
   color change rgb 23 0.019999999552965164 0.3799999952316284 0.6700000166893005
@@ -619,8 +589,8 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
   color change rgb 28 1.0 0.0 0.6600000262260437
   color change rgb 29 0.9800000190734863 0.0 0.23000000417232513
   color change rgb 30 0.8100000023841858 0.0 0.0
-  color change rgb 31 0.67578125 0.81640625 0.0
-  color change rgb 32 0.48046875 0.5703125 0.0390625
+  color change rgb 31 0.42578125 0.375 0.15234375
+  color change rgb 32 0.82421875 0.79296875 0.71875
 }
 vmdrestoremycolors
 label textsize 1.0

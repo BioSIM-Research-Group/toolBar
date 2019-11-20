@@ -1,4 +1,4 @@
-package provide toolBar 0.99
+package provide vmdToolBar 1.0
 
 # VMD tollBar plugin
 #
@@ -565,11 +565,11 @@ proc toolBar::displayCanvas {element chain resname resid type index} {
 	# ELEMENT
 	set x0 20
 	set y 38
-	$toolBar::topGui.frame1.canvas create text $x0 $y \
+	$toolBar::topGui.frame1.canvas create text [expr $x0+20] $y \
 		-fill white -justify right -font {Helvetica -30 bold} \
-		-text $element -tags data -anchor w
+		-text $element -tags "data element" -anchor e
 
-	if {[string length $element]!=1} {$toolBar::topGui.frame1.canvas itemconfigure element -font {Helvetica -24 bold} }
+	if {[string length $element]!=1} {$toolBar::topGui.frame1.canvas itemconfigure element -font {Helvetica -25 bold} }
 
 	# ATOM TYPE
 	set x [expr $x0 + 25]

@@ -10,7 +10,7 @@ namespace eval vmdPresets:: {
     variable version 1.0
     variable topGui ".gui_vmdPresets"
 
-    variable pathPresets [file join [file dirname [info script]] presets] ;# where the templates are located
+    variable pathPresets [file join [file dirname [info script]] ../templates] ;# where the templates are located
     variable colorRef "" ;# ref used to know color that is selected
 
 }
@@ -243,7 +243,7 @@ proc vmdPresets::gui {} {
             ] -in $f32 -row 3 -column 1 -sticky w -pady 0 -padx 10
         
 
-        variable clipScaleNear 0.50
+        variable clipScaleNear 0.0
 
         grid [ttk::scale $f32.clipScaleNear \
             -variable vmdPresets::clipScaleNear \
@@ -283,7 +283,7 @@ proc vmdPresets::gui {} {
 
         grid [ttk::button $f32.clipButtonReset \
             -text "Reset"\
-            -command {set vmdPresets::clipScaleNear 0.50; display nearclip set $vmdPresets::clipScaleNear; set vmdPresets::clipScaleFar 5.0; display nearclip set $vmdPresets::clipScaleFar}
+            -command {set vmdPresets::clipScaleNear 0.0; display nearclip set $vmdPresets::clipScaleNear; set vmdPresets::clipScaleFar 5.0; display nearclip set $vmdPresets::clipScaleFar}
             ] -in $f32 -row 3 -column 4 -sticky ns -pady 0 -padx 10   
      
      #   grid rowconfigure $f32.clipButtonReset     3   -weight 1
@@ -519,6 +519,7 @@ proc vmdPresets::DrawGradient {win col1Str col2Str text x0 y0 size tag} {
 proc vmdPresets::populateComboBoxBackgroundTemplates {fileExtension combobox} {
 
         # Populate the combobox with files
+
         set fileList [glob -dir $vmdPresets::pathPresets $fileExtension]
         set colorSchemes "" 
         foreach a $fileList {set colorSchemes [lappend colorSchemes [file tail [file rootname $a]]]}
@@ -750,14 +751,41 @@ proc vmdPresets::saveTemplate {file} {
   # Add gradient
   puts $fildes ""
   puts $fildes "# Gradient option"
-  puts $fildes ""
-
-  set a "yes"
-  if {$a=="yes" } {
+  if {[display get backgroundgradient]=="on" } {
     puts $fildes "display backgroundgradient on"
   } else {
     puts $fildes "display backgroundgradient off"
   }
+
+  # Add cue
+  puts $fildes ""
+  puts $fildes "# Gradient deepcue"
+  if {[display get depthcue]=="on" } {
+    puts $fildes "display depthcue on"
+  } else {
+    puts $fildes "display depthcue off"
+  }
+
+  # Culling
+  puts $fildes ""
+  puts $fildes "# Culling option"
+  if {[display get culling]=="on" } {
+    puts $fildes "display culling on"
+  } else {
+    puts $fildes "display culling off"
+  }
+
+
+ # Render Mode
+  puts $fildes ""
+  puts $fildes "# Render Mode"
+  if {[display get rendermode]=="GLSL" } {
+    puts $fildes "display rendermode GLSL"
+  } else {
+    puts $fildes "display rendermode normal"
+  }
+
+
 
   puts $fildes ""
   puts $fildes "##### Standard vmdstate"
@@ -879,18 +907,18 @@ proc vmdPresets:initVariables {} {
 
     # check the depthcue status
 
-    #if {[display get depthcue]=="off"} {
-    #        set vmdPresets::deepCueRadioButton 0
-    #} else {set vmdPresets::deepCueRadioButton 1}
+    if {[display get depthcue]=="off"} {
+            set vmdPresets::deepCueRadioButton 0
+    } else {set vmdPresets::deepCueRadioButton 1}
 
 
     #check culling
-    #if {[display get culling]=="off"} {
-    #        set vmdPresets::cullingCheckButton 1
-    #} else {set vmdPresets::cullingCheckButton 0}
+    if {[display get culling]=="off"} {
+            set vmdPresets::cullingCheckButton 0
+    } else {set vmdPresets::cullingCheckButton 1}
 
- vmdPresets::controlDeepCue
-  vmdPresets::controlCulling
+  #vmdPresets::controlDeepCue
+  #vmdPresets::controlCulling
 
 }
 
@@ -964,7 +992,7 @@ proc vmdPresets::controlclippingScale {which x} {
     set x [format %2.2f $x]
 
     #turn perspective on
-    vmdPresets::controlViewMode "Perspective" 
+   # vmdPresets::controlViewMode "Perspective" 
 
     if {$which=="Near" } {
         display nearclip set $x

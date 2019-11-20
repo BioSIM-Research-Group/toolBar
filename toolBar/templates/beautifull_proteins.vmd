@@ -11,8 +11,16 @@ foreach mol [molinfo list] {
 }
 
 # Gradient option
-
 display backgroundgradient on
+
+# Gradient deepcue
+display depthcue on
+
+# Culling option
+display culling off
+
+# Render Mode
+display rendermode GLSL
 
 ##### Standard vmdstate
 
@@ -565,6 +573,376 @@ graphics top color 1
 graphics top color 1
 graphics top color 1
 graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
 mol delrep 0 top
 mol representation CPK 1.100000 0.900000 47.000000 37.000000
 mol color Element
@@ -600,9 +978,9 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
-mol representation VDW 0.300000 50.000000
-mol color Element
-mol selection {hydrogen and not (protein or water)}
+mol representation NewCartoon 0.300000 10.000000 4.100000 0
+mol color ColorID 1
+mol selection {protein}
 mol material Glossy
 mol addrep top
 mol selupdate 1 top 0
@@ -634,143 +1012,6 @@ mol clipplane center 5 1 top {0.0 0.0 0.0}
 mol clipplane color  5 1 top {0.5 0.5 0.5 }
 mol clipplane normal 5 1 top {0.0 0.0 1.0}
 mol clipplane status 5 1 top {0}
-mol representation DynamicBonds 1.600000 0.200000 52.000000
-mol color Element
-mol selection {all within 2 of hydrogen and not (protein or water)}
-mol material Glossy
-mol addrep top
-mol selupdate 2 top 0
-mol colupdate 2 top 0
-mol scaleminmax top 2 0.000000 0.000000
-mol smoothrep top 2 0
-mol drawframes top 2 {now}
-mol clipplane center 0 2 top {0.0 0.0 0.0}
-mol clipplane color  0 2 top {0.5 0.5 0.5 }
-mol clipplane normal 0 2 top {0.0 0.0 1.0}
-mol clipplane status 0 2 top {0}
-mol clipplane center 1 2 top {0.0 0.0 0.0}
-mol clipplane color  1 2 top {0.5 0.5 0.5 }
-mol clipplane normal 1 2 top {0.0 0.0 1.0}
-mol clipplane status 1 2 top {0}
-mol clipplane center 2 2 top {0.0 0.0 0.0}
-mol clipplane color  2 2 top {0.5 0.5 0.5 }
-mol clipplane normal 2 2 top {0.0 0.0 1.0}
-mol clipplane status 2 2 top {0}
-mol clipplane center 3 2 top {0.0 0.0 0.0}
-mol clipplane color  3 2 top {0.5 0.5 0.5 }
-mol clipplane normal 3 2 top {0.0 0.0 1.0}
-mol clipplane status 3 2 top {0}
-mol clipplane center 4 2 top {0.0 0.0 0.0}
-mol clipplane color  4 2 top {0.5 0.5 0.5 }
-mol clipplane normal 4 2 top {0.0 0.0 1.0}
-mol clipplane status 4 2 top {0}
-mol clipplane center 5 2 top {0.0 0.0 0.0}
-mol clipplane color  5 2 top {0.5 0.5 0.5 }
-mol clipplane normal 5 2 top {0.0 0.0 1.0}
-mol clipplane status 5 2 top {0}
-mol representation NewCartoon 0.300000 10.000000 4.100000 0
-mol color ColorID 1
-mol selection {protein}
-mol material Glossy
-mol addrep top
-mol selupdate 3 top 0
-mol colupdate 3 top 0
-mol scaleminmax top 3 0.000000 0.000000
-mol smoothrep top 3 0
-mol drawframes top 3 {now}
-mol clipplane center 0 3 top {0.0 0.0 0.0}
-mol clipplane color  0 3 top {0.5 0.5 0.5 }
-mol clipplane normal 0 3 top {0.0 0.0 1.0}
-mol clipplane status 0 3 top {0}
-mol clipplane center 1 3 top {0.0 0.0 0.0}
-mol clipplane color  1 3 top {0.5 0.5 0.5 }
-mol clipplane normal 1 3 top {0.0 0.0 1.0}
-mol clipplane status 1 3 top {0}
-mol clipplane center 2 3 top {0.0 0.0 0.0}
-mol clipplane color  2 3 top {0.5 0.5 0.5 }
-mol clipplane normal 2 3 top {0.0 0.0 1.0}
-mol clipplane status 2 3 top {0}
-mol clipplane center 3 3 top {0.0 0.0 0.0}
-mol clipplane color  3 3 top {0.5 0.5 0.5 }
-mol clipplane normal 3 3 top {0.0 0.0 1.0}
-mol clipplane status 3 3 top {0}
-mol clipplane center 4 3 top {0.0 0.0 0.0}
-mol clipplane color  4 3 top {0.5 0.5 0.5 }
-mol clipplane normal 4 3 top {0.0 0.0 1.0}
-mol clipplane status 4 3 top {0}
-mol clipplane center 5 3 top {0.0 0.0 0.0}
-mol clipplane color  5 3 top {0.5 0.5 0.5 }
-mol clipplane normal 5 3 top {0.0 0.0 1.0}
-mol clipplane status 5 3 top {0}
-mol representation CPK 0.700000 0.500000 47.000000 37.000000
-mol color Name
-mol selection {(same residue as all  within 5 of (all and not (protein or water))) and protein}
-mol material Glossy
-mol addrep top
-mol selupdate 4 top 0
-mol colupdate 4 top 0
-mol scaleminmax top 4 0.000000 0.000000
-mol smoothrep top 4 0
-mol drawframes top 4 {now}
-mol clipplane center 0 4 top {0.0 0.0 0.0}
-mol clipplane color  0 4 top {0.5 0.5 0.5 }
-mol clipplane normal 0 4 top {0.0 0.0 1.0}
-mol clipplane status 0 4 top {0}
-mol clipplane center 1 4 top {0.0 0.0 0.0}
-mol clipplane color  1 4 top {0.5 0.5 0.5 }
-mol clipplane normal 1 4 top {0.0 0.0 1.0}
-mol clipplane status 1 4 top {0}
-mol clipplane center 2 4 top {0.0 0.0 0.0}
-mol clipplane color  2 4 top {0.5 0.5 0.5 }
-mol clipplane normal 2 4 top {0.0 0.0 1.0}
-mol clipplane status 2 4 top {0}
-mol clipplane center 3 4 top {0.0 0.0 0.0}
-mol clipplane color  3 4 top {0.5 0.5 0.5 }
-mol clipplane normal 3 4 top {0.0 0.0 1.0}
-mol clipplane status 3 4 top {0}
-mol clipplane center 4 4 top {0.0 0.0 0.0}
-mol clipplane color  4 4 top {0.5 0.5 0.5 }
-mol clipplane normal 4 4 top {0.0 0.0 1.0}
-mol clipplane status 4 4 top {0}
-mol clipplane center 5 4 top {0.0 0.0 0.0}
-mol clipplane color  5 4 top {0.5 0.5 0.5 }
-mol clipplane normal 5 4 top {0.0 0.0 1.0}
-mol clipplane status 5 4 top {0}
-mol representation HBonds 3.000000 20.000000 1.000000
-mol color ColorID 4
-mol selection {(same residue as all  within 5 of (all and not protein)) }
-mol material Glossy
-mol addrep top
-mol selupdate 5 top 0
-mol colupdate 5 top 0
-mol scaleminmax top 5 0.000000 0.000000
-mol smoothrep top 5 0
-mol drawframes top 5 {now}
-mol clipplane center 0 5 top {0.0 0.0 0.0}
-mol clipplane color  0 5 top {0.5 0.5 0.5 }
-mol clipplane normal 0 5 top {0.0 0.0 1.0}
-mol clipplane status 0 5 top {0}
-mol clipplane center 1 5 top {0.0 0.0 0.0}
-mol clipplane color  1 5 top {0.5 0.5 0.5 }
-mol clipplane normal 1 5 top {0.0 0.0 1.0}
-mol clipplane status 1 5 top {0}
-mol clipplane center 2 5 top {0.0 0.0 0.0}
-mol clipplane color  2 5 top {0.5 0.5 0.5 }
-mol clipplane normal 2 5 top {0.0 0.0 1.0}
-mol clipplane status 2 5 top {0}
-mol clipplane center 3 5 top {0.0 0.0 0.0}
-mol clipplane color  3 5 top {0.5 0.5 0.5 }
-mol clipplane normal 3 5 top {0.0 0.0 1.0}
-mol clipplane status 3 5 top {0}
-mol clipplane center 4 5 top {0.0 0.0 0.0}
-mol clipplane color  4 5 top {0.5 0.5 0.5 }
-mol clipplane normal 4 5 top {0.0 0.0 1.0}
-mol clipplane status 4 5 top {0}
-mol clipplane center 5 5 top {0.0 0.0 0.0}
-mol clipplane color  5 5 top {0.5 0.5 0.5 }
-mol clipplane normal 5 5 top {0.0 0.0 1.0}
-mol clipplane status 5 5 top {0}
-mol showrep top 5 0
 mol rename top 1a3n.pdb
 proc vmdrestoremycolors {} {
 color scale colors RWB {1.0 0.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
@@ -795,9 +1036,11 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Name {LPA} green}
     {color Name {LPB} green}
     {color Name {F} pink}
+    {color Name {M} cyan}
     {color Type {LP} green}
     {color Type {DRUD} pink}
     {color Type {F} pink}
+    {color Type {M} cyan}
     {color Element {X} cyan}
     {color Element {Ac} red2}
     {color Element {Ag} ochre}
@@ -904,31 +1147,16 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Y} ochre}
     {color Element {Yb} ochre}
     {color Element {Zr} ochre}
-    {color Resname {HEM} silver}
+    {color Resname {SF4} silver}
+    {color Resname {MO} green}
+    {color Resname {MGD} white}
+    {color Resname {MES} pink}
     {color Resname {HOH} green}
     {color Chain {A} blue}
-    {color Chain {B} red}
-    {color Chain {C} gray}
-    {color Chain {D} orange}
-    {color Chain {E} yellow}
-    {color Chain {F} tan}
-    {color Chain {G} silver}
-    {color Chain {H} green}
-    {color Segname {AP1} blue}
-    {color Segname {BP1} red}
-    {color Segname {CP1} gray}
-    {color Segname {DP1} orange}
-    {color Segname {EP1} yellow}
-    {color Segname {FP1} tan}
-    {color Segname {GP1} silver}
-    {color Segname {HP1} green}
     {color Segname {} blue}
     {color Conformation {all} blue}
-    {color Conformation {A} red}
-    {color Conformation {B} gray}
     {color Molecule {0} blue}
     {color Molecule {1a3n.pdb} blue}
-    {color Molecule {1} gray}
     {color Structure {3_10_Helix} blue}
     {color Surface {Grasp} gray}
     {color Labels {Springs} orange}
