@@ -34,7 +34,6 @@ namespace eval toolBar:: {
 								{render B \"Image render\"} {tkcon C \"Tk Console\"} \
 								{query C \"Pick atoms\"} \
 								{presets B \"VMD Templates\"} \
-								{about B \"About\"} \
 								{quit B \"Quit\"}"
 
 		variable cmdType	0 ; #variable used to reset buttons
@@ -447,11 +446,6 @@ proc toolBar::cmd {cmd} {
 							destroy  $::vmdPresets::topGui
 						} else {vmdPresets::gui}						 
 					}
-
-			about	{
-											 
-					}
-
 			quit 		{
  						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
 							switch $answer {
