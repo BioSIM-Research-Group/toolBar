@@ -42,7 +42,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "0.99"
+		variable version "1.0"
 
 		# Paths
 		variable pathImages [file join [file dirname [info script]] style/icons]
@@ -687,8 +687,6 @@ proc toolBar::quit {} {
 	wm withdraw $toolBar::topGui
 }
 
+
+#Start toolBar
 toolBar::startGui
-
-#toolBar::displayCanvas "Br" "A" "GLU" "122" "NG9" "1223"
-
-#vmdPresets::gui
