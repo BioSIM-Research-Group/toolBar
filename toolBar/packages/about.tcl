@@ -30,8 +30,7 @@ proc toolBar::about {} {
   grid [canvas $toolBar::aboutGui.frame0.canvas -bg $color1 -width 400 -height 150 -highlightthickness 0] -in $toolBar::aboutGui.frame0
 
 
-  
-  DrawGradient $toolBar::aboutGui.frame0.canvas $color1	$color2 0 0 400 150
+  toolBar::DrawGradient $toolBar::aboutGui.frame0.canvas $color1	$color2 0 0 400 150
 
   #Draw text
   $toolBar::aboutGui.frame0.canvas create text 20 80 \
@@ -58,7 +57,7 @@ proc toolBar::about {} {
 
   set color1 #fffaf0
   set color2 #ffffff
-  DrawGradient $toolBar::aboutGui.frame1.canvas1 $color1	$color2 0 0 400 270
+  toolBar::DrawGradient $toolBar::aboutGui.frame1.canvas1 $color1	$color2 0 0 400 270
 
   #Draw text 1
   $toolBar::aboutGui.frame1.canvas1 create text 20 50 \
@@ -127,7 +126,7 @@ proc toolBar::about {} {
 	grid [button $toolBar::aboutGui.frame3.visitWebsite \
 		-text {Web Page} \
     -height 2 \
-		-command {invokeBrowser "https://biosim.pt/software/"} \
+		-command {toolBar::invokeBrowser "https://biosim.pt/software/"} \
 		] -in $toolBar::aboutGui.frame3  -row 0 -column 0 -sticky ew
 
 
@@ -136,7 +135,7 @@ proc toolBar::about {} {
 }
 
 
-proc invokeBrowser {url} {
+proc toolBar::invokeBrowser {url} {
   # open is the OS X equivalent to xdg-open on Linux, start is used on Windows
   set commands {xdg-open open start}
   foreach browser $commands {
@@ -160,7 +159,7 @@ proc invokeBrowser {url} {
 
 
 
-proc DrawGradient {win col1Str col2Str x0 y0 size height} {
+proc toolBar::DrawGradient {win col1Str col2Str x0 y0 size height} {
 
     #set height 200
     set width [expr $x0 + $size]
