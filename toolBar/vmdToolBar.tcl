@@ -23,6 +23,7 @@ namespace eval toolBar:: {
         variable topGui			".toolBar"
 		variable selVGui		".toolBar.selV"
 		variable optionsGui		".toolBar.selV.options"
+		variable aboutGui		".toolBar.about"
 		variable buttonOrder "	{open B \"New molecule...\"} {save B \"Save coordinates...\"} \
 								{openVisual B \"Load visualization state...\"} {saveVisual B \"Save visualization state...\"} \
 								{main C \"Show/Hide VMD Main\"} {rotate C \"Mouse mode: rotate\"} \
@@ -34,6 +35,7 @@ namespace eval toolBar:: {
 								{render B \"Image render\"} {tkcon C \"Tk Console\"} \
 								{query C \"Pick atoms\"} \
 								{presets B \"VMD Templates\"} \
+								{about B \"About\"}
 								{quit B \"Quit\"}"
 
 		variable cmdType	0 ; #variable used to reset buttons
@@ -72,6 +74,7 @@ namespace eval toolBar:: {
 		package require vmdPresets 	1.0
 		package require balloon 	1.0
 		package require selectionManager	2.0
+		package require toolBarAbout	1.0.0
 }
 
 proc toolBar::moveWindow1 {x y} {
@@ -446,6 +449,13 @@ proc toolBar::cmd {cmd} {
 							destroy  $::vmdPresets::topGui
 						} else {vmdPresets::gui}						 
 					}
+
+			about	{
+						if {[winfo exists  $::toolBar::aboutGui]} {
+							destroy  $::toolBar::aboutGui
+						} else {toolBar::about}						 
+					}
+
 			quit 		{
  						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
 							switch $answer {
