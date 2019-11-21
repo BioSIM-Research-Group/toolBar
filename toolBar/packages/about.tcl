@@ -58,7 +58,7 @@ proc toolBar::about {} {
 
   #### Information 1
   grid [ttk::frame $toolBar::aboutGui.frame1] -row 1 -column 0
-	grid [canvas $toolBar::aboutGui.frame1.canvas1 -bg #fffaf0 -width 400 -height 280 -highlightthickness 0] -in $toolBar::aboutGui.frame1
+	grid [canvas $toolBar::aboutGui.frame1.canvas1 -bg #fffaf0 -width 400 -height 270 -highlightthickness 0] -in $toolBar::aboutGui.frame1
 
 
   #set color1 #232526
@@ -87,7 +87,7 @@ proc toolBar::about {} {
 	
 
    #Draw text 2
-  $toolBar::aboutGui.frame1.canvas1 create text 20 200 \
+  $toolBar::aboutGui.frame1.canvas1 create text 20 210 \
                 -text "UCIBIO@REQUIMTE, BioSIM\nDepartamento de Biomedicina, Room 22P4EP\nFaculdade de Medicina da Universidade do Porto\nAlameda Professor Hernani Monteiro,\n4200-319 Porto\nPortugal"  \
                 -font {Helvetica -12} \
                 -anchor w \
@@ -95,7 +95,10 @@ proc toolBar::about {} {
                 -fill  #575756 \
                 -tag "delete"
 
-	
+	#Draw line
+	$toolBar::aboutGui.frame1.canvas1 create line 20 160 380 160 -fill #2A2A28 -smooth true -width 1
+
+
 
   #### Logos 1
   grid [ttk::frame $toolBar::aboutGui.frame2] -row 2 -column 0
@@ -113,7 +116,7 @@ proc toolBar::about {} {
         -anchor w
 
   #Image 3
-  $toolBar::aboutGui.frame2.canvas1 create image 300 35 \
+  $toolBar::aboutGui.frame2.canvas1 create image 300 32 \
         -image [image create photo -file "$toolBar::pathImages/../logos/ucibio.gif"] \
         -anchor w
 
@@ -122,8 +125,9 @@ proc toolBar::about {} {
   #### Button
   grid [ttk::frame $toolBar::aboutGui.frame3] -row 3 -column 0 -sticky ew
 
-	grid [ttk::button $toolBar::aboutGui.frame3.visitWebsite \
+	grid [button $toolBar::aboutGui.frame3.visitWebsite \
 		-text {Web Page} \
+    -height 2 \
 		-command {invokeBrowser "https://biosim.pt/software/"} \
 		] -in $toolBar::aboutGui.frame3  -row 0 -column 0 -sticky ew
 
