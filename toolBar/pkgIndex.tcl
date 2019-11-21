@@ -5,3 +5,4 @@ package ifneeded balloon                                        1.0 [list source
 package ifneeded vmdPresets                                     1.0 [list source [file join $dir/packages/vmdPresets.tcl]]
 package ifneeded selectionManager                               1.0 [list source [file join $dir/packages/selectionManager.tcl]]
 package ifneeded selectionManager                               2.0 [list source [file join $dir/packages/newSelectionManager.tcl]]
+package ifneeded toolBarAbout                                   1.0.0 [list source [file join $dir/packages/about.tcl]]
