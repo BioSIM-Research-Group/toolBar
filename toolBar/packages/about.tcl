@@ -21,22 +21,17 @@ proc toolBar::about {} {
 	wm resizable $::toolBar::aboutGui 0 0
 
 
-  #### Colors
 
-  set color1 #CE9FFC
-  set color2 #7367F0
-
-#set color1 #8f92ba
-#set color2 #949ad9
-  
-
-
+  set color1 #7367F0
+  set color2 #CE9FFC
 
   #### header
   grid [ttk::frame $toolBar::aboutGui.frame0] -row 0 -column 0
   grid [canvas $toolBar::aboutGui.frame0.canvas -bg $color1 -width 400 -height 150 -highlightthickness 0] -in $toolBar::aboutGui.frame0
 
-  DrawGradient $toolBar::aboutGui.frame0.canvas $color1	$color2 0 0 400
+
+  
+  DrawGradient $toolBar::aboutGui.frame0.canvas $color1	$color2 0 0 400 150
 
   #Draw text
   $toolBar::aboutGui.frame0.canvas create text 20 80 \
@@ -61,9 +56,9 @@ proc toolBar::about {} {
 	grid [canvas $toolBar::aboutGui.frame1.canvas1 -bg #fffaf0 -width 400 -height 270 -highlightthickness 0] -in $toolBar::aboutGui.frame1
 
 
-  #set color1 #232526
-  #set color2 #414345
-  #DrawGradient $toolBar::aboutGui.frame1.canvas1 $color1	$color2 0 0 400
+  set color1 #fffaf0
+  set color2 #ffffff
+  DrawGradient $toolBar::aboutGui.frame1.canvas1 $color1	$color2 0 0 400 270
 
   #Draw text 1
   $toolBar::aboutGui.frame1.canvas1 create text 20 50 \
@@ -103,6 +98,10 @@ proc toolBar::about {} {
   #### Logos 1
   grid [ttk::frame $toolBar::aboutGui.frame2] -row 2 -column 0
 	grid [canvas $toolBar::aboutGui.frame2.canvas1 -bg white -width 400 -height 60 -highlightthickness 0] -in $toolBar::aboutGui.frame2
+
+  #set color1 white
+  #set color2 grey
+  #DrawGradient $toolBar::aboutGui.frame2.canvas1 $color1	$color2 0 0 400 60
 
 
   #Image 1
@@ -161,9 +160,9 @@ proc invokeBrowser {url} {
 
 
 
-proc DrawGradient {win col1Str col2Str x0 y0 size} {
+proc DrawGradient {win col1Str col2Str x0 y0 size height} {
 
-    set height 200
+    #set height 200
     set width [expr $x0 + $size]
     
     set color1 [winfo rgb $win $col1Str]
