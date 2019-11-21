@@ -331,7 +331,7 @@ proc vmdRender::render {} {
             append cmd " -format BMP -o $vmdRender::path.bmp"
             set theFilename "$vmdRender::path.bmp"
         }
-        "PPM : 24-bit PPM" {
+        "PPM : 24-bit PPMr" {
             append cmd " -format PPM -o $vmdRender::path.ppm"
             set theFilename "$vmdRender::path.ppm"
         }

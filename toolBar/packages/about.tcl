@@ -16,43 +16,120 @@ proc toolBar::about {} {
 	set sHeight [expr [winfo vrootheight $::toolBar::aboutGui] -50]
 
 	#### Change the location of window
-    wm geometry $::toolBar::aboutGui 400x250+[expr $sWidth / 2 - 200]+100
+    wm geometry $::toolBar::aboutGui 400x515+[expr $sWidth / 2 - 200]+100
 	$::toolBar::aboutGui configure -background {white}
 	wm resizable $::toolBar::aboutGui 0 0
 
-    #### Information
-    pack [ttk::frame $toolBar::aboutGui.frame0]
-	pack [canvas $toolBar::aboutGui.frame0.frame -bg white -width 400 -height 250 -highlightthickness 0] -in $toolBar::aboutGui.frame0
 
-	place [message $toolBar::aboutGui.frame0.frame.label1 \
-		-text "ToolBar is a VMD extensions that provides easy access to a set of natively available tools and also provides additional features to make VMD even more powerful and user-friendly.\nToolBar was developed by Henrique S. Fernandes and Nuno M.F.S.A. Cerqueira at the BioSIM Research Group of the Faculty of Medicine of the University of Porto. \nToolBar is free and can be used for any porpose. Please, if you use ToolBar, cite us. \n All rights reserved - 2019" \
-		-width 380 \
-	] -in $toolBar::aboutGui.frame0.frame -x 10 -y 10 -width 380 -height 170 -anchor nw -bordermode ignore
+  #### Colors
 
-	place [label $toolBar::aboutGui.frame0.frame.biosimLogo \
+  set color1 #CE9FFC
+  set color2 #7367F0
+
+#set color1 #8f92ba
+#set color2 #949ad9
+  
+
+
+
+  #### header
+  grid [ttk::frame $toolBar::aboutGui.frame0] -row 0 -column 0
+  grid [canvas $toolBar::aboutGui.frame0.canvas -bg $color1 -width 400 -height 150 -highlightthickness 0] -in $toolBar::aboutGui.frame0
+
+  DrawGradient $toolBar::aboutGui.frame0.canvas $color1	$color2 0 0 400
+
+  #Draw text
+  $toolBar::aboutGui.frame0.canvas create text 20 80 \
+                -text "VMDToolBar"  \
+                -font {Arial -40 bold} \
+                -anchor w \
+                -fill white \
+                -tag "delete"
+
+  #Draw text
+  $toolBar::aboutGui.frame0.canvas create text 20 110 \
+                -text "(version $toolBar::version)"  \
+                -font {Arial -12 bold} \
+                -anchor w \
+                -fill white \
+                -tag "delete"
+
+
+
+  #### Information 1
+  grid [ttk::frame $toolBar::aboutGui.frame1] -row 1 -column 0
+	grid [canvas $toolBar::aboutGui.frame1.canvas1 -bg #fffaf0 -width 400 -height 280 -highlightthickness 0] -in $toolBar::aboutGui.frame1
+
+
+  #set color1 #232526
+  #set color2 #414345
+  #DrawGradient $toolBar::aboutGui.frame1.canvas1 $color1	$color2 0 0 400
+
+  #Draw text 1
+  $toolBar::aboutGui.frame1.canvas1 create text 20 50 \
+                -text "ToolBar is a VMD extension that provides easy access to a set of natively available tools and also provides new features to make VMD an even more powerful and user-friendly application."  \
+                -font {Helvetica -15} \
+                -anchor w \
+                -width 370 \
+                -fill #575756\
+                -tag "delete"
+
+	
+  #Draw text 2
+  $toolBar::aboutGui.frame1.canvas1 create text 20 120 \
+                -text "ToolBar was developed by: \nHenrique S. Fernandes and Nuno M.F.S.A. Cerqueira"  \
+                -font {Helvetica -15} \
+                -anchor w \
+                -width 370 \
+                -fill #575756 \
+                -tag "delete"
+
+	
+
+   #Draw text 2
+  $toolBar::aboutGui.frame1.canvas1 create text 20 200 \
+                -text "UCIBIO@REQUIMTE, BioSIM\nDepartamento de Biomedicina, Room 22P4EP\nFaculdade de Medicina da Universidade do Porto\nAlameda Professor Hernani Monteiro,\n4200-319 Porto\nPortugal"  \
+                -font {Helvetica -12} \
+                -anchor w \
+                -width 370 \
+                -fill  #575756 \
+                -tag "delete"
+
+	
+
+  #### Logos 1
+  grid [ttk::frame $toolBar::aboutGui.frame2] -row 2 -column 0
+	grid [canvas $toolBar::aboutGui.frame2.canvas1 -bg white -width 400 -height 60 -highlightthickness 0] -in $toolBar::aboutGui.frame2
+
+
+  #Image 1
+  $toolBar::aboutGui.frame2.canvas1 create image 50 30 \
         -image [image create photo -file "$toolBar::pathImages/../logos/biosim.gif"] \
-        -font {Helvetica -25} \
-        -anchor center \
-		] -in $toolBar::aboutGui.frame0.frame -x 10 -y 180 -width 100 -height 50 -anchor nw -bordermode ignore
+        -anchor w
 
-	place [label $toolBar::aboutGui.frame0.frame.fmupLogo \
+  #Image 2
+  $toolBar::aboutGui.frame2.canvas1 create image 170 30 \
         -image [image create photo -file "$toolBar::pathImages/../logos/fmup.gif"] \
-        -font {Helvetica -25} \
-        -anchor center \
-		] -in $toolBar::aboutGui.frame0.frame -x 120 -y 180 -width 110 -height 50 -anchor nw -bordermode ignore
+        -anchor w
 
-	place [label $toolBar::aboutGui.frame0.frame.ucibioLogo \
+  #Image 3
+  $toolBar::aboutGui.frame2.canvas1 create image 300 35 \
         -image [image create photo -file "$toolBar::pathImages/../logos/ucibio.gif"] \
-        -font {Helvetica -25} \
-        -anchor center \
-		] -in $toolBar::aboutGui.frame0.frame -x 230 -y 180 -width 50 -height 50 -anchor nw -bordermode ignore
+        -anchor w
 
-	place [button $toolBar::aboutGui.frame0.frame.visitWebsite \
+
+
+  #### Button
+  grid [ttk::frame $toolBar::aboutGui.frame3] -row 3 -column 0 -sticky ew
+
+	grid [ttk::button $toolBar::aboutGui.frame3.visitWebsite \
 		-text {Web Page} \
 		-command {invokeBrowser "https://biosim.pt/software/"} \
-		] -in $toolBar::aboutGui.frame0.frame -x 290 -y 215 -width 100
+		] -in $toolBar::aboutGui.frame3  -row 0 -column 0 -sticky ew
 
 
+  grid rowconfigure $toolBar::aboutGui.frame3   3   -weight 1
+  grid columnconfigure $toolBar::aboutGui.frame3   0   -weight 1
 }
 
 
@@ -77,3 +154,48 @@ proc invokeBrowser {url} {
     return -code error "couldn't execute '$command': $error"
   }
 }
+
+
+
+proc DrawGradient {win col1Str col2Str x0 y0 size} {
+
+    set height 200
+    set width [expr $x0 + $size]
+    
+    set color1 [winfo rgb $win $col1Str]
+    set color2 [winfo rgb $win $col2Str]
+
+    foreach {r1 g1 b1} $color1 break
+    foreach {r2 g2 b2} $color2 break
+    set rRange [expr $r2.0 - $r1]
+    set gRange [expr $g2.0 - $g1]
+    set bRange [expr $b2.0 - $b1]
+
+    set rRatio [expr $rRange / $width]
+    set gRatio [expr $gRange / $width]
+    set bRatio [expr $bRange / $width]
+
+
+    # Draw Line
+    for {set i $x0} {$i < $width} {incr i} {
+        set nR [expr int( $r1 + ($rRatio * $i) )]
+        set nG [expr int( $g1 + ($gRatio * $i) )]
+        set nB [expr int( $b1 + ($bRatio * $i) )]
+
+        set col [format {%4.4x} $nR]
+        append col [format {%4.4x} $nG]
+        append col [format {%4.4x} $nB]
+
+        #$win create line $i $y0 [expr $y0 + $height] $i -fill #${col} -tag "delete"
+        $win create line $i $y0 $i [expr $y0 + $height] -fill #${col} -tag "delete"
+        
+
+    }
+
+    #Draw box
+    $win create rect $x0 $y0 $width [expr $y0 + $height] \
+        -outline black \
+        -tag "delete"
+
+    return $win
+ }
