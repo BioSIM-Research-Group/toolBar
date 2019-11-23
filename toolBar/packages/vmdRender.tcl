@@ -233,7 +233,7 @@ proc vmdRender::gui {} {
     set f5 $vmdRender::topGui.frame5
     grid [ttk::frame $f5] -in $vmdRender::topGui -sticky sew -pady [list 10 0]
 
-    grid [button $f5.render \
+    grid [ttk::button $f5.render \
         -text "Render" \
         -width 15 \
         -command {vmdRender::render} \

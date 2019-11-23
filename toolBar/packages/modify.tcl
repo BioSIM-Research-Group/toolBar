@@ -1229,95 +1229,80 @@ proc toolBar::guiAngleModif {} {
 	pack [ttk::frame $toolBar::angleModif.frame0]
 	pack [canvas $toolBar::angleModif.frame0.frame -bg white -width 400 -height 260 -highlightthickness 0] -in $toolBar::angleModif.frame0 
         
-    place [ttk::label $toolBar::angleModif.frame0.frame.title \
+    place [label $toolBar::angleModif.frame0.frame.title \
 		    -text {Three atoms were selected. You can adjust the angle.} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 10 -width 380
 
-    place [ttk::label $toolBar::angleModif.frame0.frame.atom1 \
+    place [label $toolBar::angleModif.frame0.frame.atom1 \
 		    -text {Atom 1:} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 30 -width 60       
 
-    place [ttk::entry $toolBar::angleModif.frame0.frame.atom1Index \
+    place [entry $toolBar::angleModif.frame0.frame.atom1Index \
 		        -textvariable {toolBar::atom1AngleSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 30 -width 100
 
-    place [ttk::label $toolBar::angleModif.frame0.frame.atom1OptionsLabel \
+    place [label $toolBar::angleModif.frame0.frame.atom1OptionsLabel \
 		        -text {Options: } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 30 -width 50
     
     variable atom1AngleOpt "Fixed Atom"
     place [ttk::combobox $toolBar::angleModif.frame0.frame.atom1Options \
 		        -textvariable {toolBar::atom1AngleOpt} \
 			    -state readonly \
-				-style toolBar.white.TCombobox \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
 		        ] -in $toolBar::angleModif.frame0.frame -x 250 -y 30 -width 140
 
         
-    place [ttk::label $toolBar::angleModif.frame0.frame.atom2 \
+    place [label $toolBar::angleModif.frame0.frame.atom2 \
 		    -text {Atom 2:} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 60 -width 60
 
-    place [ttk::entry $toolBar::angleModif.frame0.frame.atom2Index \
+    place [entry $toolBar::angleModif.frame0.frame.atom2Index \
 		        -textvariable {toolBar::atom2AngleSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 60 -width 100
 
 
-    place [ttk::label $toolBar::angleModif.frame0.frame.atom3 \
+    place [label $toolBar::angleModif.frame0.frame.atom3 \
 		    -text {Atom 3:} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 90 -width 60
 
-    place [ttk::entry $toolBar::angleModif.frame0.frame.atom3Index \
+    place [entry $toolBar::angleModif.frame0.frame.atom3Index \
 		        -textvariable {toolBar::atom3AngleSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 90 -width 100
 
-    place [ttk::label $toolBar::angleModif.frame0.frame.atom3OptionsLabel \
+    place [label $toolBar::angleModif.frame0.frame.atom3OptionsLabel \
 		        -text {Options: } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 90 -width 50
     
     variable atom3AngleOpt "Move Atom"
     place [ttk::combobox $toolBar::angleModif.frame0.frame.atom3Options \
 		        -textvariable {toolBar::atom3AngleOpt} \
 			    -state readonly \
-				-style toolBar.white.TCombobox \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
 		        ] -in $toolBar::angleModif.frame0.frame -x 250 -y 90 -width 140
 
 
-	place [ttk::label $toolBar::angleModif.frame0.frame.customAtom1 \
+	place [label $toolBar::angleModif.frame0.frame.customAtom1 \
 		    -text "Custom Selection (Atom 1):" \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 120 -width 180
 
     variable customSelection1 "none"
-	place [ttk::entry $toolBar::angleModif.frame0.frame.customAtom1Entry \
+	place [entry $toolBar::angleModif.frame0.frame.customAtom1Entry \
 		        -textvariable {toolBar::customSelection1} \
-				-style toolBar.TEntry \
 				-state disabled \
 		        ] -in $toolBar::angleModif.frame0.frame -x 200 -y 120 -width 190
 
-	place [ttk::label $toolBar::angleModif.frame0.frame.customAtom2 \
+	place [label $toolBar::angleModif.frame0.frame.customAtom2 \
 		    -text "Custom Selection (Atom 2):" \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 150 -width 180
 
     variable customSelection2 "none"
-	place [ttk::entry $toolBar::angleModif.frame0.frame.customAtom2Entry \
+	place [entry $toolBar::angleModif.frame0.frame.customAtom2Entry \
 		        -textvariable {toolBar::customSelection2} \
 				-state disabled \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::angleModif.frame0.frame -x 200 -y 150 -width 190
 
 	place [scale $toolBar::angleModif.frame0.frame.scaleBondDistance \
@@ -1332,9 +1317,8 @@ proc toolBar::guiAngleModif {} {
 			] -in $toolBar::angleModif.frame0.frame -x 10 -y 180 -width 380
 
 
-    place [ttk::label $toolBar::angleModif.frame0.frame.distanceLabel \
+    place [label $toolBar::angleModif.frame0.frame.distanceLabel \
 				-text {Angle (°): } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::angleModif.frame0.frame -x 10 -y 213 -width 60
 
     place [spinbox $toolBar::angleModif.frame0.frame.distance \
@@ -1345,15 +1329,13 @@ proc toolBar::guiAngleModif {} {
 					-command {toolBar::calcAngleDistance $toolBar::AngleValue} \
                     ] -in $toolBar::angleModif.frame0.frame -x 80 -y 210 -width 100
                 
-    place [ttk::button $toolBar::angleModif.frame0.frame.apply \
+    place [button $toolBar::angleModif.frame0.frame.apply \
 		            -text "Apply" \
-					-style toolBar.TButton \
 		            -command {toolBar::angleGuiCloseSave} \
 		            ] -in $toolBar::angleModif.frame0.frame -x 230 -y 210 -width 75
 				
-	place [ttk::button $toolBar::angleModif.frame0.frame.cancel \
+	place [button $toolBar::angleModif.frame0.frame.cancel \
 		            -text "Cancel" \
-					-style toolBar.TButton \
 		            -command {toolBar::angleGuiCloseNotSave} \
 		            ] -in $toolBar::angleModif.frame0.frame -x 315 -y 210 -width 75
 
@@ -1421,82 +1403,69 @@ proc toolBar::guiBondModif {} {
 	pack [ttk::frame $toolBar::bondModif.frame0]
 	pack [canvas $toolBar::bondModif.frame0.frame -bg white -width 400 -height 220 -highlightthickness 0] -in $toolBar::bondModif.frame0 
         
-    place [ttk::label $toolBar::bondModif.frame0.frame.title \
+    place [label $toolBar::bondModif.frame0.frame.title \
 		    -text {Two atoms were selected. You can adjust the bond distance.} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 10 -width 380
 
-    place [ttk::label $toolBar::bondModif.frame0.frame.atom1 \
+    place [label $toolBar::bondModif.frame0.frame.atom1 \
 		    -text {Atom 1:} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 30 -width 60
 
-    place [ttk::entry $toolBar::bondModif.frame0.frame.atom1Index \
+    place [entry $toolBar::bondModif.frame0.frame.atom1Index \
 		        -textvariable {toolBar::atom1BondSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::bondModif.frame0.frame -x 60 -y 30 -width 100
 
-    place [ttk::label $toolBar::bondModif.frame0.frame.atom1OptionsLabel \
+    place [label $toolBar::bondModif.frame0.frame.atom1OptionsLabel \
 		        -text {Options: } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::bondModif.frame0.frame -x 190 -y 30 -width 50
     
     variable atom1BondOpt "Fixed Atom"
     place [ttk::combobox $toolBar::bondModif.frame0.frame.atom1Options \
 		        -textvariable {toolBar::atom1BondOpt} \
 			    -state readonly \
-				-style toolBar.white.TCombobox \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
 		        ] -in $toolBar::bondModif.frame0.frame -x 250 -y 30 -width 140
 
         
-    place [ttk::label $toolBar::bondModif.frame0.frame.atom2 \
+    place [label $toolBar::bondModif.frame0.frame.atom2 \
 		    -text {Atom 2:} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 60 -width 60
 
-    place [ttk::entry $toolBar::bondModif.frame0.frame.atom2Index \
+    place [entry $toolBar::bondModif.frame0.frame.atom2Index \
 		        -textvariable {toolBar::atom2BondSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::bondModif.frame0.frame -x 60 -y 60 -width 100
 
-    place [ttk::label $toolBar::bondModif.frame0.frame.atom2OptionsLabel \
+    place [label $toolBar::bondModif.frame0.frame.atom2OptionsLabel \
 		        -text {Options: } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::bondModif.frame0.frame -x 190 -y 60 -width 50
     
     variable atom2BondOpt "Move Atom"
     place [ttk::combobox $toolBar::bondModif.frame0.frame.atom2Options \
 		        -textvariable {toolBar::atom2BondOpt} \
 			    -state readonly \
-				-style toolBar.white.TCombobox \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
 		        ] -in $toolBar::bondModif.frame0.frame -x 250 -y 60 -width 140
 
-	place [ttk::label $toolBar::bondModif.frame0.frame.customAtom1 \
+	place [label $toolBar::bondModif.frame0.frame.customAtom1 \
 		    -text "Custom Selection (Atom 1):" \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 90 -width 180
 
     variable customSelection1 "none"
-	place [ttk::entry $toolBar::bondModif.frame0.frame.customAtom1Entry \
+	place [entry $toolBar::bondModif.frame0.frame.customAtom1Entry \
 		        -textvariable {toolBar::customSelection1} \
-				-style toolBar.TEntry \
 				-state disabled \
 		        ] -in $toolBar::bondModif.frame0.frame -x 200 -y 90 -width 190
 
-	place [ttk::label $toolBar::bondModif.frame0.frame.customAtom2 \
+	place [label $toolBar::bondModif.frame0.frame.customAtom2 \
 		    -text "Custom Selection (Atom 2):" \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 120 -width 180
 
     variable customSelection2 "none"
-	place [ttk::entry $toolBar::bondModif.frame0.frame.customAtom2Entry \
+	place [entry $toolBar::bondModif.frame0.frame.customAtom2Entry \
 		        -textvariable {toolBar::customSelection2} \
 				-state disabled \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::bondModif.frame0.frame -x 200 -y 120 -width 190
 
 	place [scale $toolBar::bondModif.frame0.frame.scaleBondDistance \
@@ -1511,9 +1480,8 @@ proc toolBar::guiBondModif {} {
 			] -in $toolBar::bondModif.frame0.frame -x 10 -y 150 -width 380
 
 
-    place [ttk::label $toolBar::bondModif.frame0.frame.distanceLabel \
+    place [label $toolBar::bondModif.frame0.frame.distanceLabel \
 				-text {Bond (A): } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::bondModif.frame0.frame -x 10 -y 183 -width 60
 
     place [spinbox $toolBar::bondModif.frame0.frame.distance \
@@ -1524,16 +1492,14 @@ proc toolBar::guiBondModif {} {
 					-command {toolBar::calcBondDistance $toolBar::BondDistance} \
                 ] -in $toolBar::bondModif.frame0.frame -x 80 -y 180 -width 100
                 
-    place [ttk::button $toolBar::bondModif.frame0.frame.apply \
+    place [button $toolBar::bondModif.frame0.frame.apply \
 		            -text "Apply" \
 		            -command {toolBar::bondGuiCloseSave} \
-					-style toolBar.TButton \
 		            ] -in $toolBar::bondModif.frame0.frame -x 230 -y 180 -width 75
 				
-	place [ttk::button $toolBar::bondModif.frame0.frame.cancel \
+	place [button $toolBar::bondModif.frame0.frame.cancel \
 		            -text "Cancel" \
 		            -command {toolBar::bondGuiCloseNotSave} \
-					-style toolBar.TButton \
 		            ] -in $toolBar::bondModif.frame0.frame -x 315 -y 180 -width 75
 
 
@@ -1600,105 +1566,88 @@ proc toolBar::guiDihedModif {} {
     pack [ttk::frame $toolBar::dihedModif.frame0]
 	pack [canvas $toolBar::dihedModif.frame0.frame -bg white -width 400 -height 260 -highlightthickness 0] -in $toolBar::dihedModif.frame0 
         
-    place [ttk::label $toolBar::dihedModif.frame0.frame.title \
+    place [label $toolBar::dihedModif.frame0.frame.title \
 		    -text {Four atoms were selected.} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 10 -width 380
 
-    place [ttk::label $toolBar::dihedModif.frame0.frame.atom1 \
+    place [label $toolBar::dihedModif.frame0.frame.atom1 \
 		    -text {Atom 1:} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 30 -width 60 
 
-    place [ttk::entry $toolBar::dihedModif.frame0.frame.atom1Index \
+    place [entry $toolBar::dihedModif.frame0.frame.atom1Index \
 		        -textvariable {toolBar::atom1DihedSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 60 -y 30 -width 100
 
-    place [ttk::label $toolBar::dihedModif.frame0.frame.atom1OptionsLabel \
+    place [label $toolBar::dihedModif.frame0.frame.atom1OptionsLabel \
 		        -text {Options: } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 190 -y 30 -width 50
     
     variable atom1DihedOpt "Fixed Atom"
     place [ttk::combobox $toolBar::dihedModif.frame0.frame.atom1Options \
 		        -textvariable {toolBar::atom1DihedOpt} \
 			    -state readonly \
-				-style toolBar.TCombobox \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
 		        ] -in $toolBar::dihedModif.frame0.frame -x 250 -y 30 -width 140
 
         
-    place [ttk::label $toolBar::dihedModif.frame0.frame.atom2 \
+    place [label $toolBar::dihedModif.frame0.frame.atom2 \
 		    -text {Bond between atom} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 60 -width 110
 
-    place [ttk::entry $toolBar::dihedModif.frame0.frame.atom2Index \
+    place [entry $toolBar::dihedModif.frame0.frame.atom2Index \
 		        -textvariable {toolBar::atom2DihedSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 130 -y 60 -width 100
 
-	place [ttk::label $toolBar::dihedModif.frame0.frame.andLabel \
+	place [label $toolBar::dihedModif.frame0.frame.andLabel \
 		    -text {and} \
-			-style toolBar.whiteCenter.TLabel \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 240 -y 60 -width 40
 
-    place [ttk::entry $toolBar::dihedModif.frame0.frame.atom3Index \
+    place [entry $toolBar::dihedModif.frame0.frame.atom3Index \
 		        -textvariable {toolBar::atom3DihedSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 290 -y 60 -width 100
 
 
-    place [ttk::label $toolBar::dihedModif.frame0.frame.atom4 \
+    place [label $toolBar::dihedModif.frame0.frame.atom4 \
 		    -text {Atom 4:} \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 90 -width 60
 
-    place [ttk::entry $toolBar::dihedModif.frame0.frame.atom4Index \
+    place [entry $toolBar::dihedModif.frame0.frame.atom4Index \
 		        -textvariable {toolBar::atom4DihedSel} \
 				-state readonly \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 60 -y 90 -width 100
 
-    place [ttk::label $toolBar::dihedModif.frame0.frame.atom4OptionsLabel \
+    place [label $toolBar::dihedModif.frame0.frame.atom4OptionsLabel \
 		        -text {Options: } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 190 -y 90 -width 50
 
     variable atom4DihedOpt "Move Atom"
     place [ttk::combobox $toolBar::dihedModif.frame0.frame.atom4Options \
 		        -textvariable {toolBar::atom4DihedOpt} \
 			    -state readonly \
-				-style toolBar.TCombobox \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
 		        ] -in $toolBar::dihedModif.frame0.frame -x 250 -y 90 -width 140
 
-	place [ttk::label $toolBar::dihedModif.frame0.frame.customAtom1 \
+	place [label $toolBar::dihedModif.frame0.frame.customAtom1 \
 		    -text "Custom Selection (Atom 1):" \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 120 -width 180
 
     variable customSelection1 "none"
-	place [ttk::entry $toolBar::dihedModif.frame0.frame.customAtom1Entry \
+	place [entry $toolBar::dihedModif.frame0.frame.customAtom1Entry \
 		        -textvariable {toolBar::customSelection1} \
-				-style toolBar.TEntry \
 				-state disabled \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 200 -y 120 -width 190
 
-	place [ttk::label $toolBar::dihedModif.frame0.frame.customAtom2 \
+	place [label $toolBar::dihedModif.frame0.frame.customAtom2 \
 		    -text "Custom Selection (Atom 2):" \
-			-style toolBar.white.TLabel \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 150 -width 180
 
     variable customSelection2 "none"
-	place [ttk::entry $toolBar::dihedModif.frame0.frame.customAtom2Entry \
+	place [entry $toolBar::dihedModif.frame0.frame.customAtom2Entry \
 		        -textvariable {toolBar::customSelection2} \
 				-state disabled \
-				-style toolBar.TEntry \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 200 -y 150 -width 190
 
 	place [scale $toolBar::dihedModif.frame0.frame.scaleBondDistance \
@@ -1713,9 +1662,8 @@ proc toolBar::guiDihedModif {} {
 			] -in $toolBar::dihedModif.frame0.frame -x 10 -y 180 -width 380
 
 
-    place [ttk::label $toolBar::dihedModif.frame0.frame.distanceLabel \
+    place [label $toolBar::dihedModif.frame0.frame.distanceLabel \
 				-text {Dihedral (°): } \
-				-style toolBar.white.TLabel \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 213 -width 60
 
     place [spinbox $toolBar::dihedModif.frame0.frame.distance \
@@ -1726,15 +1674,13 @@ proc toolBar::guiDihedModif {} {
 					-command {toolBar::calcDihedDistance $toolBar::DihedValue} \
                     ] -in $toolBar::dihedModif.frame0.frame -x 80 -y 210 -width 100
                 
-    place [ttk::button $toolBar::dihedModif.frame0.frame.apply \
+    place [button $toolBar::dihedModif.frame0.frame.apply \
 		            -text "Apply" \
-					-style toolBar.TButton \
 		            -command {toolBar::dihedGuiCloseSave} \
 		            ] -in $toolBar::dihedModif.frame0.frame -x 230 -y 210 -width 75
 				
-	place [ttk::button $toolBar::dihedModif.frame0.frame.cancel \
+	place [button $toolBar::dihedModif.frame0.frame.cancel \
 		            -text "Cancel" \
-					-style toolBar.TButton \
 		            -command {toolBar::dihedGuiCloseNotSave} \
 		            ] -in $toolBar::dihedModif.frame0.frame -x 315 -y 210 -width 75
 

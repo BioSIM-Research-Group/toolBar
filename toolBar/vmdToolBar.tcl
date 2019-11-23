@@ -28,13 +28,12 @@ namespace eval toolBar:: {
 								{openVisual B \"Load visualization state...\"} {saveVisual B \"Save visualization state...\"} \
 								{main C \"Show/Hide VMD Main\"} {rotate C \"Mouse mode: rotate\"} \
 								{representations C \"Show/Hide Representations\"} {translate C \"Mouse mode: translate\"} \
-								{selV C \"Show/Hide Selection Manager\"} {scale C \"Mouse mode: scale\"}\
+								{presets B \"VMD Templates\"} {scale C \"Mouse mode: scale\"}\
 								{resetView B \"Reset View\"} {bond B \"Measure Bonds\"} \
 								{centerAtom C \"Mouse mode: center\"} {angle B \"Measure Angles\"} \
 								{deleteLabels B \"Delete all labels\"} {dihedral B \"Measure Dihedral Angles\"} \
 								{render B \"Image render\"} {tkcon C \"Tk Console\"} \
 								{query C \"Pick atoms\"} \
-								{presets B \"VMD Templates\"} \
 								{about B \"About\"}
 								{quit B \"Quit\"}"
 
@@ -700,6 +699,9 @@ toolBar::startGui
 
 
 ### Deprecated
+
+# {selV C \"Show/Hide Selection Manager\"}
+
 			# bond     	{set toolBar::button_rotate 1; \
 			# 			 mouse mode labelbond; \
 			# 			 set toolBar::button_bond 1; \
