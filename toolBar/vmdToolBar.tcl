@@ -29,9 +29,9 @@ namespace eval toolBar:: {
 								{main C \"Show/Hide VMD Main\"} {rotate C \"Mouse mode: rotate\"} \
 								{representations C \"Show/Hide Representations\"} {translate C \"Mouse mode: translate\"} \
 								{selV C \"Show/Hide Selection Manager\"} {scale C \"Mouse mode: scale\"}\
-								{resetView B \"Reset View\"} {bond C \"Measure Bonds\"} \
-								{centerAtom C \"Mouse mode: center\"} {angle C \"Measure Angles\"} \
-								{deleteLabels B \"Delete all labels\"} {dihedral C \"Measure Dihedral Angles\"} \
+								{resetView B \"Reset View\"} {bond B \"Measure Bonds\"} \
+								{centerAtom C \"Mouse mode: center\"} {angle B \"Measure Angles\"} \
+								{deleteLabels B \"Delete all labels\"} {dihedral B \"Measure Dihedral Angles\"} \
 								{render B \"Image render\"} {tkcon C \"Tk Console\"} \
 								{query C \"Pick atoms\"} \
 								{presets B \"VMD Templates\"} \
@@ -45,6 +45,18 @@ namespace eval toolBar:: {
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
 		variable version "1.0"
+
+		# Modify
+		variable pickedAtoms {}
+		variable BondDistance "0.00"
+		variable atom1BondSel
+		variable atom2BondSel
+		variable BondDistance
+		variable initialBondDistance
+		variable bondModif ".toolBar.bondModify"
+		variable angleModif ".toolBar.angleModify"
+		variable dihedModif ".toolBar.dihedModify"
+
 
 		# Paths
 		variable pathImages [file join [file dirname [info script]] style/icons]
@@ -75,6 +87,7 @@ namespace eval toolBar:: {
 		package require balloon 	1.0
 		package require selectionManager	2.0
 		package require toolBarAbout	1.0.0
+		package require toolBarModify	1.0.0
 }
 
 proc toolBar::moveWindow1 {x y} {
@@ -344,27 +357,11 @@ proc toolBar::cmd {cmd} {
 						mouse mode center; \
 						}	
 
+			bond		{toolBar::bondModifInitialProc}
 
-			bond     	{set toolBar::button_rotate 1; \
-						 mouse mode labelbond; \
-						 set toolBar::button_bond 1; \
-						 set toolBar::cmdType 1
-						 toolBar::deleteGraphics	all
-						}
+			angle		{toolBar::angleModifInitialProc}
 
-			angle     	{set toolBar::button_rotate 1;  \
-						 mouse mode labelangle; \
-						 set toolBar::button_angle 1; \
-						 set toolBar::cmdType 1
-						toolBar::deleteGraphics	all
-						}
-						
-			dihedral	{set toolBar::button_rotate 1; \
-						 mouse mode labeldihedral; \
-						 set toolBar::button_dihedral 1; \
-						 set toolBar::cmdType 1
-						 toolBar::deleteGraphics	all
-						}
+			dihedral	{toolBar::dihedModifInitialProc}
 
 			resetView	{display resetview;
 						catch {graphics [molinfo top] delete all}
@@ -699,3 +696,27 @@ proc toolBar::quit {} {
 
 #Start toolBar
 toolBar::startGui
+
+
+
+### Deprecated
+			# bond     	{set toolBar::button_rotate 1; \
+			# 			 mouse mode labelbond; \
+			# 			 set toolBar::button_bond 1; \
+			# 			 set toolBar::cmdType 1
+			# 			 toolBar::deleteGraphics	all
+			# 			}
+
+			# angle     	{set toolBar::button_rotate 1;  \
+			# 			 mouse mode labelangle; \
+			# 			 set toolBar::button_angle 1; \
+			# 			 set toolBar::cmdType 1
+			# 			toolBar::deleteGraphics	all
+			# 			}
+						
+			# dihedral	{set toolBar::button_rotate 1; \
+			# 			 mouse mode labeldihedral; \
+			# 			 set toolBar::button_dihedral 1; \
+			# 			 set toolBar::cmdType 1
+			# 			 toolBar::deleteGraphics	all
+			# 			}
