@@ -56,7 +56,7 @@ proc toolBar::guiBondModifInitialProc {} {
     variable initialSelectionX [$atomSelect get {x y z}]
 
     ## Deactivate the atom pick
-    trace remove variable ::vmd_pick_atom write toolBar::atomPicked
+    trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
     mouse mode rotate
 }
 
@@ -121,6 +121,11 @@ proc toolBar::atomPickedModify {args} {
         
         set toolBar::pickedAtoms {}
 
+        # Remove Trace
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedAngle
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedDihed
+        # trace add variable ::vmd_pick_atom write {toolBar::atomPicked}
 
         #### Load the GUI
         toolBar::guiBondModif
@@ -174,6 +179,12 @@ proc toolBar::atomPickedAngle {args} {
 
         variable initialAngleValue [measure angle [list [list $toolBar::atom1AngleSel 0] [list $toolBar::atom2AngleSel 0] [list $toolBar::atom3AngleSel 0]]]
 
+        # Remove Trace
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedAngle
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedDihed
+        # trace add variable ::vmd_pick_atom write {toolBar::atomPicked}
+
         #### Load the GUI
         toolBar::guiAngleModif
 
@@ -225,6 +236,12 @@ proc toolBar::atomPickedDihed {args} {
         $selection4 delete
 
         variable initialDihedValue [measure dihed [list [list $toolBar::atom1DihedSel 0] [list $toolBar::atom2DihedSel 0] [list $toolBar::atom3DihedSel 0] [list $toolBar::atom4DihedSel 0]]]
+
+        # Remove Trace
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedAngle
+        trace remove variable ::vmd_pick_atom write toolBar::atomPickedDihed
+        # trace add variable ::vmd_pick_atom write {toolBar::atomPicked}
 
         #### Load the GUI
         toolBar::guiDihedModif
@@ -1113,7 +1130,7 @@ proc toolBar::calcDihedDistance {newdihed} {
 ##############################################################################
 #### Bond - Apply and Cancel button
 proc toolBar::bondGuiCloseSave {} {
-    trace remove variable ::vmd_pick_atom write toolBar::atomPicked
+    trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
     mouse mode rotate
     
     set molExists [mol list]
@@ -1127,7 +1144,7 @@ proc toolBar::bondGuiCloseSave {} {
 
 
 proc toolBar::bondGuiCloseNotSave {} {
-    trace remove variable ::vmd_pick_atom write toolBar::atomPicked
+    trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
     mouse mode rotate
     
     set molExists [mol list]

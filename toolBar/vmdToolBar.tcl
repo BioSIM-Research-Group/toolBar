@@ -234,8 +234,8 @@ proc toolBar::startGui {} {
     #############################################################
 
     ## Trace pick atom
-    trace variable ::vmd_pick_atom w {toolBar::atomPicked}
-	trace variable ::vmd_frame w {toolBar::frameChanged}
+    trace add variable ::vmd_pick_atom write {toolBar::atomPicked}
+	trace add variable ::vmd_frame write {toolBar::frameChanged}
 
 	## Draw logFile
 	user add key r {mouse mode rotate; toolBar::cmd rotate}
