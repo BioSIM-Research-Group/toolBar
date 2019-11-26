@@ -43,7 +43,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "1.0"
+		variable version "1.1"
 
 		# Modify
 		variable pickedAtoms {}
@@ -87,6 +87,18 @@ namespace eval toolBar:: {
 		package require selectionManager	2.0
 		package require toolBarAbout	1.0.0
 		package require toolBarModify	1.0.0
+
+
+		## Theme
+		ttk::style theme create toolBarTheme -parent clam -settings {
+			ttk::style configure toolBar.TButton \
+				-anchor center \
+				-background "#575756" \
+				-foreground white \
+				-bordercolor white \
+				-relief raised \
+				-padding 2
+    	}
 }
 
 proc toolBar::moveWindow1 {x y} {

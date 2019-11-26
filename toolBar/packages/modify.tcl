@@ -1255,107 +1255,117 @@ proc toolBar::guiAngleModif {} {
 
 	#### Change the location of window
     wm geometry $::toolBar::angleModif 400x260+[expr $sWidth - 400]+100
-	$::toolBar::angleModif configure -background {white}
+	$::toolBar::angleModif configure -background {black}
 	wm resizable $::toolBar::angleModif 0 0
 
 	wm protocol $::toolBar::angleModif WM_DELETE_WINDOW {toolBar::bondGuiCloseSave}
 
-	
+    ### Style
+    # ttk::style theme use toolBarTheme
 
     #### Information
 	pack [ttk::frame $toolBar::angleModif.frame0]
-	pack [canvas $toolBar::angleModif.frame0.frame -bg #575756 -width 400 -height 260 -highlightthickness 0] -in $toolBar::angleModif.frame0 
+	pack [canvas $toolBar::angleModif.frame0.frame -bg #ECECEC -width 400 -height 260 -highlightthickness 0] -in $toolBar::angleModif.frame0 
         
     place [label $toolBar::angleModif.frame0.frame.title \
 		    -text {Three atoms were selected. You can adjust the angle.} \
-            -bg #575756 \
-            -fg white \
+            -bg #ECECEC \
+            -fg black \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 5 -width 380
 
     place [label $toolBar::angleModif.frame0.frame.atom1 \
 		    -text {Atom 1:} \
-            -bg #575756 \
-            -fg white \
-		    ] -in $toolBar::angleModif.frame0.frame -x 8 -y 30 -width 60       
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::angleModif.frame0.frame -x 8 -y 32 -width 60       
 
     place [entry $toolBar::angleModif.frame0.frame.atom1Index \
 		        -textvariable {toolBar::atom1AngleSel} \
 				-state readonly \
-                -background #575756 \
-                -highlightcolor #575756 \
+                -bg #ECECEC \
+                -relief flat \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 30 -width 100
 
     place [label $toolBar::angleModif.frame0.frame.atom1OptionsLabel \
 		        -text {Options: } \
-                -bg #575756 \
-		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 30 -width 50
+                -bg #ECECEC \
+                -fg black \
+		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 32 -width 50
     
     variable atom1AngleOpt "Fixed Atom"
     place [ttk::combobox $toolBar::angleModif.frame0.frame.atom1Options \
 		        -textvariable {toolBar::atom1AngleOpt} \
 			    -state readonly \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
-		        ] -in $toolBar::angleModif.frame0.frame -x 250 -y 30 -width 140
+		        ] -in $toolBar::angleModif.frame0.frame -x 250 -y 32 -width 140
 
         
     place [label $toolBar::angleModif.frame0.frame.atom2 \
 		    -text {Atom 2:} \
-            -bg #575756 \
-		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 60 -width 60
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::angleModif.frame0.frame -x 8 -y 62 -width 60
 
     place [entry $toolBar::angleModif.frame0.frame.atom2Index \
 		        -textvariable {toolBar::atom2AngleSel} \
 				-state readonly \
-                -bg #575756 \
+                -bg #ECECEC \
+                -relief flat \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 60 -width 100
 
 
     place [label $toolBar::angleModif.frame0.frame.atom3 \
 		    -text {Atom 3:} \
-            -bg #575756 \
-		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 90 -width 60
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::angleModif.frame0.frame -x 8 -y 92 -width 60
 
     place [entry $toolBar::angleModif.frame0.frame.atom3Index \
 		        -textvariable {toolBar::atom3AngleSel} \
 				-state readonly \
-                -bg #575756 \
+                -bg #ECECEC \
+                -relief flat \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 90 -width 100
 
     place [label $toolBar::angleModif.frame0.frame.atom3OptionsLabel \
 		        -text {Options: } \
-                -bg #575756 \
-		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 90 -width 50
+                -bg #ECECEC \
+                -fg black \
+		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 92 -width 50
     
     variable atom3AngleOpt "Move Atom"
     place [ttk::combobox $toolBar::angleModif.frame0.frame.atom3Options \
 		        -textvariable {toolBar::atom3AngleOpt} \
 			    -state readonly \
+                -style toolBar.TCombobox \
 		        -values "[list "Fixed Atom" "Move Atom" "Move Atoms" "Custom"]"
-		        ] -in $toolBar::angleModif.frame0.frame -x 250 -y 90 -width 140
+		        ] -in $toolBar::angleModif.frame0.frame -x 250 -y 92 -width 140
 
 
 	place [label $toolBar::angleModif.frame0.frame.customAtom1 \
 		    -text "Custom Selection (Atom 1):" \
-            -bg #575756 \
-		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 120 -width 180
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 122 -width 180
 
     variable customSelection1 "none"
 	place [entry $toolBar::angleModif.frame0.frame.customAtom1Entry \
 		        -textvariable {toolBar::customSelection1} \
 				-state disabled \
-                -bg #575756 \
+                -relief flat \
 		        ] -in $toolBar::angleModif.frame0.frame -x 200 -y 120 -width 190
 
 	place [label $toolBar::angleModif.frame0.frame.customAtom2 \
 		    -text "Custom Selection (Atom 2):" \
-            -bg #575756 \
-		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 150 -width 180
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 152 -width 180
 
     variable customSelection2 "none"
 	place [entry $toolBar::angleModif.frame0.frame.customAtom2Entry \
 		        -textvariable {toolBar::customSelection2} \
 				-state disabled \
-                -bg #575756 \
+                -relief flat \
 		        ] -in $toolBar::angleModif.frame0.frame -x 200 -y 150 -width 190
 
 	place [scale $toolBar::angleModif.frame0.frame.scaleBondDistance \
@@ -1367,12 +1377,14 @@ proc toolBar::guiAngleModif {} {
 				-command {toolBar::calcAngleDistance} \
 				-orient horizontal \
 				-showvalue 0 \
+                -background #ECECEC \
 			] -in $toolBar::angleModif.frame0.frame -x 10 -y 180 -width 380
 
 
     place [label $toolBar::angleModif.frame0.frame.distanceLabel \
 				-text {Angle (°): } \
-                -bg #575756 \
+                -bg #ECECEC \
+                -fg black \
 		        ] -in $toolBar::angleModif.frame0.frame -x 10 -y 213 -width 60
 
     place [spinbox $toolBar::angleModif.frame0.frame.distance \
@@ -1380,18 +1392,17 @@ proc toolBar::guiAngleModif {} {
 					-to {180.00} \
 					-increment 0.01 \
 					-textvariable {toolBar::AngleValue} \
+                    -relief flat \
 					-command {toolBar::calcAngleDistance $toolBar::AngleValue} \
                     ] -in $toolBar::angleModif.frame0.frame -x 80 -y 210 -width 100
                 
-    place [button $toolBar::angleModif.frame0.frame.apply \
+    place [ttk::button $toolBar::angleModif.frame0.frame.apply \
 		            -text "Apply" \
-                    -bg #575756 \
 		            -command {toolBar::angleGuiCloseSave} \
 		            ] -in $toolBar::angleModif.frame0.frame -x 230 -y 210 -width 75
 				
-	place [button $toolBar::angleModif.frame0.frame.cancel \
+	place [ttk::button $toolBar::angleModif.frame0.frame.cancel \
 		            -text "Cancel" \
-                    -bg #575756 \
 		            -command {toolBar::angleGuiCloseNotSave} \
 		            ] -in $toolBar::angleModif.frame0.frame -x 315 -y 210 -width 75
 
@@ -1448,7 +1459,7 @@ proc toolBar::guiBondModif {} {
 
 	#### Change the location of window
     wm geometry $::toolBar::bondModif 400x220+[expr $sWidth - 400]+100
-	$::toolBar::bondModif configure -background {white}
+	$::toolBar::bondModif configure -background {black}
 	wm resizable $::toolBar::bondModif 0 0
 
 	wm protocol $::toolBar::bondModif WM_DELETE_WINDOW {toolBar::bondGuiCloseSave}
@@ -1457,24 +1468,31 @@ proc toolBar::guiBondModif {} {
 
     #### Information
 	pack [ttk::frame $toolBar::bondModif.frame0]
-	pack [canvas $toolBar::bondModif.frame0.frame -bg white -width 400 -height 220 -highlightthickness 0] -in $toolBar::bondModif.frame0 
+	pack [canvas $toolBar::bondModif.frame0.frame -bg #ECECEC -width 400 -height 220 -highlightthickness 0] -in $toolBar::bondModif.frame0 
         
     place [label $toolBar::bondModif.frame0.frame.title \
 		    -text {Two atoms were selected. You can adjust the bond distance.} \
-		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 10 -width 380
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 6 -width 380
 
     place [label $toolBar::bondModif.frame0.frame.atom1 \
 		    -text {Atom 1:} \
-		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 30 -width 60
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::bondModif.frame0.frame -x 8 -y 32 -width 60
 
     place [entry $toolBar::bondModif.frame0.frame.atom1Index \
 		        -textvariable {toolBar::atom1BondSel} \
 				-state readonly \
+                -relief flat \
 		        ] -in $toolBar::bondModif.frame0.frame -x 60 -y 30 -width 100
 
     place [label $toolBar::bondModif.frame0.frame.atom1OptionsLabel \
 		        -text {Options: } \
-		        ] -in $toolBar::bondModif.frame0.frame -x 190 -y 30 -width 50
+                -bg #ECECEC \
+                -fg black \
+		        ] -in $toolBar::bondModif.frame0.frame -x 190 -y 32 -width 50
     
     variable atom1BondOpt "Fixed Atom"
     place [ttk::combobox $toolBar::bondModif.frame0.frame.atom1Options \
@@ -1486,16 +1504,21 @@ proc toolBar::guiBondModif {} {
         
     place [label $toolBar::bondModif.frame0.frame.atom2 \
 		    -text {Atom 2:} \
-		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 60 -width 60
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::bondModif.frame0.frame -x 8 -y 62 -width 60
 
     place [entry $toolBar::bondModif.frame0.frame.atom2Index \
 		        -textvariable {toolBar::atom2BondSel} \
 				-state readonly \
+                -relief flat \
 		        ] -in $toolBar::bondModif.frame0.frame -x 60 -y 60 -width 100
 
     place [label $toolBar::bondModif.frame0.frame.atom2OptionsLabel \
 		        -text {Options: } \
-		        ] -in $toolBar::bondModif.frame0.frame -x 190 -y 60 -width 50
+                -bg #ECECEC \
+                -fg black \
+		        ] -in $toolBar::bondModif.frame0.frame -x 190 -y 62 -width 50
     
     variable atom2BondOpt "Move Atom"
     place [ttk::combobox $toolBar::bondModif.frame0.frame.atom2Options \
@@ -1506,22 +1529,28 @@ proc toolBar::guiBondModif {} {
 
 	place [label $toolBar::bondModif.frame0.frame.customAtom1 \
 		    -text "Custom Selection (Atom 1):" \
-		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 90 -width 180
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 92 -width 180
 
     variable customSelection1 "none"
 	place [entry $toolBar::bondModif.frame0.frame.customAtom1Entry \
 		        -textvariable {toolBar::customSelection1} \
 				-state disabled \
+                -relief flat \
 		        ] -in $toolBar::bondModif.frame0.frame -x 200 -y 90 -width 190
 
 	place [label $toolBar::bondModif.frame0.frame.customAtom2 \
 		    -text "Custom Selection (Atom 2):" \
-		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 120 -width 180
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::bondModif.frame0.frame -x 10 -y 122 -width 180
 
     variable customSelection2 "none"
 	place [entry $toolBar::bondModif.frame0.frame.customAtom2Entry \
 		        -textvariable {toolBar::customSelection2} \
 				-state disabled \
+                -relief flat \
 		        ] -in $toolBar::bondModif.frame0.frame -x 200 -y 120 -width 190
 
 	place [scale $toolBar::bondModif.frame0.frame.scaleBondDistance \
@@ -1533,11 +1562,14 @@ proc toolBar::guiBondModif {} {
 				-command {toolBar::calcBondDistance} \
 				-orient horizontal \
 				-showvalue 0 \
+                -relief flat \
 			] -in $toolBar::bondModif.frame0.frame -x 10 -y 150 -width 380
 
 
     place [label $toolBar::bondModif.frame0.frame.distanceLabel \
 				-text {Bond (A): } \
+                -bg #ECECEC \
+                -fg black \
 		        ] -in $toolBar::bondModif.frame0.frame -x 10 -y 183 -width 60
 
     place [spinbox $toolBar::bondModif.frame0.frame.distance \
@@ -1545,15 +1577,16 @@ proc toolBar::guiBondModif {} {
 					-to 15.00 \
 					-increment 0.01 \
 					-textvariable {toolBar::BondDistance} \
+                    -relief flat \
 					-command {toolBar::calcBondDistance $toolBar::BondDistance} \
                 ] -in $toolBar::bondModif.frame0.frame -x 80 -y 180 -width 100
                 
-    place [button $toolBar::bondModif.frame0.frame.apply \
+    place [ttk::button $toolBar::bondModif.frame0.frame.apply \
 		            -text "Apply" \
 		            -command {toolBar::bondGuiCloseSave} \
 		            ] -in $toolBar::bondModif.frame0.frame -x 230 -y 180 -width 75
 				
-	place [button $toolBar::bondModif.frame0.frame.cancel \
+	place [ttk::button $toolBar::bondModif.frame0.frame.cancel \
 		            -text "Cancel" \
 		            -command {toolBar::bondGuiCloseNotSave} \
 		            ] -in $toolBar::bondModif.frame0.frame -x 315 -y 180 -width 75
@@ -1611,7 +1644,7 @@ proc toolBar::guiDihedModif {} {
 
 	#### Change the location of window
     wm geometry $::toolBar::dihedModif 400x260+[expr $sWidth - 400]+100
-	$::toolBar::dihedModif configure -background {white}
+	$::toolBar::dihedModif configure -background {black}
 	wm resizable $::toolBar::dihedModif 0 0
 
 	wm protocol $::toolBar::dihedModif WM_DELETE_WINDOW {toolBar::bondGuiCloseSave}
@@ -1620,24 +1653,31 @@ proc toolBar::guiDihedModif {} {
 
     #### Information
     pack [ttk::frame $toolBar::dihedModif.frame0]
-	pack [canvas $toolBar::dihedModif.frame0.frame -bg white -width 400 -height 260 -highlightthickness 0] -in $toolBar::dihedModif.frame0 
+	pack [canvas $toolBar::dihedModif.frame0.frame -bg #ECECEC -width 400 -height 260 -highlightthickness 0] -in $toolBar::dihedModif.frame0 
         
     place [label $toolBar::dihedModif.frame0.frame.title \
 		    -text {Four atoms were selected.} \
+            -bg #ECECEC \
+            -fg black \
 		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 10 -width 380
 
     place [label $toolBar::dihedModif.frame0.frame.atom1 \
 		    -text {Atom 1:} \
-		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 30 -width 60 
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::dihedModif.frame0.frame -x 8 -y 32 -width 60 
 
     place [entry $toolBar::dihedModif.frame0.frame.atom1Index \
 		        -textvariable {toolBar::atom1DihedSel} \
 				-state readonly \
+                -relief flat \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 60 -y 30 -width 100
 
     place [label $toolBar::dihedModif.frame0.frame.atom1OptionsLabel \
 		        -text {Options: } \
-		        ] -in $toolBar::dihedModif.frame0.frame -x 190 -y 30 -width 50
+                -bg #ECECEC \
+                -fg black \
+		        ] -in $toolBar::dihedModif.frame0.frame -x 190 -y 32 -width 50
     
     variable atom1DihedOpt "Fixed Atom"
     place [ttk::combobox $toolBar::dihedModif.frame0.frame.atom1Options \
@@ -1649,35 +1689,46 @@ proc toolBar::guiDihedModif {} {
         
     place [label $toolBar::dihedModif.frame0.frame.atom2 \
 		    -text {Bond between atom} \
-		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 60 -width 110
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 62 -width 110
 
     place [entry $toolBar::dihedModif.frame0.frame.atom2Index \
 		        -textvariable {toolBar::atom2DihedSel} \
 				-state readonly \
+                -relief flat \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 130 -y 60 -width 100
 
 	place [label $toolBar::dihedModif.frame0.frame.andLabel \
 		    -text {and} \
-		    ] -in $toolBar::dihedModif.frame0.frame -x 240 -y 60 -width 40
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::dihedModif.frame0.frame -x 240 -y 62 -width 40
 
     place [entry $toolBar::dihedModif.frame0.frame.atom3Index \
 		        -textvariable {toolBar::atom3DihedSel} \
 				-state readonly \
+                -relief flat \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 290 -y 60 -width 100
 
 
     place [label $toolBar::dihedModif.frame0.frame.atom4 \
 		    -text {Atom 4:} \
-		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 90 -width 60
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::dihedModif.frame0.frame -x 8 -y 92 -width 60
 
     place [entry $toolBar::dihedModif.frame0.frame.atom4Index \
 		        -textvariable {toolBar::atom4DihedSel} \
 				-state readonly \
+                -relief flat \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 60 -y 90 -width 100
 
     place [label $toolBar::dihedModif.frame0.frame.atom4OptionsLabel \
 		        -text {Options: } \
-		        ] -in $toolBar::dihedModif.frame0.frame -x 190 -y 90 -width 50
+                -bg #ECECEC \
+                -fg black \
+		        ] -in $toolBar::dihedModif.frame0.frame -x 190 -y 92 -width 50
 
     variable atom4DihedOpt "Move Atom"
     place [ttk::combobox $toolBar::dihedModif.frame0.frame.atom4Options \
@@ -1688,22 +1739,28 @@ proc toolBar::guiDihedModif {} {
 
 	place [label $toolBar::dihedModif.frame0.frame.customAtom1 \
 		    -text "Custom Selection (Atom 1):" \
-		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 120 -width 180
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 122 -width 180
 
     variable customSelection1 "none"
 	place [entry $toolBar::dihedModif.frame0.frame.customAtom1Entry \
 		        -textvariable {toolBar::customSelection1} \
 				-state disabled \
+                -relief flat \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 200 -y 120 -width 190
 
 	place [label $toolBar::dihedModif.frame0.frame.customAtom2 \
 		    -text "Custom Selection (Atom 2):" \
-		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 150 -width 180
+            -bg #ECECEC \
+            -fg black \
+		    ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 152 -width 180
 
     variable customSelection2 "none"
 	place [entry $toolBar::dihedModif.frame0.frame.customAtom2Entry \
 		        -textvariable {toolBar::customSelection2} \
 				-state disabled \
+                -relief flat \
 		        ] -in $toolBar::dihedModif.frame0.frame -x 200 -y 150 -width 190
 
 	place [scale $toolBar::dihedModif.frame0.frame.scaleBondDistance \
@@ -1715,12 +1772,15 @@ proc toolBar::guiDihedModif {} {
 				-command {toolBar::calcDihedDistance} \
 				-orient horizontal \
 				-showvalue 0 \
+                -relief flat \
 			] -in $toolBar::dihedModif.frame0.frame -x 10 -y 180 -width 380
 
 
     place [label $toolBar::dihedModif.frame0.frame.distanceLabel \
 				-text {Dihedral (°): } \
-		        ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 213 -width 60
+                -bg #ECECEC \
+                -fg black \
+		        ] -in $toolBar::dihedModif.frame0.frame -x 10 -y 213 -width 65
 
     place [spinbox $toolBar::dihedModif.frame0.frame.distance \
 					-from {-180.00} \
@@ -1728,14 +1788,15 @@ proc toolBar::guiDihedModif {} {
 					-increment 0.01 \
 					-textvariable {toolBar::DihedValue} \
 					-command {toolBar::calcDihedDistance $toolBar::DihedValue} \
+                    -relief flat \
                     ] -in $toolBar::dihedModif.frame0.frame -x 80 -y 210 -width 100
                 
-    place [button $toolBar::dihedModif.frame0.frame.apply \
+    place [ttk::button $toolBar::dihedModif.frame0.frame.apply \
 		            -text "Apply" \
 		            -command {toolBar::dihedGuiCloseSave} \
 		            ] -in $toolBar::dihedModif.frame0.frame -x 230 -y 210 -width 75
 				
-	place [button $toolBar::dihedModif.frame0.frame.cancel \
+	place [ttk::button $toolBar::dihedModif.frame0.frame.cancel \
 		            -text "Cancel" \
 		            -command {toolBar::dihedGuiCloseNotSave} \
 		            ] -in $toolBar::dihedModif.frame0.frame -x 315 -y 210 -width 75
