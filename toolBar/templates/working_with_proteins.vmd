@@ -11,8 +11,16 @@ foreach mol [molinfo list] {
 }
 
 # Gradient option
-
 display backgroundgradient on
+
+# Gradient deepcue
+display depthcue off
+
+# Culling option
+display culling off
+
+# Render Mode
+display rendermode GLSL
 
 ##### Standard vmdstate
 
@@ -99,14 +107,14 @@ proc vmdrestoremymaterials {} {
   material change outlinewidth Glass3 0.000000
   material change transmode Glass3 0.000000
   material change ambient Glossy 0.000000
-  material change diffuse Glossy 0.650000
+  material change diffuse Glossy 0.660000
   material change specular Glossy 1.000000
-  material change shininess Glossy 0.880000
+  material change shininess Glossy 0.860000
   material change mirror Glossy 0.000000
   material change opacity Glossy 1.000000
-  material change outline Glossy 0.000000
-  material change outlinewidth Glossy 0.000000
-  material change transmode Glossy 0.000000
+  material change outline Glossy 4.000000
+  material change outlinewidth Glossy 0.550000
+  material change transmode Glossy 1.000000
   material change ambient HardPlastic 0.000000
   material change diffuse HardPlastic 0.560000
   material change specular HardPlastic 0.280000
@@ -734,10 +742,211 @@ graphics top color 1
 graphics top color 1
 graphics top color 1
 graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
+graphics top color 1
 mol delrep 0 top
-mol representation NewCartoon 0.300000 10.000000 4.100000 0
-mol color ColorID 1
-mol selection {all}
+mol representation CPK 1.100000 0.900000 47.000000 37.000000
+mol color Element
+mol selection {all and not hydrogen and not (protein or water)}
 mol material Glossy
 mol addrep top
 mol selupdate 0 top 0
@@ -769,9 +978,9 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
-mol representation Licorice 0.300000 12.000000 12.000000
-mol color Name
-mol selection {not protein and not water}
+mol representation NewCartoon 0.300000 10.000000 4.100000 0
+mol color ColorID 32
+mol selection {protein}
 mol material Glossy
 mol addrep top
 mol selupdate 1 top 0
@@ -817,18 +1026,23 @@ color scale colors GWB {0.0 1.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
 color scale colors BWG {0.0 0.0 1.0} {1.0 1.0 1.0} {0.0 1.0 0.0}
 color scale colors BlkW {0.0 0.0 0.0} {0.5 0.5 0.5} {1.0 1.0 1.0}
 color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
-  color scale method RWB
+  color scale method BWR
   set colorcmds {
     {color Display {Background} orange2}
     {color Display {BackgroundTop} orange2}
     {color Display {BackgroundBot} orange3}
     {color Display {FPS} white}
+    {color Name {C} yellow2}
     {color Name {LPA} green}
     {color Name {LPB} green}
+    {color Name {F} pink}
+    {color Name {M} cyan}
     {color Type {LP} green}
     {color Type {DRUD} pink}
+    {color Type {F} pink}
+    {color Type {M} cyan}
     {color Element {X} cyan}
-    {color Element {Ac} ochre}
+    {color Element {Ac} red2}
     {color Element {Ag} ochre}
     {color Element {Al} ochre}
     {color Element {Am} ochre}
@@ -843,6 +1057,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Bi} ochre}
     {color Element {Bk} ochre}
     {color Element {Br} ochre}
+    {color Element {C} green3}
     {color Element {Ca} ochre}
     {color Element {Cd} ochre}
     {color Element {Ce} ochre}
@@ -932,22 +1147,13 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Element {Y} ochre}
     {color Element {Yb} ochre}
     {color Element {Zr} ochre}
+    {color Resname {SF4} silver}
+    {color Resname {MO} green}
+    {color Resname {MGD} white}
+    {color Resname {MES} pink}
+    {color Resname {HOH} green}
     {color Chain {A} blue}
-    {color Chain {B} red}
-    {color Chain {C} gray}
-    {color Chain {D} orange}
-    {color Chain {E} yellow}
-    {color Chain {F} tan}
-    {color Chain {G} silver}
-    {color Chain {H} green}
-    {color Segname {AP1} blue}
-    {color Segname {BP1} red}
-    {color Segname {CP1} gray}
-    {color Segname {DP1} orange}
-    {color Segname {EP1} yellow}
-    {color Segname {FP1} tan}
-    {color Segname {GP1} silver}
-    {color Segname {HP1} green}
+    {color Segname {} blue}
     {color Conformation {all} blue}
     {color Molecule {0} blue}
     {color Molecule {1a3n.pdb} blue}
@@ -971,12 +1177,13 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
   color change rgb 11 0.6499999761581421 0.0 0.6499999761581421
   color change rgb 12 0.5 0.8999999761581421 0.4000000059604645
   color change rgb 13 0.8999999761581421 0.4000000059604645 0.699999988079071
-  color change rgb 14 0.5 0.30000001192092896 0.0
+  color change rgb 14 0.5 0.4000000059604645 0.0
   color change rgb 15 0.5 0.5 0.75
-  color change rgb 17 0.8799999952316284 0.9700000286102295 0.019999999552965164
+  color change rgb 16 0.94140625 0.15234375 0.06640625
+  color change rgb 17 0.95703125 0.68359375 0.09765625
   color change rgb 18 0.550000011920929 0.8999999761581421 0.019999999552965164
-  color change rgb 19 0.0 0.8999999761581421 0.03999999910593033
-  color change rgb 20 0.0 0.8999999761581421 0.5
+  color change rgb 19 0.0 0.5199999809265137 0.7200000286102295
+  color change rgb 20 0.44999998807907104 0.44999998807907104 0.44999998807907104
   color change rgb 21 0.0 0.8799999952316284 1.0
   color change rgb 22 0.0 0.7599999904632568 1.0
   color change rgb 23 0.019999999552965164 0.3799999952316284 0.6700000166893005
@@ -987,8 +1194,8 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
   color change rgb 28 1.0 0.0 0.6600000262260437
   color change rgb 29 0.9800000190734863 0.0 0.23000000417232513
   color change rgb 30 0.8100000023841858 0.0 0.0
-  color change rgb 31 0.05859375 0.125 0.15234375
-  color change rgb 32 0.171875 0.32421875 0.390625
+  color change rgb 31 0.21484375 0.23046875 0.265625
+  color change rgb 32 0.2578125 0.5234375 0.953125
 }
 vmdrestoremycolors
 label textsize 1.0
