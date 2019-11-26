@@ -57,19 +57,17 @@ proc toolBar::guiBondModifInitialProc {} {
 
     ## Deactivate the atom pick
     trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
-    mouse mode rotate
 }
 
 #### Initial procedure AngleGui
 proc toolBar::guiAngleModifInitialProc {} {
     ## Get the index of the atoms picked
     set atomSelect [atomselect top "all"]
-    variable initialSelection [$atomSelect get index]
-    variable initialSelectionX [$atomSelect get {x y z}]
+    variable initialSelectionAngle [$atomSelect get index]
+    variable initialSelectionXAngle [$atomSelect get {x y z}]
 
     ## Deactivate the atom pick
     trace remove variable ::vmd_pick_atom write toolBar::atomPickedAngle
-    mouse mode rotate
 }
 
 #### Initial procedure DihedGui
@@ -77,12 +75,11 @@ proc toolBar::guiDihedModifInitialProc {} {
     ## Get the index of the atoms picked
     set atomSelect [atomselect top "all"]
 
-    variable initialSelection [$atomSelect get index]
-    variable initialSelectionX [$atomSelect get {x y z}]
+    variable initialSelectionDihedral [$atomSelect get index]
+    variable initialSelectionXDihedral [$atomSelect get {x y z}]
 
     ## Deactivate the atom pick
     trace remove variable ::vmd_pick_atom write toolBar::atomPickedDihed
-    mouse mode rotate
 }
 ##############################################################################
 
@@ -99,6 +96,34 @@ proc toolBar::revertInitialStructure {} {
     }
 
     set toolBar::initialSelectionX []
+
+}
+
+proc toolBar::revertInitialStructureAngle {} {
+
+    set i 0
+    foreach atom $toolBar::initialSelectionAngle {
+        set sel [atomselect top "index $atom"]
+        $sel moveto [lindex $toolBar::initialSelectionXAngle $i]
+        $sel delete
+        incr i
+    }
+
+    set toolBar::initialSelectionXAngle []
+
+}
+
+proc toolBar::revertInitialStructureDihedral {} {
+
+    set i 0
+    foreach atom $toolBar::initialSelectionDihedral {
+        set sel [atomselect top "index $atom"]
+        $sel moveto [lindex $toolBar::initialSelectionXDihedral $i]
+        $sel delete
+        incr i
+    }
+
+    set toolBar::initialSelectionXDihedral []
 
 }
 ##############################################################################
@@ -125,7 +150,6 @@ proc toolBar::atomPickedModify {args} {
         trace remove variable ::vmd_pick_atom write toolBar::atomPickedModify
         trace remove variable ::vmd_pick_atom write toolBar::atomPickedAngle
         trace remove variable ::vmd_pick_atom write toolBar::atomPickedDihed
-        # trace add variable ::vmd_pick_atom write {toolBar::atomPicked}
 
         #### Load the GUI
         toolBar::guiBondModif
@@ -191,8 +215,6 @@ proc toolBar::atomPickedAngle {args} {
         #### Run the initial procedure
         toolBar::guiAngleModifInitialProc
 
-        set toolBar::pickedAtoms {}
-
     } elseif {$numberPickedAtoms < 2 } {
         lappend toolBar::pickedAtoms $::vmd_pick_atom
 
@@ -248,8 +270,6 @@ proc toolBar::atomPickedDihed {args} {
 
         #### Run the initial procedure
         toolBar::guiDihedModifInitialProc
-
-        set toolBar::pickedAtoms {}
 
     } elseif {$numberPickedAtoms < 3} {
         lappend toolBar::pickedAtoms $::vmd_pick_atom
@@ -1183,7 +1203,7 @@ proc toolBar::angleGuiCloseNotSave {} {
         mol modselect 9 top "none"
     }
 
-    toolBar::revertInitialStructure
+    toolBar::revertInitialStructureAngle
     destroy $::toolBar::angleModif
 }
 
@@ -1212,7 +1232,7 @@ proc toolBar::dihedGuiCloseNotSave {} {
         mol modselect 9 top "none"
     }
 
-    toolBar::revertInitialStructure
+    toolBar::revertInitialStructureDihedral
     destroy $::toolBar::dihedModif
 }
 ##############################################################################
@@ -1244,23 +1264,30 @@ proc toolBar::guiAngleModif {} {
 
     #### Information
 	pack [ttk::frame $toolBar::angleModif.frame0]
-	pack [canvas $toolBar::angleModif.frame0.frame -bg white -width 400 -height 260 -highlightthickness 0] -in $toolBar::angleModif.frame0 
+	pack [canvas $toolBar::angleModif.frame0.frame -bg #575756 -width 400 -height 260 -highlightthickness 0] -in $toolBar::angleModif.frame0 
         
     place [label $toolBar::angleModif.frame0.frame.title \
 		    -text {Three atoms were selected. You can adjust the angle.} \
-		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 10 -width 380
+            -bg #575756 \
+            -fg white \
+		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 5 -width 380
 
     place [label $toolBar::angleModif.frame0.frame.atom1 \
 		    -text {Atom 1:} \
-		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 30 -width 60       
+            -bg #575756 \
+            -fg white \
+		    ] -in $toolBar::angleModif.frame0.frame -x 8 -y 30 -width 60       
 
     place [entry $toolBar::angleModif.frame0.frame.atom1Index \
 		        -textvariable {toolBar::atom1AngleSel} \
 				-state readonly \
+                -background #575756 \
+                -highlightcolor #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 30 -width 100
 
     place [label $toolBar::angleModif.frame0.frame.atom1OptionsLabel \
 		        -text {Options: } \
+                -bg #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 30 -width 50
     
     variable atom1AngleOpt "Fixed Atom"
@@ -1273,25 +1300,30 @@ proc toolBar::guiAngleModif {} {
         
     place [label $toolBar::angleModif.frame0.frame.atom2 \
 		    -text {Atom 2:} \
+            -bg #575756 \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 60 -width 60
 
     place [entry $toolBar::angleModif.frame0.frame.atom2Index \
 		        -textvariable {toolBar::atom2AngleSel} \
 				-state readonly \
+                -bg #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 60 -width 100
 
 
     place [label $toolBar::angleModif.frame0.frame.atom3 \
 		    -text {Atom 3:} \
+            -bg #575756 \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 90 -width 60
 
     place [entry $toolBar::angleModif.frame0.frame.atom3Index \
 		        -textvariable {toolBar::atom3AngleSel} \
 				-state readonly \
+                -bg #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 60 -y 90 -width 100
 
     place [label $toolBar::angleModif.frame0.frame.atom3OptionsLabel \
 		        -text {Options: } \
+                -bg #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 190 -y 90 -width 50
     
     variable atom3AngleOpt "Move Atom"
@@ -1304,22 +1336,26 @@ proc toolBar::guiAngleModif {} {
 
 	place [label $toolBar::angleModif.frame0.frame.customAtom1 \
 		    -text "Custom Selection (Atom 1):" \
+            -bg #575756 \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 120 -width 180
 
     variable customSelection1 "none"
 	place [entry $toolBar::angleModif.frame0.frame.customAtom1Entry \
 		        -textvariable {toolBar::customSelection1} \
 				-state disabled \
+                -bg #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 200 -y 120 -width 190
 
 	place [label $toolBar::angleModif.frame0.frame.customAtom2 \
 		    -text "Custom Selection (Atom 2):" \
+            -bg #575756 \
 		    ] -in $toolBar::angleModif.frame0.frame -x 10 -y 150 -width 180
 
     variable customSelection2 "none"
 	place [entry $toolBar::angleModif.frame0.frame.customAtom2Entry \
 		        -textvariable {toolBar::customSelection2} \
 				-state disabled \
+                -bg #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 200 -y 150 -width 190
 
 	place [scale $toolBar::angleModif.frame0.frame.scaleBondDistance \
@@ -1336,6 +1372,7 @@ proc toolBar::guiAngleModif {} {
 
     place [label $toolBar::angleModif.frame0.frame.distanceLabel \
 				-text {Angle (°): } \
+                -bg #575756 \
 		        ] -in $toolBar::angleModif.frame0.frame -x 10 -y 213 -width 60
 
     place [spinbox $toolBar::angleModif.frame0.frame.distance \
@@ -1348,11 +1385,13 @@ proc toolBar::guiAngleModif {} {
                 
     place [button $toolBar::angleModif.frame0.frame.apply \
 		            -text "Apply" \
+                    -bg #575756 \
 		            -command {toolBar::angleGuiCloseSave} \
 		            ] -in $toolBar::angleModif.frame0.frame -x 230 -y 210 -width 75
 				
 	place [button $toolBar::angleModif.frame0.frame.cancel \
 		            -text "Cancel" \
+                    -bg #575756 \
 		            -command {toolBar::angleGuiCloseNotSave} \
 		            ] -in $toolBar::angleModif.frame0.frame -x 315 -y 210 -width 75
 

@@ -246,9 +246,9 @@ proc toolBar::startGui {} {
 
 	user add key 0 {mouse mode center; toolBar::cmd centerAtom}
 	user add key 1 {mouse mode pick; toolBar::cmd query}
-	user add key 2 {mouse mode bond; toolBar::cmd bond}
-	user add key 3 {mouse mode angle; toolBar::cmd angle}
-	user add key 4 {mouse mode dihedral; toolBar::cmd dihedral}
+	# user add key 2 {mouse mode bond; toolBar::cmd bond}
+	# user add key 3 {mouse mode angle; toolBar::cmd angle}
+	# user add key 4 {mouse mode dihedral; toolBar::cmd dihedral}
 
     #############################################################
     #### Bindings ###############################################
@@ -508,13 +508,14 @@ proc toolBar::atomPicked {args} {
 	toolBar::displayCanvas $element $chain $resname $resid $type $index
 
 	set time 1200
-	switch $toolBar::cmd {
-             query    	{set color red; 	toolBar::label_atoms [molinfo top] $atompick}
-			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1200} }
-			 angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2000} }
-			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2500} }
-			 default	{}
-	}
+	set color red; 	toolBar::label_atoms [molinfo top] $atompick
+	# switch $toolBar::cmd {
+    #          query    	{set color red; 	toolBar::label_atoms [molinfo top] $atompick}
+	# 		#  bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1200} }
+	# 		#  angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2000} }
+	# 		#  dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2500} }
+	# 		 default	{}
+	# }
 
 
 	#Delete Atom Reference
