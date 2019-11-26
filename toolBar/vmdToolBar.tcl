@@ -465,6 +465,9 @@ proc toolBar::cmd {cmd} {
 					}
 
 			quit 		{
+						catch {destroy $toolBar::bondModif}
+						catch {destroy $toolBar::angleModif}
+						catch {destroy $toolBar::dihedModif}
  						set answer [tk_messageBox -message "Really quit?" -type yesno -icon question]
 							switch $answer {
 							yes {catch {exit} debug}
@@ -521,13 +524,13 @@ proc toolBar::atomPicked {args} {
 
 	set time 1200
 	set color red; 	toolBar::label_atoms [molinfo top] $atompick
-	# switch $toolBar::cmd {
-    #          query    	{set color red; 	toolBar::label_atoms [molinfo top] $atompick}
-	# 		#  bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1200} }
-	# 		#  angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2000} }
-	# 		#  dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2500} }
-	# 		 default	{}
-	# }
+	switch $toolBar::cmd {
+             query    	{set color red; 	toolBar::label_atoms [molinfo top] $atompick}
+			 bond    	{set color blue;	if {[llength $toolBar::graphicsID]<=2} {set time 1200} }
+			 angle    	{set color green;	if {[llength $toolBar::graphicsID]<=3} {set time 2000} }
+			 dihedral	{set color yellow;	if {[llength $toolBar::graphicsID]<=4} {set time 2500} }
+			 default	{}
+	}
 
 
 	#Delete Atom Reference
@@ -701,6 +704,10 @@ proc toolBar::vmdState {file} {
 proc toolBar::quit {} {
 	trace remove variable ::vmd_pick_atom write toolBar::atomPicked
 	trace remove variable ::vmd_frame write toolBar::frameChanged
+
+	destroy $toolBar::bondModif
+	destroy $toolBar::angleModif
+	destroy $toolBar::dihedModif
 	
 	wm withdraw $toolBar::topGui
 }
