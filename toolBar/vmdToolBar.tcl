@@ -43,7 +43,7 @@ namespace eval toolBar:: {
 		variable nColumns 1; # number of columns per row in the toolbar
 		variable xoff 0	; # coordinates of window
 		variable yoff 0 ; # coordinates of window
-		variable version "1.1"
+		variable version "1.2"
 
 		# Modify
 		variable pickedAtoms {}

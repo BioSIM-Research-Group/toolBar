@@ -1,5 +1,5 @@
 ####vmdStore#### START toolBar
 ## Version XXversionXX
 lappend auto_path "$::vmdStorePath/plugins/toolBar"
-vmd_install_extension toolBar "toolBar::startGui" "VMD Store/Tool Bar"
+vmd_install_extension vmdToolBar "toolBar::startGui" "VMD Store/Tool Bar"
 ####vmdStore#### END toolBar
