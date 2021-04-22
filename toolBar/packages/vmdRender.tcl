@@ -285,7 +285,7 @@ proc vmdRender::render {} {
 
     #Change color of the button to get some feedback
     set f5 $vmdRender::topGui.frame5
-    $f5.render configure -background red -text "Rendering..."; update
+    $f5.render configure -text "Rendering..."; update
 
     catch {graphics $toolBar::Layer delete all}
 
@@ -358,9 +358,9 @@ proc vmdRender::render {} {
 
 
     #Change color of the button to get some feedback
-    $f5.render configure -background green -text "Done."; update
+    $f5.render configure -text "Done."; update
 
-    after 1500 {$vmdRender::topGui.frame5.render configure -background SystemButtonFace -text "Render"; update}
+    after 1500 {$vmdRender::topGui.frame5.render configure -text "Render"; update}
 }
 
 #### Start
