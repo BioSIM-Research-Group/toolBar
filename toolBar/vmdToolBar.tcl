@@ -4,16 +4,11 @@ package provide vmdToolBar 1.0
 #
 # Author: Nuno M. F. Sousa A. Cerqueira and Henrique S. Fernandes
 #
-# $Id: toolBar.tcl, v1.0 2017/11/10 22:31:39
+# $Id: toolBar.tcl, v1.0 2022/09/05
 #
 # Implements a toolBar for VMD with basic commands
 # 
 # usage: toolBar::startGui
-
-
-###### TODO
-# 1. Add selection manager
-# 3. incluir uma sphere para center on atom
 
 
 namespace eval toolBar:: {
@@ -129,7 +124,9 @@ proc toolBar::startGui {} {
 	#wm attributes $toolBar::topGui -disabled 0 -topmost 0 -toolwindow 1
     
 	# do not show top bar
-	wm overrideredirect $toolBar::topGui true
+	#wm overrideredirect $toolBar::topGui true
+	#wm attributes $toolBar::topGui -topmost yes
+	#wm attributes $toolBar::topGui -toolwindow
 
 	# window not resizable
 	wm resizable $toolBar::topGui 0 0
@@ -228,7 +225,7 @@ proc toolBar::startGui {} {
 
 	#### FRAME 2- Text or Canvas frame
 
-	grid [canvas $toolBar::topGui.frame1.canvas -width 8 -height 220 \
+	grid [canvas $toolBar::topGui.frame1.canvas -width 8 -height 258 \
 			-bg {#575756} \
 			-borderwidth 0 \
 			-highlightbackground {#575756} \
@@ -236,7 +233,7 @@ proc toolBar::startGui {} {
 
 	# DRAW LINE
 	$toolBar::topGui.frame1.canvas create line 10 10 75 10 -fill #2A2A28 -smooth true -width 3
-	$toolBar::topGui.frame1.canvas create line 10 216 75 216 -fill #2A2A28 -smooth true -width 3
+	$toolBar::topGui.frame1.canvas create line 10 254 75 254 -fill #2A2A28 -smooth true -width 3
 
 
 	update
@@ -513,14 +510,16 @@ proc toolBar::atomPicked {args} {
 	set atompick [atomselect $::vmd_pick_mol "index $::vmd_pick_atom"]
 
 	set element [$atompick get element]
+	set name [$atompick get name]
 	set chain [$atompick get chain]
 	set resname [$atompick get resname]
 	set resid [$atompick get resid]
+	set residue [$atompick get residue]
 	set type [$atompick get type]
 	set index [$atompick get index]
 
 	#Display text Widget
-	toolBar::displayCanvas $element $chain $resname $resid $type $index
+	toolBar::displayCanvas $element $chain $resname $resid $type $index $residue $name
 
 	set time 1200
 	set color red; 	toolBar::label_atoms [molinfo top] $atompick
@@ -572,7 +571,7 @@ proc toolBar::sphere {selection color} {
 }
 
 
-proc toolBar::displayCanvas {element chain resname resid type index} {
+proc toolBar::displayCanvas {element chain resname resid type index residue name} {
 
 	# Delete canvas
 	$toolBar::topGui.frame1.canvas delete data
@@ -582,39 +581,43 @@ proc toolBar::displayCanvas {element chain resname resid type index} {
 	set x0 20
 	set y 38
 	$toolBar::topGui.frame1.canvas create text [expr $x0+20] $y \
-		-fill white -justify right -font {Helvetica -30 bold} \
+		-fill white -justify right -font {Arial -30 bold} \
 		-text $element -tags "data element" -anchor e
 
-	if {[string length $element]!=1} {$toolBar::topGui.frame1.canvas itemconfigure element -font {Helvetica -25 bold} }
+	if {[string length $element]!=1} {$toolBar::topGui.frame1.canvas itemconfigure element -font {Arial -25 bold} }
 
 	# ATOM TYPE
 	set x [expr $x0 + 25]
-	$toolBar::topGui.frame1.canvas create text $x [expr $y+10] \
-		-fill #E9C062 -font {Helvetica -14 bold} \
+	$toolBar::topGui.frame1.canvas create text $x [expr $y - 8 ] \
+		-fill #E9C062 -font {Arial -16 bold} \
 		-text "$type" -tags data  -anchor w
+	
+	$toolBar::topGui.frame1.canvas create text $x [expr $y + 8] \
+	-fill #E9C062 -font {Arial -16 bold} \
+	-text "$name" -tags data  -anchor w
 
 	# CHAIN
 	set y [expr $y+40]
 	set x [expr $x0 + 36]
 	$toolBar::topGui.frame1.canvas create text $x $y \
-		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-fill #A7FE60 -justify center -font {Arial -16 bold}\
 		-text "Chain :" -anchor e -tags data
 
 	set x [expr $x0 + 46]
 	$toolBar::topGui.frame1.canvas create text $x $y \
-		-fill white -justify center -font {Helvetica -12 bold}\
+		-fill white -justify center -font {Arial -16 bold}\
 		-text $chain -tags data
 		
 	# RESNAME
 	set y [expr $y + 25]
 	set x [expr $x0 + 22]
 	$toolBar::topGui.frame1.canvas create text $x $y \
-		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-fill #A7FE60 -justify center -font {Arial -16 bold}\
 		-text "ResName" -tags data
 
 	set x [expr $x0 + 22]
 	$toolBar::topGui.frame1.canvas create text $x [expr $y + 17] \
-		-fill white -justify center -font {Helvetica -12 bold}\
+		-fill white -justify center -font {Arial -16 bold}\
 		-text $resname -tags data
 
 
@@ -622,25 +625,37 @@ proc toolBar::displayCanvas {element chain resname resid type index} {
 	set y [expr $y + 38]
 	set x [expr $x0 + 22]
 	$toolBar::topGui.frame1.canvas create text $x $y \
-		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-fill #A7FE60 -justify center -font {Arial -16 bold}\
 		-text "ResID" -tags data
 
 	set x [expr $x0 + 22]
 	$toolBar::topGui.frame1.canvas create text $x [expr $y + 17] \
-		-fill white -justify center -font {Helvetica -12 bold}\
+		-fill white -justify center -font {Arial -16 bold}\
 		-text $resid -tags data
 
+
+	# Residue
+	set y [expr $y + 38]
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x $y \
+		-fill #A7FE60 -justify center -font {Arial -16 bold}\
+		-text "Residue" -tags data
+
+	set x [expr $x0 + 22]
+	$toolBar::topGui.frame1.canvas create text $x [expr $y + 17] \
+		-fill white -justify center -font {Arial -16 bold}\
+		-text $residue -tags data
 
 	# INDEX
 	set y [expr $y + 38]
 	set x [expr $x0 + 22]
 	$toolBar::topGui.frame1.canvas create text $x $y \
-		-fill #A7FE60 -justify center -font {Helvetica -12 bold}\
+		-fill #A7FE60 -justify center -font {Arial -16 bold}\
 		-text "Index" -tags data
 
 	set x [expr $x0 + 22]
 	$toolBar::topGui.frame1.canvas create text $x [expr $y + 17] \
-		-fill white -justify center -font {Helvetica -12 bold}\
+		-fill white -justify center -font {Arial -16 bold}\
 		-text $index -tags data
 
 
